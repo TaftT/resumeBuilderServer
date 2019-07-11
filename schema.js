@@ -12,12 +12,12 @@ const personalinfoSchema = mongoose.Schema({
  		 address: {
    			type: String,
     		required: true,
-        default: new Date().toDateString()
+
  		 },
      city: {
    			type: String,
     		required: true,
-        default: new Date().toDateString()
+
  		 },
      state: {
    			type: String,
