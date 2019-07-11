@@ -534,6 +534,330 @@ server.put("/extracurricular/:id", function(req, res){
   });
 });
 
+//#### language #####
+server.get("/language", function(req, res){
+  resumeInfo.languagemodel.find().then(function(model){
+    res.json({
+      languagelist: model
+    });
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.get("/language/:id", function(req, res){
+  resumeInfo.languagemodel.findById(req.params.id).then(function(item){
+    if(item == null){
+      res.status(404);
+      res.json({
+        msg: `there is no language with id of ${req.params.id}`
+      });
+    } else{
+      res.json({
+        language : item
+      });
+    }
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.post("/language", function(req, res){
+  	resumeInfo.languagemodel.create({
+  	  	title: req.body.title,
+   		  proficiency: req.body.proficiency,
+
+ 	 }).then(function(newmodel){
+    		res.status(201);
+    		res.json({
+      		newmodel: newmodel
+    	});
+  	}).catch(function(error){
+   	 	res.status(400).json({msg : error.message});
+ 	 });
+});
+
+server.delete("/language/:id", function(req, res){
+  resumeInfo.languagemodel.findByIdAndDelete( req.params.id).then(function(){
+    res.status(204);
+    res.send();
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.put("/language/:id", function(req, res){
+  resumeInfo.languagemodel.findById(req.params.id).then(function(item){
+    if(item == null){
+      res.status(404);
+      res.json({
+        msg: `there is no language with id of ${req.params.id}`
+      });
+    } else{
+      if (req.body.title != undefined){
+        item.title = req.body.title;
+      }
+      if (req.body.proficiency != undefined){
+        item.proficiency = req.body.proficiency;
+      }
+
+      item.saveddate = new Date().toDateString()
+
+      item.save().then(function(){
+        res.status(200);
+        res.json({
+          education: item
+        });
+      })
+    }
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+//#### program #####
+server.get("/program", function(req, res){
+  resumeInfo.programmodel.find().then(function(model){
+    res.json({
+      programlist: model
+    });
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.get("/program/:id", function(req, res){
+  resumeInfo.programmodel.findById(req.params.id).then(function(item){
+    if(item == null){
+      res.status(404);
+      res.json({
+        msg: `there is no program with id of ${req.params.id}`
+      });
+    } else{
+      res.json({
+        program : item
+      });
+    }
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.post("/program", function(req, res){
+  	resumeInfo.programmodel.create({
+  	  	title: req.body.title,
+   		  proficiency: req.body.proficiency,
+
+ 	 }).then(function(newmodel){
+    		res.status(201);
+    		res.json({
+      		newmodel: newmodel
+    	});
+  	}).catch(function(error){
+   	 	res.status(400).json({msg : error.message});
+ 	 });
+});
+
+server.delete("/program/:id", function(req, res){
+  resumeInfo.programmodel.findByIdAndDelete( req.params.id).then(function(){
+    res.status(204);
+    res.send();
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.put("/program/:id", function(req, res){
+  resumeInfo.programmodel.findById(req.params.id).then(function(item){
+    if(item == null){
+      res.status(404);
+      res.json({
+        msg: `there is no program with id of ${req.params.id}`
+      });
+    } else{
+      if (req.body.title != undefined){
+        item.title = req.body.title;
+      }
+      if (req.body.proficiency != undefined){
+        item.proficiency = req.body.proficiency;
+      }
+
+      item.saveddate = new Date().toDateString()
+
+      item.save().then(function(){
+        res.status(200);
+        res.json({
+          education: item
+        });
+      })
+    }
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+//#### softskill #####
+server.get("/softskill", function(req, res){
+  resumeInfo.softskillmodel.find().then(function(model){
+    res.json({
+      softskilllist: model
+    });
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.get("/softskill/:id", function(req, res){
+  resumeInfo.softskillmodel.findById(req.params.id).then(function(item){
+    if(item == null){
+      res.status(404);
+      res.json({
+        msg: `there is no soft skill with id of ${req.params.id}`
+      });
+    } else{
+      res.json({
+        softskill : item
+      });
+    }
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.post("/softskill", function(req, res){
+  	resumeInfo.softskillmodel.create({
+  	  	title: req.body.title,
+
+ 	 }).then(function(newmodel){
+    		res.status(201);
+    		res.json({
+      		newmodel: newmodel
+    	});
+  	}).catch(function(error){
+   	 	res.status(400).json({msg : error.message});
+ 	 });
+});
+
+server.delete("/softskill/:id", function(req, res){
+  resumeInfo.softskillmodel.findByIdAndDelete( req.params.id).then(function(){
+    res.status(204);
+    res.send();
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.put("/softskill/:id", function(req, res){
+  resumeInfo.softskillmodel.findById(req.params.id).then(function(item){
+    if(item == null){
+      res.status(404);
+      res.json({
+        msg: `there is no soft skill with id of ${req.params.id}`
+      });
+    } else{
+      if (req.body.title != undefined){
+        item.title = req.body.title;
+      }
+
+      item.save().then(function(){
+        res.status(200);
+        res.json({
+          education: item
+        });
+      })
+    }
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+//#### award #####
+server.get("/award", function(req, res){
+  resumeInfo.awardmodel.find().then(function(model){
+    res.json({
+      awardlist: model
+    });
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.get("/award/:id", function(req, res){
+  resumeInfo.awardmodel.findById(req.params.id).then(function(item){
+    if(item == null){
+      res.status(404);
+      res.json({
+        msg: `there is no award with id of ${req.params.id}`
+      });
+    } else{
+      res.json({
+        award : item
+      });
+    }
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.post("/award", function(req, res){
+  	resumeInfo.awardmodel.create({
+  	  	title: req.body.title,
+        receivedfrom: req.body.receivedfrom,
+   		  description: req.body.description,
+        date:req.body.date,
+ 	 }).then(function(newmodel){
+    		res.status(201);
+    		res.json({
+      		newmodel: newmodel
+    	});
+  	}).catch(function(error){
+   	 	res.status(400).json({msg : error.message});
+ 	 });
+});
+
+server.delete("/award/:id", function(req, res){
+  resumeInfo.awardmodel.findByIdAndDelete( req.params.id).then(function(){
+    res.status(204);
+    res.send();
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.put("/award/:id", function(req, res){
+  resumeInfo.awardmodel.findById(req.params.id).then(function(item){
+    if(item == null){
+      res.status(404);
+      res.json({
+        msg: `there is no award item with id of ${req.params.id}`
+      });
+    } else{
+      if (req.body.title != undefined){
+        item.title = req.body.title;
+      }
+      if (req.body.receivedfrom != undefined){
+        item.receivedfrom = req.body.receivedfrom;
+      }
+      if (req.body.description != undefined){
+        item.description = req.body.description;
+      }
+      if (req.body.date != undefined){
+        item.date = req.body.date;
+      }
+      item.saveddate = new Date().toDateString()
+
+      item.save().then(function(){
+        res.status(200);
+        res.json({
+          education: item
+        });
+      })
+    }
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
 
 mongoose.connect("mongodb+srv://pocolocomoco:mocolocopoco@cluster0-ztwj9.mongodb.net/ResumeBuilder?retryWrites=true&w=majority", {
  	 useNewUrlParser: true
