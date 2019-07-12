@@ -21,7 +21,7 @@ var app= new Vue ({
         awardslist:[],
         statementlist:[],
 
-        
+
         personalinfoEdit:
         {
             first_name:"",
@@ -29,7 +29,7 @@ var app= new Vue ({
             address: "",
             city:"",
             state:"",
-            zip:"", 
+            zip:"",
             country: "",
             email: "",
             phone: "",
@@ -42,12 +42,12 @@ var app= new Vue ({
           statement: "",
         },
 
-        workexpEdit: {
-            work_company: "",
-            work_title: "",
-            work_startdate: new Date().toISOString().substr(0, 10),
-            work_enddate: new Date().toISOString().substr(0, 10),
-            work_description: "",
+        workexpEdit: {//TAFT CHANGE
+            company: "jfsdfsd",
+            title: "ifajdsakl",
+            startdate: new Date().toISOString().substr(0, 10),
+            enddate: new Date().toISOString().substr(0, 10),
+            description: "jdskf",
             start_menu: false,
             end_menu: false,
             position: 0, // for each v-card in a template, do for loop through all categories and see which has the desired position
@@ -60,7 +60,7 @@ var app= new Vue ({
           gradyear: new Date().toISOString().substr(0, 10),
           menu: false
         },
-        
+
         accomplishmentEdit: {
           title: "",
           description: "",
@@ -108,7 +108,7 @@ var app= new Vue ({
         pickingColor: false,
         color_brightness: 6,
         accent: 0,
-        
+
       template: "malia",
       templateLabel: "Choose a Template",
       templates: [
@@ -129,7 +129,7 @@ var app= new Vue ({
           name: "Template 4"
         },
       ],
-      
+
       statementdisplay: [],
       workexpdisplay: [],
       educationdisplay: [],
@@ -144,7 +144,7 @@ var app= new Vue ({
 
       workexpposition: "",
       position1: {},
-        
+
     },
     created: function () {
 
@@ -182,27 +182,17 @@ var app= new Vue ({
         console.log("Accent Color: ", this.selected_color_accent);
       });
     },
-  
+
 
     methods: {
       addStatement: function(){
         this.statementlist.push(this.statementEdit)
-  
+
         this.statementEdit= {
           statement: "",
         }
       },
-      addWork: function(){
-        this.workexplist.push(this.workexpEdit)
-        this.workexpEdit={
-          work1company: "",
-          work1title: "",
-          work1startdate: "",
-          work1enddate: "",
-          work1description: "",
-          
-        }
-      },
+      
       addEducation: function(){
           this.educationlist.push(this.educationEdit)
 
@@ -212,7 +202,7 @@ var app= new Vue ({
             gradyear: "",
             menu: false
           }
-        
+
       },
       addAccomplishment: function(){
         this.accomplishmentlist.push(this.accomplishmentEdit)
@@ -255,7 +245,7 @@ var app= new Vue ({
       },
       addExtracurricular: function(){
         this.extracurricularlist.push(this.extracurricularEdit)
-  
+
         this.extracurricularEdit= {
           title: "",
           proficiency:  "",
@@ -329,7 +319,7 @@ var app= new Vue ({
           this.pickingColor = false;
           x = document.getElementById("main");
           x.style.setAttribute("style", "display: hidden;");
-  
+
         };
       },
       newKellyColorPickerAccent: function () {
@@ -362,12 +352,12 @@ var app= new Vue ({
         });
         doc.save(this.personalinfoEdit.first_name+'_Resume.pdf');
       },
-  
+
 
       getData: function(want) {
         fetch(`${url}/${want}`).then(function (response) { //then executes when browser has received response from browser
           response.json().then(function (data) {
-  
+
             if(want=="statement"){
               app.statementlist = data.statementlist
             }
@@ -395,10 +385,54 @@ var app= new Vue ({
             if(want=="award"){
               app.awardslist = data.awardlist
             }
-  
+
             });
           });
         },
+
+        submitNewWorkexp: function (){
+
+          console.log(app.workexpEdit)
+          fetch(`${url}/workexp`, {
+          method:"POST",
+          headers:{
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(app.workexpEdit)
+        }).then(function (response) {
+          response.json().then((data)=>{console.log(data.msg)})
+
+          app.workexpEdit={
+            company: "",
+            title: "",
+            startdate: new Date().toISOString().substr(0, 10),
+            enddate: new Date().toISOString().substr(0, 10),
+            description: "",
+            start_menu: false,
+            end_menu: false,
+            position: 0,
+          }
+
+        });
+
+
+          },
+
+        // deleteInfo:  function(){
+        //   fetch(`${url}/posts/${post._id}`, {
+        //     method: "DELETE"
+        //   }).then(function(response){
+        //     if (response.status == 204){
+        //       console.log("Deleted Post")
+        //       app.getPosts();
+        //     } else if(response.status == 400){
+        //       response.json().then(function(data){
+        //         alert(data.msg)
+        //       })
+        //     }
+        //   })
+        //
+        // },
 
     },
 

@@ -98,13 +98,6 @@
                                         <v-expansion-panel-content>
                                             <template v-slot:header> <v-card-text class="display-1">Work experience</v-card-text></template>
                                             <v-card class="ma-2 pa-4">
-                                                <v-card  flat v-for="experience in workexplist">
-                                                    <v-card-title>{{experience.work_title}}, {{experience.work_startdate}} - {{experience.work_enddate}}</v-card-title>
-                                                    <v-card-text>{{experience.work_company}}</v-card-text>
-                                                    <v-card-text>{{experience.work_description}}</v-card-text>
-                                                    <v-btn icon><v-icon color="red">delete</v-icon></v-btn>
-                                                    <v-btn icon><v-icon color="red">edit</v-icon></v-btn>
-                                                </v-card>
                                                 <v-text-field box label="Company" v-model="workexpEdit.company"></v-text-field>
                                                 <v-text-field box label="Job Title" v-model="workexpEdit.title"></v-text-field>
                                                 <v-menu
