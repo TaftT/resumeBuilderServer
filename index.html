@@ -16,8 +16,69 @@
                                 <v-btn flat @click="page = 'form' ">Input Form</v-btn>
                                 <v-btn flat @click="page = 'savedinfo' ">Your Info</v-btn>
                                 <v-btn flat @click="page = 'preview' ">Preview</v-btn>
+																<v-btn flat @click="page = 'login' ">Login</v-btn> <!-- CHANGED BY TAFT AND SHARON -->
                             </v-toolbar-items>
                         </v-toolbar>
+
+												<div v-if="page == 'login'"> <!-- CHANGED BY TAFT AND SHARON -->
+                    <v-card-text style="padding-top: 10px"class="text-xs-center">Welcome to Resume<span class="font-weight-light">Builder</span></v-card-text>
+                    <h1 style="padding-top: 10px"class="text-xs-center" color="blue lighten-4">Login</h1>
+                    <v-container>
+                        <v-layout>
+                            <v-flex xs0 md3 >
+                            </v-flex>
+                            <v-flex xs12 md6 class="blue lighten-4">
+
+                                <v-container style="position: relative" class="text-xs-center">
+                                        <v-card-text>
+                                    <v-card flat >
+                                    <v-card-title primary-title>
+                                        <v-card-text>Login</v-card-text>
+                                    </v-card-title>
+                                    <v-form>
+                                    <v-text-field  prepend-icon="person" name="Username" label="Username" v-model="username"></v-text-field>
+                                    <v-text-field  prepend-icon="lock" name="Password" label="Password" type="password" v-model="password"></v-text-field>
+                                    <v-card-actions>
+                                        <v-btn primary @click= "login()" large block>Login</v-btn>
+                                    </v-card-actions>
+                                    </v-form>
+                                    </v-card>
+                                    <p class="text-xs-center" style="padding-top: 10px">Don't have an account?</p>
+                                <v-spacer></v-spacer>
+                                <v-hover><v-btn outline @click="page = 'register'" color="#2C3CE8" >Register</v-btn></v-hover>
+                            </v-card-text>
+                                </v-container>
+
+                            </v-flex>
+                            <v-flex xs0 md3 >
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </div>
+								<div v-if="page == 'register'"> <!-- CHANGED BY TAFT AND SHARON -->
+                        <v-card-text style="padding-top: 10px"class="text-xs-center">Welcome to Resume<span class="font-weight-light">Builder</span></v-card-text>
+                        <h1 style="padding-top: 10px"class="text-xs-center">Register</h1>
+                        <v-container>
+                            <v-layout>
+                                <v-flex xs0 md3 >
+                                </v-flex>
+                                <v-flex xs12 md6 class="blue lighten-4">
+                                    <v-card-text>
+                                    <v-container style="position: relative" class="text-xs-center">
+                                        <v-card flat>
+                                                <v-text-field  prepend-icon="person" name="Username" label="Username" v-model="username"></v-text-field>
+                                                <v-text-field  prepend-icon="lock" name="Password" label="Password" type="password" v-model="password"></v-text-field>
+                                        </v-card>
+                                    <v-spacer></v-spacer>
+                                    <v-btn outline @click="register()" color="#2C3CE8" >SIGN UP</v-btn>
+                                    </v-container>
+                                </v-card-text>
+                                </v-flex>
+                                <v-flex xs0 md3 >
+                                </v-flex>
+                            </v-layout>
+                        </v-container>
+                </div>
                 <div v-if="page == 'form'">
                     <v-container>
                             <v-layout>

@@ -1,11 +1,13 @@
-//var url = "http://localhost:3000";
-var url = "https://createresume.herokuapp.com";
+var url = "http://localhost:3000";
+//var url = "https://createresume.herokuapp.com";
 
 
 var app= new Vue ({
     el: "#app1",
 
     data: {
+      username: "", //CHANGED BY TAFT AND SHARON
+      password: "", //CHANGED BY TAFT AND SHARON
       menu:false,
       modal: false,
       page: "form",
@@ -161,15 +163,7 @@ var app= new Vue ({
     },
     created: function () {
 
-      this.getData("statement")
-      this.getData("workexp")
-      this.getData("education")
-      this.getData("accomplishment")
-      this.getData("extracurricular")
-      this.getData("language")
-      this.getData("program")
-      this.getData("softskill")
-      this.getData("award")
+
 
       addEventListener("click", function () {
         app.selected_color_main = document.getElementById("colorMain").style.backgroundColor;
@@ -181,6 +175,62 @@ var app= new Vue ({
 
 
     methods: {
+      register: function() { //ADDED by TAFT
+  			fetch(`${url}/users/register`, {
+  				method: "POST",
+  				credentials: "include",
+  				headers: {
+  					"Content-type": "application/json"
+  				},
+  				body: JSON.stringify({
+  					username: this.username,
+  					password: this.password
+  				})
+  			}).then(function(response) {
+  				if (response.status == 422 || response.status == 400) {
+  					response.json().then(function(data) {
+  						alert(data.msg);
+  					})
+  				} else if (response.status == 201) {
+  					console.log("registered");
+  				}
+  			});
+  		},
+
+  		login: function() { //ADDED by TAFT
+        console.log(this.username);
+  			fetch(`${url}/users/login`, {
+  				method: "POST",
+  				credentials: "include",
+  				headers: {
+  					"Content-type": "application/json"
+  				},
+  				body: JSON.stringify({
+  					username: this.username,
+  					password: this.password
+  				})
+  			}).then(function(response) {
+  				if (response.status == 403) {
+  					response.json().then(function(data) {
+  						alert(data.msg);
+  					})
+  				}else if(response.status == 200){
+            alert("logged in");
+            app.page = "form";
+            app.getData("statement")
+            app.getData("workexp")
+            app.getData("education")
+            app.getData("accomplishment")
+            app.getData("extracurricular")
+            app.getData("language")
+            app.getData("program")
+            app.getData("softskill")
+            app.getData("award")
+
+          }
+  			});
+  		},
+
       addStatement: function(){
         this.statementlist.push(this.statementEdit)
 
@@ -388,7 +438,9 @@ var app= new Vue ({
 
 
       getData: function(want) {
-        fetch(`${url}/${want}`).then(function (response) { //then executes when browser has received response from browser
+        fetch(`${url}/${want}`,{
+          credentials: "include"
+        }).then(function (response) { //then executes when browser has received response from browser
           response.json().then(function (data) {
 
             if(want=="statement"){

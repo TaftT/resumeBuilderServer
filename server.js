@@ -1,25 +1,152 @@
 const express = require("express");
+const expressSession = require("express-session"); // npm install express-session
 const cors = require("cors");
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs"); // npm install bcryptjs
+const passport = require("passport"); // npm install passport
+const LocalStrategy = require("passport-local").Strategy;
 
 var server = express();
 var port = process.env.PORT || 3000;
 
 
 var resumeInfo = require("./schema.js")
+var userModel = require("./user.js");
 
-server.use(cors());
+//server.use(cors());
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", req.get("origin"));
+  // res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+server.options("*", function(req, res, next) {
+  res.header("Access-Control-Allow-Headers", "Content-type");
+  next();
+});
+server.use(express.json());
 server.use( express.urlencoded({ extend: false}));
-server.use(express.json());
-server.use(express.json());
 server.use(function(req , res, next) {
   console.log(`New request: ${req.method} ${req.path} on ${ new Date()}`);
   next();
 
 });
 
+server.use(expressSession({
+  secret: "Avatar is the best tv show ever",
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+      secure: false,
+      maxAge: 3600000 // 1 hour
+  }
+}));
+server.use(passport.initialize());
+server.use(passport.session());
+passport.serializeUser(function(user, callback) {
+  callback(null, user.id);
+});
+passport.deserializeUser(function(id, callback) {
+  userModel.findById(id, function(error, user) {
+      callback(error, user);
+  });
+});
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+      userModel.findOne({
+          username: username
+      }, function(error, user) {
+          if (error) {
+              return done(error);
+          }
+          if (!user) {
+              return done(null, false);
+          }
+          bcrypt.compare(password, user.password, function(error, isMatch) {
+              if (isMatch) {
+                  return done(null, user);
+              } else {
+                  return done(null, false);
+              }
+          });
+      });
+  }
+));
+var ensureAuthentication = function(req, res, next) {
+  if (req.isAuthenticated()) {
+      next();
+  } else {
+      res.status(403); // Forbidden
+      res.json({
+          msg: "Please login first"
+      });
+  }
+};
+
+// Endpoints
+server.get("/private", ensureAuthentication, function(req, res) {
+  res.json({
+      msg: `Hello ${req.user.username}`
+  });
+});
+
+// Register
+server.post("/users/register",  function(req, res) {
+  userModel.findOne({
+      username: req.body.username
+  }).then(function(user) {
+      if (user) {
+          res.status(422); // unprocessable
+          res.json({
+              msg: "That username is already in use."
+          });
+      } else {
+          // Create the user, but first encrypt the password
+          bcrypt.genSalt(10, function(error, salt) {
+              bcrypt.hash(req.body.password, salt, function(error, hashed_password) {
+                  userModel.create({
+                      username: req.body.username,
+                      password: hashed_password
+                  }).then(function(new_user) {
+                      res.status(201);
+                      res.json({
+                          user: new_user
+                      });
+                  }).catch(function(error) {
+                      res.status(400).json({msg: error.message});
+                  });
+              });
+          });
+      }
+  }).catch(function(error) {
+      res.status(400).json({msg: error.message});
+  });
+});
+
+// Login
+server.post("/users/login",
+  passport.authenticate("local", { failureRedirect: "/users/login/error" }),
+  function(req, res, next) {
+      res.redirect("/users/login/success");
+  }
+);
+
+// Login error and success
+server.get("/users/login/error", function(req, res) {
+  res.status(403); // forbidden
+  res.json({
+      msg: "Invalid username or password"
+  });
+});
+
+server.get("/users/login/success", function(req, res) {
+  res.json({
+      msg: `Welcome ${req.user.username}`
+  });
+});
+
 //#### personalinfo #####
-server.get("/personalinfo", function(req, res){
+server.get("/personalinfo", ensureAuthentication,  function(req, res){
   resumeInfo.personalinfomodel.find().then(function(model){
     res.json({
       personalinfo: model
@@ -29,7 +156,7 @@ server.get("/personalinfo", function(req, res){
   });
 });
 
-server.get("/personalinfo/:id", function(req, res){
+server.get("/personalinfo/:id", ensureAuthentication,  function(req, res){
   resumeInfo.personalinfomodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -46,7 +173,7 @@ server.get("/personalinfo/:id", function(req, res){
   });
 });
 
-server.post("/personalinfo", function(req, res){
+server.post("/personalinfo", ensureAuthentication,  function(req, res){
   	resumeInfo.personalinfomodel.create({
   	  	first_name: req.body.first_name,
         last_name: req.body.last_name,
@@ -66,7 +193,7 @@ server.post("/personalinfo", function(req, res){
  	 });
 });
 
-server.delete("/personalinfo/:id", function(req, res){
+server.delete("/personalinfo/:id", ensureAuthentication,  function(req, res){
   resumeInfo.personalinfomodel.findByIdAndDelete( req.params.id).then(function(){
     res.status(204);
     res.send();
@@ -75,7 +202,7 @@ server.delete("/personalinfo/:id", function(req, res){
   });
 });
 
-server.put("/personalinfo/:id", function(req, res){
+server.put("/personalinfo/:id", ensureAuthentication,  function(req, res){
   resumeInfo.personalinfomodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -123,7 +250,7 @@ server.put("/personalinfo/:id", function(req, res){
 
 
 //#### statement #####
-server.get("/statement", function(req, res){
+server.get("/statement", ensureAuthentication,  function(req, res){
   resumeInfo.statementmodel.find().then(function(model){
     res.json({
       statementlist: model
@@ -150,7 +277,7 @@ server.get("/statement/:id", function(req, res){
   });
 });
 
-server.post("/statement", function(req, res){
+server.post("/statement", ensureAuthentication,  function(req, res){
   	resumeInfo.statementmodel.create({
   	  	statement: req.body.statement,
  	 }).then(function(newmodel){
@@ -163,7 +290,7 @@ server.post("/statement", function(req, res){
  	 });
 });
 
-server.delete("/statement/:id", function(req, res){
+server.delete("/statement/:id", ensureAuthentication,  function(req, res){
   resumeInfo.statementmodel.findByIdAndDelete( req.params.id).then(function(){
     res.status(204);
     res.send();
@@ -172,7 +299,7 @@ server.delete("/statement/:id", function(req, res){
   });
 });
 
-server.put("/statement/:id", function(req, res){
+server.put("/statement/:id", ensureAuthentication,  function(req, res){
   resumeInfo.statementmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -199,7 +326,7 @@ server.put("/statement/:id", function(req, res){
 
 
 //#### work experience #####
-server.get("/workexp", function(req, res){
+server.get("/workexp", ensureAuthentication,  function(req, res){
   resumeInfo.workexpmodel.find().then(function(model){
     res.json({
       workexplist: model
@@ -209,7 +336,7 @@ server.get("/workexp", function(req, res){
   });
 });
 
-server.get("/workexp/:id", function(req, res){
+server.get("/workexp/:id", ensureAuthentication,  function(req, res){
   resumeInfo.workexpmodel.findById(req.params.id).then(function(experience){
     if(experience == null){
       res.status(404);
@@ -226,7 +353,7 @@ server.get("/workexp/:id", function(req, res){
   });
 });
 
-server.post("/workexp", function(req, res){
+server.post("/workexp", ensureAuthentication,  function(req, res){
   	resumeInfo.workexpmodel.create({
   	  	company: req.body.company,
    		  title: req.body.title,
@@ -243,7 +370,7 @@ server.post("/workexp", function(req, res){
  	 });
 });
 
-server.delete("/workexp/:id", function(req, res){
+server.delete("/workexp/:id", ensureAuthentication,  function(req, res){
   resumeInfo.workexpmodel.findByIdAndDelete( req.params.id).then(function(){
     res.status(204);
     res.send();
@@ -252,7 +379,7 @@ server.delete("/workexp/:id", function(req, res){
   });
 });
 
-server.put("/workexp/:id", function(req, res){
+server.put("/workexp/:id", ensureAuthentication,  function(req, res){
   resumeInfo.workexpmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -290,7 +417,7 @@ server.put("/workexp/:id", function(req, res){
 });
 
 //#### education #####
-server.get("/education", function(req, res){
+server.get("/education", ensureAuthentication,  function(req, res){
   resumeInfo.educationmodel.find().then(function(model){
     res.json({
       educationlist: model
@@ -300,7 +427,7 @@ server.get("/education", function(req, res){
   });
 });
 
-server.get("/education/:id", function(req, res){
+server.get("/education/:id", ensureAuthentication,  function(req, res){
   resumeInfo.educationmodel.findById(req.params.id).then(function(education){
     if(education == null){
       res.status(404);
@@ -317,7 +444,7 @@ server.get("/education/:id", function(req, res){
   });
 });
 
-server.post("/education", function(req, res){
+server.post("/education", ensureAuthentication,  function(req, res){
   	resumeInfo.educationmodel.create({
   	  	college: req.body.college,
    		  degree: req.body.degree,
@@ -332,7 +459,7 @@ server.post("/education", function(req, res){
  	 });
 });
 
-server.delete("/education/:id", function(req, res){
+server.delete("/education/:id", ensureAuthentication,  function(req, res){
   resumeInfo.educationmodel.findByIdAndDelete( req.params.id).then(function(){
     res.status(204);
     res.send();
@@ -341,7 +468,7 @@ server.delete("/education/:id", function(req, res){
   });
 });
 
-server.put("/education/:id", function(req, res){
+server.put("/education/:id", ensureAuthentication,  function(req, res){
   resumeInfo.educationmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -373,7 +500,7 @@ server.put("/education/:id", function(req, res){
 });
 
 //#### accomplishment #####
-server.get("/accomplishment", function(req, res){
+server.get("/accomplishment", ensureAuthentication,  function(req, res){
   resumeInfo.accomplishmentmodel.find().then(function(model){
     res.json({
       accomplishmentlist: model
@@ -383,7 +510,7 @@ server.get("/accomplishment", function(req, res){
   });
 });
 
-server.get("/accomplishment/:id", function(req, res){
+server.get("/accomplishment/:id", ensureAuthentication,  function(req, res){
   resumeInfo.accomplishmentmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -400,7 +527,7 @@ server.get("/accomplishment/:id", function(req, res){
   });
 });
 
-server.post("/accomplishment", function(req, res){
+server.post("/accomplishment", ensureAuthentication,  function(req, res){
   	resumeInfo.accomplishmentmodel.create({
   	  	title: req.body.title,
    		  description: req.body.description,
@@ -414,7 +541,7 @@ server.post("/accomplishment", function(req, res){
  	 });
 });
 
-server.delete("/accomplishment/:id", function(req, res){
+server.delete("/accomplishment/:id", ensureAuthentication,  function(req, res){
   resumeInfo.accomplishmentmodel.findByIdAndDelete( req.params.id).then(function(){
     res.status(204);
     res.send();
@@ -423,7 +550,7 @@ server.delete("/accomplishment/:id", function(req, res){
   });
 });
 
-server.put("/accomplishment/:id", function(req, res){
+server.put("/accomplishment/:id", ensureAuthentication,  function(req, res){
   resumeInfo.accomplishmentmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -452,7 +579,7 @@ server.put("/accomplishment/:id", function(req, res){
 });
 
 //#### extracurricular #####
-server.get("/extracurricular", function(req, res){
+server.get("/extracurricular", ensureAuthentication,  function(req, res){
   resumeInfo.extracurricularmodel.find().then(function(model){
     res.json({
       extracurricularlist: model
@@ -462,7 +589,7 @@ server.get("/extracurricular", function(req, res){
   });
 });
 
-server.get("/extracurricular/:id", function(req, res){
+server.get("/extracurricular/:id", ensureAuthentication,  function(req, res){
   resumeInfo.extracurricularmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -479,7 +606,7 @@ server.get("/extracurricular/:id", function(req, res){
   });
 });
 
-server.post("/extracurricular", function(req, res){
+server.post("/extracurricular", ensureAuthentication,  function(req, res){
   	resumeInfo.extracurricularmodel.create({
   	  	title: req.body.title,
    		  description: req.body.description,
@@ -494,7 +621,7 @@ server.post("/extracurricular", function(req, res){
  	 });
 });
 
-server.delete("/extracurricular/:id", function(req, res){
+server.delete("/extracurricular/:id", ensureAuthentication,  function(req, res){
   resumeInfo.extracurricularmodel.findByIdAndDelete( req.params.id).then(function(){
     res.status(204);
     res.send();
@@ -503,7 +630,7 @@ server.delete("/extracurricular/:id", function(req, res){
   });
 });
 
-server.put("/extracurricular/:id", function(req, res){
+server.put("/extracurricular/:id", ensureAuthentication,  function(req, res){
   resumeInfo.extracurricularmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -535,7 +662,7 @@ server.put("/extracurricular/:id", function(req, res){
 });
 
 //#### language #####
-server.get("/language", function(req, res){
+server.get("/language", ensureAuthentication,  function(req, res){
   resumeInfo.languagemodel.find().then(function(model){
     res.json({
       languagelist: model
@@ -545,7 +672,7 @@ server.get("/language", function(req, res){
   });
 });
 
-server.get("/language/:id", function(req, res){
+server.get("/language/:id", ensureAuthentication,  function(req, res){
   resumeInfo.languagemodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -562,7 +689,7 @@ server.get("/language/:id", function(req, res){
   });
 });
 
-server.post("/language", function(req, res){
+server.post("/language", ensureAuthentication,  function(req, res){
   	resumeInfo.languagemodel.create({
   	  	title: req.body.title,
    		  proficiency: req.body.proficiency,
@@ -577,7 +704,7 @@ server.post("/language", function(req, res){
  	 });
 });
 
-server.delete("/language/:id", function(req, res){
+server.delete("/language/:id", ensureAuthentication,  function(req, res){
   resumeInfo.languagemodel.findByIdAndDelete( req.params.id).then(function(){
     res.status(204);
     res.send();
@@ -586,7 +713,7 @@ server.delete("/language/:id", function(req, res){
   });
 });
 
-server.put("/language/:id", function(req, res){
+server.put("/language/:id", ensureAuthentication,  function(req, res){
   resumeInfo.languagemodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -616,7 +743,7 @@ server.put("/language/:id", function(req, res){
 });
 
 //#### program #####
-server.get("/program", function(req, res){
+server.get("/program", ensureAuthentication,  function(req, res){
   resumeInfo.programmodel.find().then(function(model){
     res.json({
       programlist: model
@@ -626,7 +753,7 @@ server.get("/program", function(req, res){
   });
 });
 
-server.get("/program/:id", function(req, res){
+server.get("/program/:id", ensureAuthentication,  function(req, res){
   resumeInfo.programmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -643,7 +770,7 @@ server.get("/program/:id", function(req, res){
   });
 });
 
-server.post("/program", function(req, res){
+server.post("/program", ensureAuthentication,  function(req, res){
   	resumeInfo.programmodel.create({
   	  	title: req.body.title,
    		  proficiency: req.body.proficiency,
@@ -658,7 +785,7 @@ server.post("/program", function(req, res){
  	 });
 });
 
-server.delete("/program/:id", function(req, res){
+server.delete("/program/:id", ensureAuthentication,  function(req, res){
   resumeInfo.programmodel.findByIdAndDelete( req.params.id).then(function(){
     res.status(204);
     res.send();
@@ -667,7 +794,7 @@ server.delete("/program/:id", function(req, res){
   });
 });
 
-server.put("/program/:id", function(req, res){
+server.put("/program/:id", ensureAuthentication,  function(req, res){
   resumeInfo.programmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -697,7 +824,7 @@ server.put("/program/:id", function(req, res){
 });
 
 //#### softskill #####
-server.get("/softskill", function(req, res){
+server.get("/softskill", ensureAuthentication,  function(req, res){
   resumeInfo.softskillmodel.find().then(function(model){
     res.json({
       softskilllist: model
@@ -707,7 +834,7 @@ server.get("/softskill", function(req, res){
   });
 });
 
-server.get("/softskill/:id", function(req, res){
+server.get("/softskill/:id", ensureAuthentication,  function(req, res){
   resumeInfo.softskillmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -724,7 +851,7 @@ server.get("/softskill/:id", function(req, res){
   });
 });
 
-server.post("/softskill", function(req, res){
+server.post("/softskill", ensureAuthentication, function(req, res){
   	resumeInfo.softskillmodel.create({
   	  	title: req.body.title,
 
@@ -738,7 +865,7 @@ server.post("/softskill", function(req, res){
  	 });
 });
 
-server.delete("/softskill/:id", function(req, res){
+server.delete("/softskill/:id", ensureAuthentication,  function(req, res){
   resumeInfo.softskillmodel.findByIdAndDelete( req.params.id).then(function(){
     res.status(204);
     res.send();
@@ -747,7 +874,7 @@ server.delete("/softskill/:id", function(req, res){
   });
 });
 
-server.put("/softskill/:id", function(req, res){
+server.put("/softskill/:id", ensureAuthentication,  function(req, res){
   resumeInfo.softskillmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -772,7 +899,7 @@ server.put("/softskill/:id", function(req, res){
 });
 
 //#### award #####
-server.get("/award", function(req, res){
+server.get("/award", ensureAuthentication,  function(req, res){
   resumeInfo.awardmodel.find().then(function(model){
     res.json({
       awardlist: model
@@ -782,7 +909,7 @@ server.get("/award", function(req, res){
   });
 });
 
-server.get("/award/:id", function(req, res){
+server.get("/award/:id", ensureAuthentication,  function(req, res){
   resumeInfo.awardmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
@@ -799,7 +926,7 @@ server.get("/award/:id", function(req, res){
   });
 });
 
-server.post("/award", function(req, res){
+server.post("/award", ensureAuthentication,  function(req, res){
   	resumeInfo.awardmodel.create({
   	  	title: req.body.title,
         receivedfrom: req.body.receivedfrom,
@@ -815,7 +942,7 @@ server.post("/award", function(req, res){
  	 });
 });
 
-server.delete("/award/:id", function(req, res){
+server.delete("/award/:id", ensureAuthentication,  function(req, res){
   resumeInfo.awardmodel.findByIdAndDelete( req.params.id).then(function(){
     res.status(204);
     res.send();
@@ -824,7 +951,7 @@ server.delete("/award/:id", function(req, res){
   });
 });
 
-server.put("/award/:id", function(req, res){
+server.put("/award/:id", ensureAuthentication,  function(req, res){
   resumeInfo.awardmodel.findById(req.params.id).then(function(item){
     if(item == null){
       res.status(404);
