@@ -1,6 +1,6 @@
 const express = require("express");
 const expressSession = require("express-session"); // npm install express-session
-const cors = require("cors");
+//const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs"); // npm install bcryptjs
 const passport = require("passport"); // npm install passport
@@ -22,6 +22,7 @@ server.use(function(req, res, next) {
 });
 server.options("*", function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Content-type");
+  res.header("Access-Control-Allow-Methods", "DELETE")
   next();
 });
 server.use(express.json());

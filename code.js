@@ -1,20 +1,21 @@
-var url = "http://localhost:3000";
-//var url = "https://createresume.herokuapp.com";
-
+//var url = "http://localhost:3000";
+var url = "https://createresume.herokuapp.com";
 
 var app= new Vue ({
     el: "#app1",
 
     data: {
-      username: "", //CHANGED BY TAFT AND SHARON
-      password: "", //CHANGED BY TAFT AND SHARON
+      username: "", 
+      password: "", 
       menu:false,
       modal: false,
       page: "form",
       color: "",
 
         educationlist:[],
-        workexplist:[],
+        workexplist:[            
+          // position: 0, // add to database
+        ],
         accomplishmentlist: [],
         extracurricularlist:[],
         languageslist:[],
@@ -23,7 +24,7 @@ var app= new Vue ({
         awardslist:[],
         statementlist:[],
 
-
+        
         personalinfoEdit:
         {
             first_name:"",
@@ -31,7 +32,7 @@ var app= new Vue ({
             address: "",
             city:"",
             state:"",
-            zip:"",
+            zip:"", 
             country: "",
             email: "",
             phone: "",
@@ -50,8 +51,6 @@ var app= new Vue ({
             description: "",
             start_menu: false,
             end_menu: false,
-            position: 0, // for each v-card in a template, do for loop through all categories and see which has the desired position
-
         },
         educationEdit: {
           college: "",
@@ -106,7 +105,7 @@ var app= new Vue ({
         pickingColor: false,
         color_brightness: 6,
         accent: 0,
-
+        
       template: "malia",
       templateLabel: "Choose a Template",
       templates: [
@@ -127,7 +126,7 @@ var app= new Vue ({
           name: "Template 4"
         },
       ],
-
+      
       statementdisplay: [],
       workexpdisplay: [],
       educationdisplay: [],
@@ -140,7 +139,16 @@ var app= new Vue ({
 
       add_remove: "",
 
-      workexpposition: "",
+      statementposition: 0,
+      workexpposition: 0,
+      educationposition: 0,
+      accomplishmentposition: 0,
+      extracurricularposition: 0,
+      languagesposition: 0,
+      programsposition: 0,
+      softskillsposition: 0,
+      awardsposition: 0,
+
       position1: {},
 
       zone1: [],
@@ -159,20 +167,23 @@ var app= new Vue ({
       zone6_type: "",
       zone7_type: "",
 
-
+      emailRules: [ //changed
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
+      ],
+      fieldRules: [ //changed
+        v => !!v || 'This field is required',
+      ],
     },
     created: function () {
 
 
-
-      addEventListener("click", function () {
+      addEventListener("click", function () { //changed
         app.selected_color_main = document.getElementById("colorMain").style.backgroundColor;
-        console.log("Main Color: ", app.selected_color_main);
         app.selected_color_accent = document.getElementById("colorAccent").style.backgroundColor;
-        console.log("Accent Color: ", app.selected_color_accent);
-      });
+      }, {passive: true});
     },
-
+  
 
     methods: {
       register: function() { //ADDED by TAFT
@@ -231,81 +242,11 @@ var app= new Vue ({
   			});
   		},
 
-      addStatement: function(){
-        this.statementlist.push(this.statementEdit)
-
-        this.statementEdit= {
-          statement: "",
-        }
-      },
-      addWork: function(){
-        this.workexplist.push(this.workexpEdit)
-        this.workexpEdit={
-          work1company: "",
-          work1title: "",
-          work1startdate: "",
-          work1enddate: "",
-          work1description: "",
-
-        }
-      },
-      addEducation: function(){
-          this.educationlist.push(this.educationEdit)
-
-          this.educationEdit= {
-            college: "",
-            degree: "",
-            gradyear: "",
-            menu: false
-          }
-
-      },
-      addAccomplishment: function(){
-        this.accomplishmentlist.push(this.accomplishmentEdit)
-
-        this.accomplishmentEdit= {
-          title: "",
-          description: "",
-        }
-
-      },
-      addLanguage: function(){
-        this.languageslist.push(this.languagesEdit)
-
-        this.languagesEdit= {
-          title: "",
-          proficiency:  "",
-        }
-
-
-      },
-      addSkill: function(){
-        this.programslist.push(this.programsEdit)
-
-        this.programsEdit= {
-          title: "",
-          proficiency:  "",
-        }
-
-
-      },
-      addAward: function(){
-        this.awardslist.push(this.awardsEdit)
-
-        this.awardsEdit= {
-          title: "",
-          receivedfrom:  "",
-          date: "",
-          description: "",
-        }
-      },
-      addExtracurricular: function(){
-        this.extracurricularlist.push(this.extracurricularEdit)
-
-        this.extracurricularEdit= {
-          title: "",
-          proficiency:  "",
-        }
+      phoneNum: function () { //changed
+        var x = this.personalinfoEdit.phone.replace(/\D/g, '').match(`(\d{0,3})(\d{0,3})(\d{0,4})`);
+        return (
+          x = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '')
+        );
       },
 
       includeStatement: function(exp) {
@@ -355,41 +296,258 @@ var app= new Vue ({
       },
 
 
-      priorityOne: function (exp) {
-        this.priority1.push(exp);
+      apply: function (type) {
+        var display = [];
+        if (type == "workexp") {
+          display = this.workexpdisplay;
+          if (this.workexpposition == "1") {
+            this.apply1(type,display,);
+          }
+          else if (this.workexpposition == "2") {
+            this.apply2(type,display);
+          }
+          else if (this.workexpposition == "3") {
+            this.apply3(type,display);
+          }
+          else if (this.workexpposition == "4") {
+            this.apply4(type,display);
+          }
+          else if (this.workexpposition == "5") {
+            this.apply5(type,display);
+          }
+          else if (this.workexpposition == "6") {
+            this.apply6(type,display);
+          }
+          else if (this.workexpposition == "7") {
+            this.apply7(type,display);
+          }
+        }
+        else if (type == "education") {
+          display = this.educationdisplay;
+          if (this.educationposition == "1") {
+            this.apply1(type, display);
+          }
+          else if (this.educationposition == "2") {
+            this.apply2(type, display);
+          }
+          else if (this.educationposition == "3") {
+            this.apply3(type, display);
+          }
+          else if (this.educationposition == "4") {
+            this.apply4(type, display);
+          }
+          else if (this.educationposition == "5") {
+            this.apply5(type, display);
+          }
+          else if (this.educationposition == "6") {
+            this.apply6(type, display);
+          }
+          else if (this.educationposition == "7") {
+            this.apply7(type, display);
+          }
+        }
+        else if (type == "statement") {
+          display = this.statementdisplay;
+          if (this.statementposition == "1") {
+            this.apply1(type, display);
+          }
+          else if (this.statementposition == "2") {
+            this.apply2(type, display);
+          }
+          else if (this.statementposition == "3") {
+            this.apply3(type, display);
+          }
+          else if (this.statementposition == "4") {
+            this.apply4(type, display);
+          }
+          else if (this.statementposition == "5") {
+            this.apply5(type, display);
+          }
+          else if (this.statementposition == "6") {
+            this.apply6(type, display);
+          }
+          else if (this.statementposition == "7") {
+            this.apply7(type, display);
+          }
+        }
+        else if (type == "accomplishment") {
+          display = this.accomplishmentdisplay;
+          if (this.accomplishmentposition == "1") {
+            this.apply1(type, display);
+          }
+          else if (this.accomplishmentposition == "2") {
+            this.apply2(type, display);
+          }
+          else if (this.accomplishmentposition == "3") {
+            this.apply3(type, display);
+          }
+          else if (this.accomplishmentposition == "4") {
+            this.apply4(type, display);
+          }
+          else if (this.accomplishmentposition == "5") {
+            this.apply5(type, display);
+          }
+          else if (this.accomplishmentposition == "6") {
+            this.apply6(type, display);
+          }
+          else if (this.accomplishmentposition == "7") {
+            this.apply7(type, display);
+          }
+        }
+        else if (type == "award") {
+          display = this.awardsdisplay;
+          if (this.awardsposition == "1") {
+            this.apply1(type, display);
+          }
+          else if (this.awardsposition == "2") {
+            this.apply2(type, display);
+          }
+          else if (this.awardsposition == "3") {
+            this.apply3(type, display);
+          }
+          else if (this.awardsposition == "4") {
+            this.apply4(type, display);
+          }
+          else if (this.awardsposition == "5") {
+            this.apply5(type, display);
+          }
+          else if (this.awardsposition == "6") {
+            this.apply6(type, display);
+          }
+          else if (this.awardsposition == "7") {
+            this.apply7(type, display);
+          }
+        }
+        else if (type == "language") {
+          display = this.languagesdisplay;
+          if (this.languagesposition == "1") {
+            this.apply1(type, display);
+          }
+          else if (this.languagesposition == "2") {
+            this.apply2(type, display);
+          }
+          else if (this.languagesposition == "3") {
+            this.apply3(type, display);
+          }
+          else if (this.languagesposition == "4") {
+            this.apply4(type, display);
+          }
+          else if (this.languagesposition == "5") {
+            this.apply5(type, display);
+          }
+          else if (this.languagesposition == "6") {
+            this.apply6(type, display);
+          }
+          else if (this.languagesposition == "7") {
+            this.apply7(type, display);
+          }
+        }
+        else if (type == "extracurricular") {
+          display = this.extracurricularndisplay;
+          if (this.extracurricularnposition == "1") {
+            this.apply1(type, display);
+          }
+          else if (this.extracurricularnposition == "2") {
+            this.apply2(type, display);
+          }
+          else if (this.extracurricularnposition == "3") {
+            this.apply3(type, display);
+          }
+          else if (this.extracurricularnposition == "4") {
+            this.apply4(type, display);
+          }
+          else if (this.extracurricularnposition == "5") {
+            this.apply5(type, display);
+          }
+          else if (this.extracurricularnposition == "6") {
+            this.apply6(type, display);
+          }
+          else if (this.extracurricularnposition == "7") {
+            this.apply7(type, display);
+          }
+        }
+        else if (type == "programs") {
+          display = this.programsdisplay;
+          if (this.programsposition == "1") {
+            this.apply1(type, display);
+          }
+          else if (this.programsposition == "2") {
+            this.apply2(type, display);
+          }
+          else if (this.programsposition == "3") {
+            this.apply3(type, display);
+          }
+          else if (this.programsposition == "4") {
+            this.apply4(type, display);
+          }
+          else if (this.programsposition == "5") {
+            this.apply5(type, display);
+          }
+          else if (this.programsposition == "6") {
+            this.apply6(type, display);
+          }
+          else if (this.programsposition == "7") {
+            this.apply7(type, display);
+          }
+        }
+        else if (type == "skills") {
+          display = this.softskillsdisplay;
+          if (this.softskillsposition == "1") {
+            this.apply1(type, display);
+          }
+          else if (this.softskillsposition == "2") {
+            this.apply2(type, display);
+          }
+          else if (this.softskillsposition == "3") {
+            this.apply3(type, display);
+          }
+          else if (this.softskillsposition == "4") {
+            this.apply4(type, display);
+          }
+          else if (this.softskillsposition == "5") {
+            this.apply5(type, display);
+          }
+          else if (this.softskillsposition == "6") {
+            this.apply6(type, display);
+          }
+          else if (this.softskillsposition == "7") {
+            this.apply7(type, display);
+          }
+        }
       },
 
 
-      apply1: function (type) {
-        this.zone1 = this.workexpdisplay;
-        this.zone1_type = type;
+      apply1: function (type, display) {
+          this.zone1 = display;
+          this.zone1_type = type;
       },
-      apply2: function (type) {
-        this.zone2 = this.workexpdisplay;
+      apply2: function (type, display) {
+        this.zone2 = display;
         this.zone2_type = type;
       },
-      apply3: function (type) {
-        this.zone3 = this.workexpdisplay;
-        this.zone3_type = type;
+      apply3: function (type, display) {
+          this.zone3 = display;
+          this.zone3_type = type;
       },
-      apply4: function (type) {
-        this.zone4 = this.workexpdisplay;
-        this.zone4_type = type;
+      apply4: function (type, display) {
+          this.zone4 = display;
+          this.zone4_type = type;
       },
-      apply5: function (type) {
-        this.zone5 = this.workexpdisplay;
-        this.zone1_type = type;
+      apply5: function (type, display) {
+          this.zone5 = display;
+          this.zone5_type = type;
       },
-      apply6: function (type) {
-        this.zone6 = this.workexpdisplay;
-        this.zone6_type = type;
+      apply6: function (type, display) {
+          this.zone6 = display;
+          this.zone6_type = type;
       },
-      apply7: function (type) {
-        this.zone7 = this.workexpdisplay;
-        this.zone7_type = type;
+      apply7: function (type, display) {
+          this.zone7 = display;
+          this.zone7_type = type;
       },
+      
 
-      newKellyColorPickerMain: function () {
+      newKellyColorPickerMain: function () { 
         if (this.pickingColorMain == false) {
           new KellyColorPicker({
             place : 'color-picker-main',
@@ -405,7 +563,7 @@ var app= new Vue ({
           this.pickingColorMain = false;
         };
       },
-      newKellyColorPickerAccent: function () {
+      newKellyColorPickerAccent: function () { 
         if (this.pickingColor == false) {
           new KellyColorPicker({
             place : 'color-picker-accent',
@@ -435,14 +593,14 @@ var app= new Vue ({
         });
         doc.save(this.personalinfoEdit.first_name+'_Resume.pdf');
       },
-
+  
 
       getData: function(want) {
         fetch(`${url}/${want}`,{
           credentials: "include"
         }).then(function (response) { //then executes when browser has received response from browser
           response.json().then(function (data) {
-
+  
             if(want=="statement"){
               app.statementlist = data.statementlist
             }
@@ -470,7 +628,7 @@ var app= new Vue ({
             if(want=="award"){
               app.awardslist = data.awardlist
             }
-
+  
             });
           });
         },
@@ -569,7 +727,7 @@ var app= new Vue ({
 
         },
 
-        submitlanguage: function (){ //ADDED BY TAFT
+        submitLanguage: function (){ //ADDED BY TAFT
           fetch(`${url}/language`, {
           method:"POST",
           headers:{
@@ -637,7 +795,7 @@ var app= new Vue ({
 
         },
 
-        submitextracurricular: function (){ //ADDED BY TAFT
+        submitExtracurricular: function (){ //ADDED BY TAFT
           fetch(`${url}/extracurricular`, {
           method:"POST",
           headers:{
@@ -680,8 +838,10 @@ var app= new Vue ({
         },
 
         deleteItem:  function(thing,item){
-
-          fetch(`${url}/${thing}/${item._id}`, {
+          console.log("Trying to deletes")
+          fetch(`${url}/${thing}/${item._id}`,
+          {
+            credentials: "include",
             method: "DELETE"
           }).then(function(response){
             if (response.status == 204){
@@ -697,50 +857,9 @@ var app= new Vue ({
 
         },
 
-        // editItem:  function(thing,item){
-        //   fetch(`${url}/thing/${item.id}`, {
-        //     method:"PUT",
-        //     headers:{
-        //       "Content-type": "application/json"
-        //     },
-        //     body: JSON.stringify(reqBody)
-        //   }).then(function (response) {
-        //     if (response.status == 400){
-        //       response.json().then(function (data) {
-        //         alert(data.msg)
-        //         });
-        //     } else {
-        //       app.page="blog"
-        //       app.getData(thing);
-        //
-        //     }
-        //   });
-        //   },
-
-
-
-
-
-
     },
 
     computed: {
-        computedColorClass: function () {
-          return {
-            "lighten-5": this.color_brightness == 1,
-            "lighten-4": this.color_brightness == 2,
-            "lighten-3": this.color_brightness == 3,
-            "lighten-2": this.color_brightness == 4,
-            "lighten-1": this.color_brightness == 5,
-            "darken-1": this.color_brightness == 7,
-            "darken-2": this.color_brightness == 8,
-            "darken-3": this.color_brightness == 9,
-            "darken-4": this.color_brightness == 10,
-            "accent-1": this.accent == 11,
-            "accent-2": this.accent == 12,
-            "accent-3": this.accent == 13,
-            "accent-4": this.accent == 14,
-          }
-        },
+        
       },
 })
