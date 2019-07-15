@@ -37,30 +37,26 @@ var app= new Vue ({
             professional_title: "",
             linkedin: "",
         },
-
         statementEdit: {
           statement: "",
         },
-
-        workexpEdit: {//TAFT CHANGE
-            company: "jfsdfsd",
-            title: "ifajdsakl",
+        workexpEdit: {
+            company: "",
+            title: "",
             startdate: new Date().toISOString().substr(0, 10),
             enddate: new Date().toISOString().substr(0, 10),
-            description: "jdskf",
+            description: "",
             start_menu: false,
             end_menu: false,
             position: 0, // for each v-card in a template, do for loop through all categories and see which has the desired position
 
         },
-
         educationEdit: {
           college: "",
           degree: "",
           gradyear: new Date().toISOString().substr(0, 10),
           menu: false
         },
-
         accomplishmentEdit: {
           title: "",
           description: "",
@@ -145,6 +141,23 @@ var app= new Vue ({
       workexpposition: "",
       position1: {},
 
+      zone1: [],
+      zone2: [],
+      zone3: [],
+      zone4: [],
+      zone5: [],
+      zone6: [],
+      zone7: [],
+
+      zone1_type: "",
+      zone2_type: "",
+      zone3_type: "",
+      zone4_type: "",
+      zone5_type: "",
+      zone6_type: "",
+      zone7_type: "",
+
+
     },
     created: function () {
 
@@ -158,28 +171,11 @@ var app= new Vue ({
       this.getData("softskill")
       this.getData("award")
 
-
-      new KellyColorPicker({
-        place : 'color-picker-main',
-        size : 150,
-        input : 'colorMain',
-        method: 'triangle',
-        input_format: "rgba",
-        alpha_slider: true,
-      });
-      new KellyColorPicker({
-        place : 'color-picker-accent',
-        size : 150,
-        input : 'colorAccent',
-        method: 'triangle',
-        input_format: "rgba",
-        alpha_slider: true,
-      });
       addEventListener("click", function () {
-        this.selected_color_main = document.getElementById("colorMain").style.backgroundColor;
-        console.log("Main Color: ", this.selected_color_main);
-        this.selected_color_accent = document.getElementById("colorAccent").style.backgroundColor;
-        console.log("Accent Color: ", this.selected_color_accent);
+        app.selected_color_main = document.getElementById("colorMain").style.backgroundColor;
+        console.log("Main Color: ", app.selected_color_main);
+        app.selected_color_accent = document.getElementById("colorAccent").style.backgroundColor;
+        console.log("Accent Color: ", app.selected_color_accent);
       });
     },
 
@@ -192,7 +188,17 @@ var app= new Vue ({
           statement: "",
         }
       },
-      
+      addWork: function(){
+        this.workexplist.push(this.workexpEdit)
+        this.workexpEdit={
+          work1company: "",
+          work1title: "",
+          work1startdate: "",
+          work1enddate: "",
+          work1description: "",
+
+        }
+      },
       addEducation: function(){
           this.educationlist.push(this.educationEdit)
 
@@ -303,8 +309,38 @@ var app= new Vue ({
         this.priority1.push(exp);
       },
 
+
+      apply1: function (type) {
+        this.zone1 = this.workexpdisplay;
+        this.zone1_type = type;
+      },
+      apply2: function (type) {
+        this.zone2 = this.workexpdisplay;
+        this.zone2_type = type;
+      },
+      apply3: function (type) {
+        this.zone3 = this.workexpdisplay;
+        this.zone3_type = type;
+      },
+      apply4: function (type) {
+        this.zone4 = this.workexpdisplay;
+        this.zone4_type = type;
+      },
+      apply5: function (type) {
+        this.zone5 = this.workexpdisplay;
+        this.zone1_type = type;
+      },
+      apply6: function (type) {
+        this.zone6 = this.workexpdisplay;
+        this.zone6_type = type;
+      },
+      apply7: function (type) {
+        this.zone7 = this.workexpdisplay;
+        this.zone7_type = type;
+      },
+
       newKellyColorPickerMain: function () {
-        if (this.pickingColor == false) {
+        if (this.pickingColorMain == false) {
           new KellyColorPicker({
             place : 'color-picker-main',
             size : 150,
@@ -314,12 +350,9 @@ var app= new Vue ({
             alpha_slider: true,
             display: 'block',
           });
-          this.pickingColor = true;
-        } else if (this.pickingColor == true) {
-          this.pickingColor = false;
-          x = document.getElementById("main");
-          x.style.setAttribute("style", "display: hidden;");
-
+          this.pickingColorMain = true;
+        } else if (this.pickingColorMain == true) {
+          this.pickingColorMain = false;
         };
       },
       newKellyColorPickerAccent: function () {
@@ -390,9 +423,28 @@ var app= new Vue ({
           });
         },
 
-        submitNewWorkexp: function (){
+        submitStatement: function (){ //ADDED BY TAFT
+          fetch(`${url}/statement`, {
+          method:"POST",
+          headers:{
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(app.statementEdit)
+        }).then(function (response) {
+          //response.json().then((data)=>{console.log(data.msg)})
 
-          console.log(app.workexpEdit)
+          app.statementEdit=
+           {
+            statement: ""
+          }
+          app.getData("statement");
+
+        });
+
+
+        },
+
+        submitNewWorkexp: function (){
           fetch(`${url}/workexp`, {
           method:"POST",
           headers:{
@@ -400,7 +452,7 @@ var app= new Vue ({
           },
           body: JSON.stringify(app.workexpEdit)
         }).then(function (response) {
-          response.json().then((data)=>{console.log(data.msg)})
+          //response.json().then((data)=>{console.log(data.msg)})
 
           app.workexpEdit={
             company: "",
@@ -412,27 +464,211 @@ var app= new Vue ({
             end_menu: false,
             position: 0,
           }
+          app.getData("workexp");
 
         });
 
 
-          },
+        },
 
-        // deleteInfo:  function(){
-        //   fetch(`${url}/posts/${post._id}`, {
-        //     method: "DELETE"
-        //   }).then(function(response){
-        //     if (response.status == 204){
-        //       console.log("Deleted Post")
-        //       app.getPosts();
-        //     } else if(response.status == 400){
-        //       response.json().then(function(data){
+        submitEducation: function (){ //ADDED BY TAFT
+          fetch(`${url}/education`, {
+          method:"POST",
+          headers:{
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(app.educationEdit)
+        }).then(function (response) {
+          //response.json().then((data)=>{console.log(data.msg)})
+
+          app.educationEdit=
+           {
+            college: "",
+            degree: "",
+            gradyear: new Date().toISOString().substr(0, 10),
+            menu: false
+          }
+          app.getData("education");
+
+        });
+
+
+        },
+
+        submitAccomplishment: function (){ //ADDED BY TAFT
+          fetch(`${url}/accomplishment`, {
+          method:"POST",
+          headers:{
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(app.accomplishmentEdit)
+        }).then(function (response) {
+          //response.json().then((data)=>{console.log(data.msg)})
+
+          app.accomplishmentEdit=
+           {
+            title: "",
+            description: "",
+          }
+          app.getData("accomplishment");
+
+        });
+
+
+        },
+
+        submitlanguage: function (){ //ADDED BY TAFT
+          fetch(`${url}/language`, {
+          method:"POST",
+          headers:{
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(app.languagesEdit)
+        }).then(function (response) {
+          //response.json().then((data)=>{console.log(data.msg)})
+
+          app.languagesEdit=
+           {
+              title: "",
+              proficiency:  "",
+            }
+          app.getData("language");
+
+        });
+
+
+        },
+
+        submitProgram: function (){ //ADDED BY TAFT
+          fetch(`${url}/program`, {
+          method:"POST",
+          headers:{
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(app.programsEdit)
+        }).then(function (response) {
+          //response.json().then((data)=>{console.log(data.msg)})
+
+          app.programsEdit=
+           {
+              title: "",
+              proficiency:  "",
+            }
+          app.getData("program");
+
+        });
+
+
+        },
+        submitAward: function (){ //ADDED BY TAFT
+          fetch(`${url}/award`, {
+          method:"POST",
+          headers:{
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(app.awardsEdit)
+        }).then(function (response) {
+          //response.json().then((data)=>{console.log(data.msg)})
+
+          app.awardsEdit=
+           {
+            title: "",
+            receivedfrom:  "",
+            date: new Date().toISOString().substr(0, 10),
+            description: "",
+            menu:false
+          }
+          app.getData("award");
+
+        });
+
+
+        },
+
+        submitextracurricular: function (){ //ADDED BY TAFT
+          fetch(`${url}/extracurricular`, {
+          method:"POST",
+          headers:{
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(app.extracurricularEdit)
+        }).then(function (response) {
+          //response.json().then((data)=>{console.log(data.msg)})
+
+          app.extracurricularEdit=
+           {
+            title: "",
+            description: "",
+            date: "",
+          }
+          app.getData("extracurricular");
+
+        });
+
+
+        },
+        submitSoftskill: function (){ //ADDED BY TAFT
+          fetch(`${url}/softskill`, {
+          method:"POST",
+          headers:{
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(app.softskillsEdit)
+        }).then(function (response) {
+          //response.json().then((data)=>{console.log(data.msg)})
+
+          app.softskillsEdit=
+           {
+            title: "",
+          }
+          app.getData("softskill");
+
+        });
+
+        },
+
+        deleteItem:  function(thing,item){
+
+          fetch(`${url}/${thing}/${item._id}`, {
+            method: "DELETE"
+          }).then(function(response){
+            if (response.status == 204){
+              console.log("Deleted Item")
+              app.getData(thing);
+            } else if(response.status == 400){
+              response.json().then(function(data){
+                alert(data.msg)
+              })
+            }
+
+          });
+
+        },
+
+        // editItem:  function(thing,item){
+        //   fetch(`${url}/thing/${item.id}`, {
+        //     method:"PUT",
+        //     headers:{
+        //       "Content-type": "application/json"
+        //     },
+        //     body: JSON.stringify(reqBody)
+        //   }).then(function (response) {
+        //     if (response.status == 400){
+        //       response.json().then(function (data) {
         //         alert(data.msg)
-        //       })
-        //     }
-        //   })
+        //         });
+        //     } else {
+        //       app.page="blog"
+        //       app.getData(thing);
         //
-        // },
+        //     }
+        //   });
+        //   },
+
+
+
+
+
 
     },
 

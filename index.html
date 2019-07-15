@@ -84,7 +84,7 @@
                                                                     <v-text-field label="Country" v-model="personalinfoEdit.country"></v-text-field>
                                                                 </v-flex>
                                                             </v-layout>
-
+																														<v-btn @click="">Update Personal Info</v-btn><!-- CHANGED BY TAFT -->
                                                         </v-card-text>
                                                     </v-card>
                                                 </v-expansion-panel-content>
@@ -92,76 +92,71 @@
                                             <template v-slot:header><v-card-text class="display-1">Personal branding statement</v-card-text></template>
                                             <v-card class="ma-2 pa-4">
                                                 <v-text-field label="One to two sentences describing or branding yourself" v-model="statementEdit.statement"></v-text-field>
-                                                <v-btn @click="addStatement()">Add branding statement</v-btn>
+                                                <v-btn @click="submitStatement()">Add branding statement</v-btn><!-- CHANGED BY TAFT -->
                                             </v-card>
                                         </v-expansion-panel-content>
                                         <v-expansion-panel-content>
-                                            <template v-slot:header> <v-card-text class="display-1">Work experience</v-card-text></template>
-                                            <v-card class="ma-2 pa-4">
-                                                <v-text-field box label="Company" v-model="workexpEdit.company"></v-text-field>
-                                                <v-text-field box label="Job Title" v-model="workexpEdit.title"></v-text-field>
-                                                <v-menu
-                                                    v-model="workexpEdit.start_menu"
-                                                    :close-on-content-click="false"
-                                                    :nudge-right="40"
-                                                    lazy
-                                                    transition="scale-transition"
-                                                    offset-y
-                                                    full-width
-                                                    min-width="290px"
-                                                >
-                                                    <template v-slot:activator="{ on }">
-                                                    <v-text-field
-                                                        box
-                                                        v-model="workexpEdit.startdate"
-                                                        label="Start date"
-                                                        prepend-icon="event"
-                                                        readonly
-                                                        v-on="on"
-                                                    ></v-text-field>
-                                                    </template>
-                                                    <v-date-picker v-model="workexpEdit.startdate" @input="workexpEdit.start_menu = false">
+                                                <template v-slot:header> <v-card-text class="display-1">Work experience</v-card-text></template>
+                                                <v-card class="ma-2 pa-4">
+                                                    <v-text-field box label="Company" v-model="workexpEdit.company"></v-text-field>
+                                                    <v-text-field box label="Job Title" v-model="workexpEdit.title"></v-text-field>
+                                                    <v-menu
+                                                        v-model="workexpEdit.start_menu"
+                                                        :close-on-content-click="false"
+                                                        :nudge-right="40"
+                                                        lazy
+                                                        transition="scale-transition"
+                                                        offset-y
+                                                        full-width
+                                                        min-width="290px"
+                                                    >
+                                                        <template v-slot:activator="{ on }">
+                                                        <v-text-field
+                                                            box
+                                                            v-model="workexpEdit.startdate"
+                                                            label="Start date"
+                                                            prepend-icon="event"
+                                                            readonly
+                                                            v-on="on"
+                                                        ></v-text-field>
+                                                        </template>
+                                                        <v-date-picker v-model="workexpEdit.startdate" @input="workexpEdit.start_menu = false">
 
-                                                    </v-date-picker>
-                                                </v-menu>
+                                                        </v-date-picker>
+                                                    </v-menu>
 
-                                                <v-menu
-                                                    v-model="workexpEdit.end_menu"
-                                                    :close-on-content-click="false"
-                                                    :nudge-right="40"
-                                                    lazy
-                                                    transition="scale-transition"
-                                                    offset-y
-                                                    full-width
-                                                    min-width="290px"
-                                                >
-                                                    <template v-slot:activator="{ on }">
-                                                    <v-text-field
-                                                        box
-                                                        v-model="workexpEdit.enddate"
-                                                        label="Start date"
-                                                        prepend-icon="event"
-                                                        readonly
-                                                        v-on="on"
-                                                    ></v-text-field>
-                                                    </template>
-                                                    <v-date-picker v-model="workexpEdit.enddate" @input="workexpEdit.end_menu = false">
+                                                    <v-menu
+                                                        v-model="workexpEdit.end_menu"
+                                                        :close-on-content-click="false"
+                                                        :nudge-right="40"
+                                                        lazy
+                                                        transition="scale-transition"
+                                                        offset-y
+                                                        full-width
+                                                        min-width="290px"
+                                                    >
+                                                        <template v-slot:activator="{ on }">
+                                                        <v-text-field
+                                                            box
+                                                            v-model="workexpEdit.enddate"
+                                                            label="Start date"
+                                                            prepend-icon="event"
+                                                            readonly
+                                                            v-on="on"
+                                                        ></v-text-field>
+                                                        </template>
+                                                        <v-date-picker v-model="workexpEdit.enddate" @input="workexpEdit.end_menu = false">
 
-                                                    </v-date-picker>
-                                                </v-menu>
-                                                <v-text-field box label="Brief description" v-model="workexpEdit.description"></v-text-field>
-                                                <v-btn @click="submitNewWorkexp()">Add Work Experience</v-btn>
-                                            </v-card>
-                                        </v-expansion-panel-content>
+                                                        </v-date-picker>
+                                                    </v-menu>
+                                                    <v-text-field box label="Brief description" v-model="workexpEdit.description"></v-text-field>
+                                                    <v-btn @click="submitNewWorkexp()">Add Work Experience</v-btn><!-- CHANGED BY TAFT -->
+                                                </v-card>
+                                            </v-expansion-panel-content>
                             <v-expansion-panel-content id="education">
                                     <template v-slot:header> <v-card-text class="display-1">Education</v-card-text></template>
                                     <v-card class="ma-2 pa-4">
-                                        <v-card  flat v-for="school in educationlist">
-                                                <v-card-title>{{school.college}}, {{school.degree}} - {{school.gradyear}}</v-card-title>
-
-                                                <v-btn icon><v-icon color="red">delete</v-icon></v-btn>
-                                                <v-btn icon><v-icon color="red">edit</v-icon></v-btn>
-                                            </v-card>
+                                        <!-- DELETED CARD HERE TAFT -->
                                         <v-text-field box label="School attended" v-model="educationEdit.college"></v-text-field>
                                         <v-text-field box label="Degree" v-model="educationEdit.degree"></v-text-field>
                                         <template v-slot:activator="{ on }">
@@ -197,7 +192,7 @@
 
                                         </v-date-picker>
                                     </v-menu>
-                                        <v-btn @click="addEducation()">Add Education</v-btn>
+                                        <v-btn @click="submitEducation()">Add Education</v-btn><!-- CHANGED BY TAFT -->
 
                                     </v-card>
                             </v-expansion-panel-content>
@@ -207,7 +202,7 @@
                                     <v-card class="ma-2 pa-4">
                                         <v-text-field  box label="Accomplishment" v-model="accomplishmentEdit.title"></v-text-field>
                                         <v-textarea auto-grow rows="1" box label="Brief description" v-model="accomplishmentEdit.description"></v-textarea>
-                                        <v-btn @click="addAccomplishment()">Add Accomplishment</v-btn>
+                                        <v-btn @click="submitAccomplishment()">Add Accomplishment</v-btn><!-- CHANGED BY TAFT -->
 
                                     </v-card>
                             </v-expansion-panel-content>
@@ -222,7 +217,7 @@
                                             item-value=""
                                             v-model="languagesEdit.proficiency">
                                         </v-overflow-btn>
-                                        <v-btn @click="addLanguage()">Add Language</v-btn>
+                                        <v-btn @click="submitlanguage()">Add Language</v-btn><!-- CHANGED BY TAFT -->
 
                                     </v-card>
                             </v-expansion-panel-content>
@@ -237,7 +232,7 @@
                                             item-value=""
                                             v-model="programsEdit.proficiency">
                                         </v-overflow-btn>
-                                        <v-btn @click="addSkill()">Add Skill</v-btn>
+                                        <v-btn @click="submitProgram()">Add Skill</v-btn><!-- CHANGED BY TAFT -->
 
                                     </v-card>
                             </v-expansion-panel-content>
@@ -273,7 +268,7 @@
                                     </v-menu>
                                         <v-textarea auto-grow rows="1"
                                         box label="Brief description" v-model="awardsEdit.description"></v-textarea>
-                                        <v-btn @click="addAward()">Add Award</v-btn>
+                                        <v-btn @click="submitAward()">Add Award</v-btn><!-- CHANGED BY TAFT -->
                                     </v-card>
                             </v-expansion-panel-content>
 
@@ -305,7 +300,7 @@
                                         </template>
                                         <v-date-picker v-model="extracurricularEdit.date"></v-date-picker>
                                     </v-menu>
-                                    <v-btn @click="addExtracurricular()">Add Extracurricular Activity</v-btn>
+                                    <v-btn @click="submitextracurricular()">Add Extracurricular Activity</v-btn><!-- CHANGED BY TAFT -->
                                 </v-card>
                             </v-expansion-panel-content>
 
@@ -313,6 +308,7 @@
                                     <template v-slot:header> <v-card-text class="display-1">Soft Skill</v-card-text></template>
                                     <v-card class="ma-2 pa-4">
                                         <v-text-field label="Soft Skills" v-model="softskillsEdit.title"></v-text-field>
+																				<v-btn @click="submitSoftskill()">Add Soft Skill</v-btn><!-- CHANGED BY TAFT -->
                                     </v-card>
                             </v-expansion-panel-content>
 
@@ -347,9 +343,12 @@
                                                     </v-flex>
                                                     <v-flex xs3>
                                                         <v-btn fab flat @click="includeStatement(exp)"><v-icon>add</v-icon></v-btn>
+																												<v-btn @click="deleteItem('statement',exp)" icon><v-icon color="red">delete</v-icon></v-btn><!-- CHANGED BY TAFT -->
+
                                                     </v-flex>
                                                 </v-layout>
                                             </div>
+                                            <v-btn @click="apply('statement')">Apply Changes</v-btn>
                                         </v-card>
                                     <v-card class="ma-3 pa-3" id="workexp1">
                                         <v-card-text class="display-1">Work Experience</v-card-text>
@@ -371,14 +370,15 @@
                                                 </v-flex>
                                                 <v-flex xs2>
                                                     <v-btn fab flat @click="includeWork(exp)"><v-icon>add</v-icon></v-btn>
+																										<v-btn @click="deleteItem('workexp',exp)" icon><v-icon color="red">delete</v-icon></v-btn><!-- CHANGED BY TAFT -->
                                                     <!-- <v-btn fab flat @click="excludeWork(exp)"><v-icon>remove</v-icon></v-btn> -->
                                                     <v-btn fab flat @click="priorityOne(exp)"><v-icon>gesture</v-icon></v-btn>
                                                 </v-flex>
                                             </v-layout>
                                             <v-divider></v-divider>
                                         </div>
-
-                                        </v-card>
+                                        <v-btn @click="apply('work')">Apply Changes</v-btn>
+                                    </v-card>
                                     <v-card class="ma-3 pa-3" id="education1">
                                         <v-card-text class="display-1">Education</v-card-text>
                                         <div v-for="exp in educationlist">
@@ -389,9 +389,11 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeEducation(exp)"><v-icon>add</v-icon></v-btn>
+																												<v-btn @click="deleteItem('education',exp)" icon><v-icon color="red">delete</v-icon></v-btn><!-- CHANGED BY TAFT -->
                                                 </v-flex>
                                             </v-layout>
                                         </div>
+                                        <v-btn @click="apply('education')">Apply Changes</v-btn>
                                         </v-card>
                                     <v-card class="ma-3 pa-3" id="accomplistments1">
                                         <v-card-text class="display-1">Accomplishments</v-card-text>
@@ -404,9 +406,11 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeAccomplishment(exp)"><v-icon>add</v-icon></v-btn>
+																												<v-btn @click="deleteItem('accomplishment',exp)" icon><v-icon color="red">delete</v-icon></v-btn><!-- CHANGED BY TAFT -->
                                                 </v-flex>
                                             </v-layout>
                                         </div>
+                                        <v-btn @click="apply('accomplishment')">Apply Changes</v-btn>
                                         </v-card>
                                     <v-card class="ma-3 pa-3" id="awards1">
                                         <v-card-text class="display-1">Awards</v-card-text>
@@ -419,9 +423,11 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeAward(exp)"><v-icon>add</v-icon></v-btn>
+																												<v-btn @click="deleteItem('award',exp)" icon><v-icon color="red">delete</v-icon></v-btn><!-- CHANGED BY TAFT -->
                                                 </v-flex>
                                             </v-layout>
                                         </div>
+                                        <v-btn @click="apply('award')">Apply Changes</v-btn>
                                         </v-card>
                                     <v-card class="ma-3 pa-3" id="languages">
                                         <v-card-text class="display-1">Languages</v-card-text>
@@ -432,9 +438,11 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeLanguage(exp)"><v-icon>add</v-icon></v-btn>
+																												<v-btn @click="deleteItem('language',exp)" icon><v-icon color="red">delete</v-icon></v-btn><!-- CHANGED BY TAFT -->
                                                 </v-flex>
                                             </v-layout>
                                         </div>
+                                        <v-btn @click="apply('language')">Apply Changes</v-btn>
                                         </v-card>
                                     <v-card class="ma-3 pa-3" id="extracurricular">
                                         <v-card-text class="display-1">Extracurriculars</v-card-text>
@@ -446,9 +454,11 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeExtracurricular(exp)"><v-icon>add</v-icon></v-btn>
+																												<v-btn @click="deleteItem('extracurricular',exp)" icon><v-icon color="red">delete</v-icon></v-btn><!-- CHANGED BY TAFT -->
                                                 </v-flex>
                                             </v-layout>
                                         </div>
+                                        <v-btn @click="apply('extracurricular')">Apply Changes</v-btn>
                                         </v-card>
                                     <v-card class="ma-3 pa-3" id="programs">
                                         <v-card-text class="display-1">Programs</v-card-text>
@@ -459,9 +469,11 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeProgram(exp)"><v-icon>add</v-icon></v-btn>
+																												<v-btn @click="deleteItem('program',exp)" icon><v-icon color="red">delete</v-icon></v-btn><!-- CHANGED BY TAFT -->
                                                 </v-flex>
                                             </v-layout>
                                         </div>
+                                        <v-btn @click="apply('programs')">Apply Changes</v-btn>
                                         </v-card>
                                     <v-card class="ma-3 pa-3" id="skills">
                                         <v-card-text class="display-1">Soft Skills</v-card-text>
@@ -472,10 +484,12 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeSkill(exp)"><v-icon>add</v-icon></v-btn>
+																												<v-btn @click="deleteItem('softskill',exp)" icon><v-icon color="red">delete</v-icon></v-btn><!-- CHANGED BY TAFT -->
                                                 </v-flex>
                                             </v-layout>
                                         </div>
-                                        </v-card>
+                                        <v-btn @click="apply('skills')">Apply Changes</v-btn>
+                                    </v-card>
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -510,15 +524,15 @@
                                     <v-layout>
                                         <v-flex xs3 offset-xs9>
                                             <v-card id="fixedPos" v-show="pickingColorMain">
-                                                                            <v-card-text>
-                                                <canvas id="color-picker-main" width="150" height="150" style="width: 150px; height: 150px;"></canvas>
-                                                                            </v-card-text>
+                                                <v-card-text>
+                                                    <canvas id="color-picker-main" width="150" height="150" style="width: 150px; height: 150px;"></canvas>
+                                                </v-card-text>
                                             </v-card>
 
-                                                                        <v-card id="fixedPos" v-show="pickingColor">
-                                                                            <v-card-text>
-                                                <canvas id="color-picker-accent" width="150" height="150" style="width: 150px; height: 150px;"></canvas>
-                                                                            </v-card-text>
+                                            <v-card id="fixedPos" v-show="pickingColor">
+                                                <v-card-text>
+                                                    <canvas id="color-picker-accent" width="150" height="150" style="width: 150px; height: 150px;"></canvas>
+                                                </v-card-text>
                                             </v-card>
                                         </v-flex>
                                     </v-layout>
@@ -530,7 +544,7 @@
                                                     <v-flex xs12 sm10>
                                                         <v-card>
                                                             <v-responsive :aspect-ratio="8.5/11">
-                                                                <v-card id="padding" align-center justify-center flat color="blue-grey" height="20%">
+                                                                <v-card id="padding" align-center justify-center flat :color="selected_color_main" height="20%">
                                                                     <v-layout>
                                                                         <v-flex xs3>
                                                                             <div>
@@ -549,7 +563,7 @@
                                                                 </v-card>
                                                                     <v-layout>
                                                                         <v-flex xs4 class="text-xs-center">
-                                                                            <v-card color="blue-grey darken-2" height="500%">
+                                                                                <v-card :color="selected_color_accent" height="500%">
                                                                                 <v-card tile height="4%">
                                                                                     <v-card-text>
                                                                                         <h1 :class="{'headline': $vuetify.breakpoint.xsOnly, 'display-1': $vuetify.breakpoint.smOnly}">{{personalinfoEdit.first_name}} {{personalinfoEdit.last_name}}</h1>
@@ -622,7 +636,7 @@
                                                             <v-layout>
                                                                 <v-flex xs4></v-flex>
                                                                 <v-flex xs8 height=15%>
-                                                                    <v-card class="blue lighten-2 ma-4 pa-4 text-xs-right" >
+                                                                        <v-card class="ma-4 pa-4 text-xs-right" :color="selected_color_main" >
                                                                         <v-card-text class="display-3 pa-1 white--text">{{personalinfoEdit.first_name}}{{personalinfoEdit.last_name}}</v-card-text>
                                                                         <v-card-text class="display-1 pa-1 white--text">{{personalinfoEdit.email}}</v-card-text>
                                                                         <v-card-text class="headline pa-1 white--text">{{personalinfoEdit.phone}}</v-card-text>
@@ -662,7 +676,7 @@
                                                                     <v-container grid-list-lg fluid>
                                                                         <v-layout column>
                                                                             <v-flex xs12>
-                                                                                <v-card class="blue lighten-4 pa-2" height=600 flat>
+                                                                                    <v-card class="pa-2" :color="selected_color_accent" height=600 flat>
                                                                                     <v-card-text class="headline">Skills
                                                                                     </v-card-text>
                                                                                     <v-card-text class="">{{softskillsEdit.title}}</v-card-text>
@@ -684,6 +698,310 @@
                                                 <v-flex>
                                                     <v-card xs12 sm10>
                                                         <v-responsive :aspect-ratio="8.5/11">
+                                                            <div v-for="item in zone1">
+                                                                <v-card v-if="zone1_type == 'statement'">
+                                                                    <v-card-text>{{item.statement}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone1_type == 'workexp'">
+                                                                    <v-card-text>{{item.company}}</v-card-text>
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.startdate}}</v-card-text>
+                                                                    <v-card-text>{{item.enddate}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone1_type == 'education'">
+                                                                    <v-card-text>{{item.college}}</v-card-text>
+                                                                    <v-card-text>{{item.degree}}</v-card-text>
+                                                                    <v-card-text>{{item.gradyear}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone1_type == 'accomplishment'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone1_type == 'extracurricular'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone1_type == 'languages'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone1_type == 'programs'">
+                                                                        <v-card-text>{{item.title}}</v-card-text>
+                                                                        <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone1_type == 'softskills'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone1_type == 'awards'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.receivedfrom}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                            </div>
+                                                            <div v-for="item in zone2">
+                                                                <v-card v-if="zone2_type == 'statement'">
+                                                                    <v-card-text>{{item.statement}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone2_type == 'workexp'">
+                                                                    <v-card-text>{{item.company}}</v-card-text>
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.startdate}}</v-card-text>
+                                                                    <v-card-text>{{item.enddate}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone2_type == 'education'">
+                                                                    <v-card-text>{{item.college}}</v-card-text>
+                                                                    <v-card-text>{{item.degree}}</v-card-text>
+                                                                    <v-card-text>{{item.gradyear}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone2_type == 'accomplishment'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone2_type == 'extracurricular'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone2_type == 'languages'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone2_type == 'programs'">
+                                                                        <v-card-text>{{item.title}}</v-card-text>
+                                                                        <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone2_type == 'softskills'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone2_type == 'awards'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.receivedfrom}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                            </div>
+                                                            <div v-for="item in zone3">
+                                                                <v-card v-if="zone3_type == 'statement'">
+                                                                    <v-card-text>{{item.statement}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone3_type == 'workexp'">
+                                                                    <v-card-text>{{item.company}}</v-card-text>
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.startdate}}</v-card-text>
+                                                                    <v-card-text>{{item.enddate}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone3_type == 'education'">
+                                                                    <v-card-text>{{item.college}}</v-card-text>
+                                                                    <v-card-text>{{item.degree}}</v-card-text>
+                                                                    <v-card-text>{{item.gradyear}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone3_type == 'accomplishment'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone3_type == 'extracurricular'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone3_type == 'languages'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone3_type == 'programs'">
+                                                                        <v-card-text>{{item.title}}</v-card-text>
+                                                                        <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone3_type == 'softskills'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone3_type == 'awards'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.receivedfrom}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                            </div>
+                                                            <div v-for="item in zone4">
+                                                                <v-card v-if="zone4_type == 'statement'">
+                                                                    <v-card-text>{{item.statement}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone4_type == 'workexp'">
+                                                                    <v-card-text>{{item.company}}</v-card-text>
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.startdate}}</v-card-text>
+                                                                    <v-card-text>{{item.enddate}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone4_type == 'education'">
+                                                                    <v-card-text>{{item.college}}</v-card-text>
+                                                                    <v-card-text>{{item.degree}}</v-card-text>
+                                                                    <v-card-text>{{item.gradyear}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone4_type == 'accomplishment'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone4_type == 'extracurricular'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone4_type == 'languages'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone4_type == 'programs'">
+                                                                        <v-card-text>{{item.title}}</v-card-text>
+                                                                        <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone4_type == 'softskills'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone4_type == 'awards'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.receivedfrom}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                            </div>
+                                                            <div v-for="item in zone5">
+                                                                <v-card v-if="zone5_type == 'statement'">
+                                                                    <v-card-text>{{item.statement}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone5_type == 'workexp'">
+                                                                    <v-card-text>{{item.company}}</v-card-text>
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.startdate}}</v-card-text>
+                                                                    <v-card-text>{{item.enddate}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone5_type == 'education'">
+                                                                    <v-card-text>{{item.college}}</v-card-text>
+                                                                    <v-card-text>{{item.degree}}</v-card-text>
+                                                                    <v-card-text>{{item.gradyear}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone5_type == 'accomplishment'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone5_type == 'extracurricular'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone5_type == 'languages'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone5_type == 'programs'">
+                                                                        <v-card-text>{{item.title}}</v-card-text>
+                                                                        <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone5_type == 'softskills'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone5_type == 'awards'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.receivedfrom}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                            </div>
+                                                            <div v-for="item in zone6">
+                                                                <v-card v-if="zone6_type == 'statement'">
+                                                                    <v-card-text>{{item.statement}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone6_type == 'workexp'">
+                                                                    <v-card-text>{{item.company}}</v-card-text>
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.startdate}}</v-card-text>
+                                                                    <v-card-text>{{item.enddate}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone6_type == 'education'">
+                                                                    <v-card-text>{{item.college}}</v-card-text>
+                                                                    <v-card-text>{{item.degree}}</v-card-text>
+                                                                    <v-card-text>{{item.gradyear}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone6_type == 'accomplishment'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone6_type == 'extracurricular'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone6_type == 'languages'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone6_type == 'programs'">
+                                                                        <v-card-text>{{item.title}}</v-card-text>
+                                                                        <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone6_type == 'softskills'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone6_type == 'awards'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.receivedfrom}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                            </div>
+                                                            <div v-for="item in zone7">
+                                                                <v-card v-if="zone7_type == 'statement'">
+                                                                    <v-card-text>{{item.statement}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone7_type == 'workexp'">
+                                                                    <v-card-text>{{item.company}}</v-card-text>
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.startdate}}</v-card-text>
+                                                                    <v-card-text>{{item.enddate}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone7_type == 'education'">
+                                                                    <v-card-text>{{item.college}}</v-card-text>
+                                                                    <v-card-text>{{item.degree}}</v-card-text>
+                                                                    <v-card-text>{{item.gradyear}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone7_type == 'accomplishment'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone7_type == 'extracurricular'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone7_type == 'languages'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone7_type == 'programs'">
+                                                                        <v-card-text>{{item.title}}</v-card-text>
+                                                                        <v-card-text>{{item.proficiency}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone7_type == 'softskills'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                </v-card>
+                                                                <v-card v-if="zone7_type == 'awards'">
+                                                                    <v-card-text>{{item.title}}</v-card-text>
+                                                                    <v-card-text>{{item.receivedfrom}}</v-card-text>
+                                                                    <v-card-text>{{item.date}}</v-card-text>
+                                                                    <v-card-text>{{item.description}}</v-card-text>
+                                                                </v-card>
+                                                            </div>
+                                                        </v-responsive>
+
+                                                        <!-- <v-responsive :aspect-ratio="8.5/11">
                                                             <br>
                                                             <v-layout>
                                                                 <v-flex xs4></v-flex>
@@ -708,9 +1026,9 @@
 
                                                                     </v-card>
                                                                 </v-flex>
-                                                            <!-- </v-layout>
+                                                            </v-layout>
 
-                                                            <v-layout> -->
+                                                            <v-layout>
                                                                 <v-flex xs3 class="pa-1">
                                                                     <v-container grid-list-lg fluid>
                                                                         <v-layout column>
@@ -725,7 +1043,7 @@
                                                                     </v-container>
                                                                 </v-flex>
                                                             </v-layout>
-                                                        </v-responsive>
+                                                        </v-responsive> -->
                                                     </v-card>
                                                 </v-flex>
 
