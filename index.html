@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="hannahstyle1.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
 		<link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
@@ -17,13 +17,13 @@
                         <v-spacer></v-spacer>
                         <v-toolbar-items>
                             <v-btn flat @click="page = 'form' ">Input Form</v-btn>
-                            <v-btn flat @click="page = 'savedinfo' ">Your Info</v-btn>
-                            <v-btn flat @click="page = 'preview' ">Preview</v-btn>
+                            <v-btn flat @click="page = 'savedinfo'; loadlists() ">Your Info</v-btn>
+                            <v-btn flat @click="page = 'preview'; loadlists() ">Preview</v-btn>
                             <v-btn flat @click="page = 'login' ">Login</v-btn>
                         </v-toolbar-items>
                 </v-toolbar>
 
-                <div v-show="page == 'login'"> 
+                <div v-show="page == 'login'">
                     <v-card-text style="padding-top: 10px"class="text-xs-center">Welcome to Resume<span class="font-weight-light">Builder</span></v-card-text>
                     <h1 style="padding-top: 10px"class="text-xs-center" color="blue lighten-4">Login</h1>
                     <v-container>
@@ -88,7 +88,7 @@
                         <v-layout>
                             <v-flex xs12 lg10 offset-lg1> <!-- changed -->
                                 <v-card class="pa-4">
-                                    
+
                                 </v-card>
                             </v-flex>
                         </v-layout>
@@ -198,10 +198,10 @@
                                                         ></v-text-field>
                                                         </template>
                                                         <v-date-picker v-model="workexpEdit.startdate" @input="workexpEdit.start_menu = false">
-    
+
                                                         </v-date-picker>
                                                     </v-menu>
-    
+
                                                     <v-menu
                                                         v-model="workexpEdit.end_menu"
                                                         :close-on-content-click="false"
@@ -223,7 +223,7 @@
                                                         ></v-text-field>
                                                         </template>
                                                         <v-date-picker v-model="workexpEdit.enddate" @input="workexpEdit.end_menu = false">
-    
+
                                                         </v-date-picker>
                                                     </v-menu>
                                                     <v-text-field box label="Brief description" v-model="workexpEdit.description"></v-text-field>
@@ -235,7 +235,7 @@
                                     <v-card class="ma-2 pa-4">
                                         <v-card  flat v-for="school in educationlist">
                                                 <v-card-title>{{school.college}}, {{school.degree}} - {{school.gradyear}}</v-card-title>
-                        
+
                                                 <v-btn icon><v-icon color="red">delete</v-icon></v-btn>
                                                 <v-btn icon><v-icon color="red">edit</v-icon></v-btn>
                                             </v-card>
@@ -271,7 +271,7 @@
                                         ></v-text-field>
                                         </template>
                                         <v-date-picker v-model="educationEdit.gradyear" @input="educationEdit.menu = false">
-                                            
+
                                         </v-date-picker>
                                     </v-menu>
                                     <v-btn @click="submitEducation()">Add Education</v-btn>
@@ -345,7 +345,7 @@
                                         ></v-text-field>
                                         </template>
                                         <v-date-picker v-model="awardsEdit.date" @input="awardsEdit.menu = false">
-                                            
+
                                         </v-date-picker>
                                     </v-menu>
                                         <v-textarea auto-grow rows="1"
@@ -395,9 +395,9 @@
                             </v-expansion-panel-content>
 
                         </v-expansion-panel>
-                        
+
                                 </v-card>
-            
+
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -465,7 +465,7 @@
                                                 <v-flex xs2>
                                                     <v-btn fab flat @click="includeWork(exp)"><v-icon>add</v-icon></v-btn>
                                                     <v-btn @click="deleteItem('workexp',exp)" icon><v-icon color="red">delete</v-icon></v-btn>
-                                                    
+
                                                 </v-flex>
                                             </v-layout>
                                             <v-divider></v-divider>
@@ -516,7 +516,7 @@
                                                 <v-flex xs9>
                                                     <v-card-text class="headline pa-1 ml-3">{{exp.title}}</v-card-text>
                                                     <v-card-text class="ml-4 pl-2">{{exp.description}}</v-card-text>
-                                                    
+
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeAccomplishment(exp)"><v-icon>add</v-icon></v-btn>
@@ -688,7 +688,7 @@
                                                 <v-toolbar-text>Main Color</v-toolbar-text>
                                                 <v-btn fab @click="newKellyColorPickerAccent()" id="colorAccent" value="#54aedb"></v-btn>
                                                 <v-toolbar-text>Accent Color</v-toolbar-text>
-                
+
                             </v-toolbar>
                             <v-container>
                                 <v-layout>
@@ -698,7 +698,7 @@
                                                 <canvas id="color-picker-main" width="150" height="150" style="width: 150px; height: 150px;"></canvas>
                                             </v-card-text>
                                         </v-card>
-            
+
                                         <v-card id="fixedPos" v-show="pickingColor">
                                             <v-card-text>
                                                 <canvas id="color-picker-accent" width="150" height="150" style="width: 150px; height: 150px;"></canvas>
@@ -760,12 +760,12 @@
                                                                             </v-card>
                                                                             <v-card flat color="transparent">
                                                                                 <v-card-text>
-                            
+
                                                                                 </v-card-text>
                                                                             </v-card>
                                                                         </v-card>
                                                                     </v-flex>
-                        
+
                                                                         <v-flex xs-8>
                                                                         <v-card>
                                                                             <v-card-text>
@@ -787,12 +787,12 @@
                                                                             </v-card-text>
                                                                     </v-card>
                                                                     </v-flex>
-                        
-                        
+
+
                                                                 </v-layout>
                                                         </v-responsive>
                                                     </v-card>
-                        
+
                                             </v-flex>
                                         </v-layout>
                                 </v-container>
@@ -812,7 +812,7 @@
                                                                 </v-card>
                                                             </v-flex>
                                                         </v-layout>
-                
+
                                                         <v-layout>
                                                             <v-flex xs8 offset-xs1 class="pa-1 ma-4">
                                                                 <v-card class="pa-3 ma-3 transparent" flat>
@@ -834,12 +834,12 @@
                                                                     <v-card-text class="pa-1">I have awards but none that mean anything to me</v-card-text>
                                                                     <v-card-text class="pa-1">{{awardsEdit.title}}</v-card-text>
                                                                     <v-card-text class="pa-1">{{awardsEdit.receivedfrom}}{{awardsEdit.date}}</v-card-text>
-                                                                    
+
                                                                     <v-card-text class="pa-1">{{awardsEdit.description}}</v-card-text>
                                                                 </v-card>
                                                             </v-flex>
                                                         <!-- </v-layout>
-                
+
                                                         <v-layout> -->
                                                             <v-flex xs3 class="pa-1">
                                                                 <v-container grid-list-lg fluid>
@@ -858,7 +858,7 @@
                                                     </v-responsive>
                                                 </v-card>
                                             </v-flex>
-                                            
+
                                         </v-layout>
                                 </v-container>
 
@@ -1132,7 +1132,7 @@
                                                     </v-responsive>
                                                 </v-card>
                                             </v-flex>
-                                            
+
                                         </v-layout>
                                 </v-container>
                             </v-container>
@@ -1149,5 +1149,5 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
     <script src="html5kellycolorpicker.js"></script>
-	<script src="hannahcode1.js"></script>
+	<script src="code.js"></script>
 </html>

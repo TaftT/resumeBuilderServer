@@ -5,15 +5,15 @@ var app= new Vue ({
     el: "#app1",
 
     data: {
-      username: "", 
-      password: "", 
+      username: "",
+      password: "",
       menu:false,
       modal: false,
       page: "form",
       color: "",
 
         educationlist:[],
-        workexplist:[            
+        workexplist:[
           // position: 0, // add to database
         ],
         accomplishmentlist: [],
@@ -24,7 +24,7 @@ var app= new Vue ({
         awardslist:[],
         statementlist:[],
 
-        
+
         personalinfoEdit:
         {
             first_name:"",
@@ -32,7 +32,7 @@ var app= new Vue ({
             address: "",
             city:"",
             state:"",
-            zip:"", 
+            zip:"",
             country: "",
             email: "",
             phone: "",
@@ -105,7 +105,7 @@ var app= new Vue ({
         pickingColor: false,
         color_brightness: 6,
         accent: 0,
-        
+
       template: "malia",
       templateLabel: "Choose a Template",
       templates: [
@@ -126,7 +126,7 @@ var app= new Vue ({
           name: "Template 4"
         },
       ],
-      
+
       statementdisplay: [],
       workexpdisplay: [],
       educationdisplay: [],
@@ -176,6 +176,7 @@ var app= new Vue ({
       ],
     },
     created: function () {
+      app.loadlists()
 
 
       addEventListener("click", function () { //changed
@@ -183,9 +184,20 @@ var app= new Vue ({
         app.selected_color_accent = document.getElementById("colorAccent").style.backgroundColor;
       }, {passive: true});
     },
-  
+
 
     methods: {
+      loadlists: function() {
+      app.getData("statement")
+      app.getData("workexp")
+      app.getData("education")
+      app.getData("accomplishment")
+      app.getData("extracurricular")
+      app.getData("language")
+      app.getData("program")
+      app.getData("softskill")
+      app.getData("award")
+      },
       register: function() { //ADDED by TAFT
   			fetch(`${url}/users/register`, {
   				method: "POST",
@@ -228,15 +240,7 @@ var app= new Vue ({
   				}else if(response.status == 200){
             alert("logged in");
             app.page = "form";
-            app.getData("statement")
-            app.getData("workexp")
-            app.getData("education")
-            app.getData("accomplishment")
-            app.getData("extracurricular")
-            app.getData("language")
-            app.getData("program")
-            app.getData("softskill")
-            app.getData("award")
+            app.loadlists();
 
           }
   			});
@@ -545,9 +549,9 @@ var app= new Vue ({
           this.zone7 = display;
           this.zone7_type = type;
       },
-      
 
-      newKellyColorPickerMain: function () { 
+
+      newKellyColorPickerMain: function () {
         if (this.pickingColorMain == false) {
           new KellyColorPicker({
             place : 'color-picker-main',
@@ -563,7 +567,7 @@ var app= new Vue ({
           this.pickingColorMain = false;
         };
       },
-      newKellyColorPickerAccent: function () { 
+      newKellyColorPickerAccent: function () {
         if (this.pickingColor == false) {
           new KellyColorPicker({
             place : 'color-picker-accent',
@@ -593,14 +597,14 @@ var app= new Vue ({
         });
         doc.save(this.personalinfoEdit.first_name+'_Resume.pdf');
       },
-  
+
 
       getData: function(want) {
         fetch(`${url}/${want}`,{
           credentials: "include"
         }).then(function (response) { //then executes when browser has received response from browser
           response.json().then(function (data) {
-  
+
             if(want=="statement"){
               app.statementlist = data.statementlist
             }
@@ -628,15 +632,16 @@ var app= new Vue ({
             if(want=="award"){
               app.awardslist = data.awardlist
             }
-  
+
             });
           });
         },
 
         submitStatement: function (){ //ADDED BY TAFT
           fetch(`${url}/statement`, {
-          method:"POST",
-          headers:{
+            credentials: "include",
+            method:"POST",
+            headers:{
             "Content-type": "application/json"
           },
           body: JSON.stringify(app.statementEdit)
@@ -656,8 +661,9 @@ var app= new Vue ({
 
         submitNewWorkexp: function (){
           fetch(`${url}/workexp`, {
-          method:"POST",
-          headers:{
+            credentials: "include",
+            method:"POST",
+            headers:{
             "Content-type": "application/json"
           },
           body: JSON.stringify(app.workexpEdit)
@@ -683,8 +689,9 @@ var app= new Vue ({
 
         submitEducation: function (){ //ADDED BY TAFT
           fetch(`${url}/education`, {
-          method:"POST",
-          headers:{
+            credentials: "include",
+            method:"POST",
+            headers:{
             "Content-type": "application/json"
           },
           body: JSON.stringify(app.educationEdit)
@@ -707,8 +714,9 @@ var app= new Vue ({
 
         submitAccomplishment: function (){ //ADDED BY TAFT
           fetch(`${url}/accomplishment`, {
-          method:"POST",
-          headers:{
+            credentials: "include",
+            method:"POST",
+            headers:{
             "Content-type": "application/json"
           },
           body: JSON.stringify(app.accomplishmentEdit)
@@ -729,8 +737,9 @@ var app= new Vue ({
 
         submitLanguage: function (){ //ADDED BY TAFT
           fetch(`${url}/language`, {
-          method:"POST",
-          headers:{
+            credentials: "include",
+            method:"POST",
+            headers:{
             "Content-type": "application/json"
           },
           body: JSON.stringify(app.languagesEdit)
@@ -751,8 +760,9 @@ var app= new Vue ({
 
         submitProgram: function (){ //ADDED BY TAFT
           fetch(`${url}/program`, {
-          method:"POST",
-          headers:{
+            credentials: "include",
+            method:"POST",
+            headers:{
             "Content-type": "application/json"
           },
           body: JSON.stringify(app.programsEdit)
@@ -772,8 +782,9 @@ var app= new Vue ({
         },
         submitAward: function (){ //ADDED BY TAFT
           fetch(`${url}/award`, {
-          method:"POST",
-          headers:{
+            credentials: "include",
+            method:"POST",
+            headers:{
             "Content-type": "application/json"
           },
           body: JSON.stringify(app.awardsEdit)
@@ -797,8 +808,9 @@ var app= new Vue ({
 
         submitExtracurricular: function (){ //ADDED BY TAFT
           fetch(`${url}/extracurricular`, {
-          method:"POST",
-          headers:{
+            credentials: "include",
+            method:"POST",
+            headers:{
             "Content-type": "application/json"
           },
           body: JSON.stringify(app.extracurricularEdit)
@@ -819,8 +831,9 @@ var app= new Vue ({
         },
         submitSoftskill: function (){ //ADDED BY TAFT
           fetch(`${url}/softskill`, {
-          method:"POST",
-          headers:{
+            credentials: "include",
+            method:"POST",
+            headers:{
             "Content-type": "application/json"
           },
           body: JSON.stringify(app.softskillsEdit)
@@ -860,6 +873,6 @@ var app= new Vue ({
     },
 
     computed: {
-        
+
       },
 })
