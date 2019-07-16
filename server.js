@@ -142,7 +142,15 @@ server.get("/users/login/error", function(req, res) {
 
 server.get("/users/login/success", function(req, res) {
   res.json({
-      msg: `Welcome ${req.user.username}`
+      msg: `Welcome ${req.user.username}`,
+      user_id: req.user._id
+  });
+});
+
+server.get("/users/checklogin",ensureAuthentication, function(req, res) {
+  res.json({
+      msg: `Welcome ${req.user.username}`,
+      user_id: req.user._id
   });
 });
 
@@ -252,7 +260,13 @@ server.put("/personalinfo/:id", ensureAuthentication,  function(req, res){
 
 //#### statement #####
 server.get("/statement", ensureAuthentication,  function(req, res){
-  resumeInfo.statementmodel.find().then(function(model){
+  var model = [];
+  resumeInfo.statementmodel.find().then(function(wholeModel){
+    wholeModel.forEach(function(item){
+      if (item.user_id == req.user._id){
+        model.push(item)
+      }
+    });
     res.json({
       statementlist: model
     });
@@ -281,6 +295,8 @@ server.get("/statement/:id", function(req, res){
 server.post("/statement", ensureAuthentication,  function(req, res){
   	resumeInfo.statementmodel.create({
   	  	statement: req.body.statement,
+        user_id: req.body.user_id,
+
  	 }).then(function(newmodel){
     		res.status(201);
     		res.json({
@@ -328,7 +344,13 @@ server.put("/statement/:id", ensureAuthentication,  function(req, res){
 
 //#### work experience #####
 server.get("/workexp", ensureAuthentication,  function(req, res){
-  resumeInfo.workexpmodel.find().then(function(model){
+  var model = [];
+  resumeInfo.workexpmodel.find().then(function(wholeModel){
+    wholeModel.forEach(function(item){
+      if (item.user_id == req.user._id){
+        model.push(item)
+      }
+    });
     res.json({
       workexplist: model
     });
@@ -361,6 +383,7 @@ server.post("/workexp", ensureAuthentication,  function(req, res){
     		startdate: req.body.startdate,
         enddate: req.body.enddate,
         description: req.body.description,
+        user_id: req.body.user_id,
  	 }).then(function(newmodel){
     		res.status(201);
     		res.json({
@@ -419,7 +442,13 @@ server.put("/workexp/:id", ensureAuthentication,  function(req, res){
 
 //#### education #####
 server.get("/education", ensureAuthentication,  function(req, res){
-  resumeInfo.educationmodel.find().then(function(model){
+  var model = [];
+  resumeInfo.educationmodel.find().then(function(wholeModel){
+      wholeModel.forEach(function(item){
+        if (item.user_id == req.user._id){
+          model.push(item)
+        }
+      });
     res.json({
       educationlist: model
     });
@@ -450,6 +479,7 @@ server.post("/education", ensureAuthentication,  function(req, res){
   	  	college: req.body.college,
    		  degree: req.body.degree,
     		gradyear: req.body.gradyear,
+        user_id: req.body.user_id,
  	 }).then(function(newmodel){
     		res.status(201);
     		res.json({
@@ -502,7 +532,13 @@ server.put("/education/:id", ensureAuthentication,  function(req, res){
 
 //#### accomplishment #####
 server.get("/accomplishment", ensureAuthentication,  function(req, res){
-  resumeInfo.accomplishmentmodel.find().then(function(model){
+  var model = [];
+  resumeInfo.accomplishmentmodel.find().then(function(wholeModel){
+    wholeModel.forEach(function(item){
+      if (item.user_id == req.user._id){
+        model.push(item)
+      }
+    });
     res.json({
       accomplishmentlist: model
     });
@@ -532,6 +568,7 @@ server.post("/accomplishment", ensureAuthentication,  function(req, res){
   	resumeInfo.accomplishmentmodel.create({
   	  	title: req.body.title,
    		  description: req.body.description,
+        user_id: req.body.user_id,
  	 }).then(function(newmodel){
     		res.status(201);
     		res.json({
@@ -581,7 +618,13 @@ server.put("/accomplishment/:id", ensureAuthentication,  function(req, res){
 
 //#### extracurricular #####
 server.get("/extracurricular", ensureAuthentication,  function(req, res){
-  resumeInfo.extracurricularmodel.find().then(function(model){
+  var model = [];
+  resumeInfo.extracurricularmodel.find().then(function(wholeModel){
+    wholeModel.forEach(function(item){
+      if (item.user_id == req.user._id){
+        model.push(item)
+      }
+    });
     res.json({
       extracurricularlist: model
     });
@@ -612,6 +655,7 @@ server.post("/extracurricular", ensureAuthentication,  function(req, res){
   	  	title: req.body.title,
    		  description: req.body.description,
         date:req.body.date,
+        user_id: req.body.user_id,
  	 }).then(function(newmodel){
     		res.status(201);
     		res.json({
@@ -664,7 +708,13 @@ server.put("/extracurricular/:id", ensureAuthentication,  function(req, res){
 
 //#### language #####
 server.get("/language", ensureAuthentication,  function(req, res){
-  resumeInfo.languagemodel.find().then(function(model){
+  var model = [];
+  resumeInfo.languagemodel.find().then(function(wholeModel){
+    wholeModel.forEach(function(item){
+      if (item.user_id == req.user._id){
+        model.push(item)
+      }
+    });
     res.json({
       languagelist: model
     });
@@ -694,6 +744,7 @@ server.post("/language", ensureAuthentication,  function(req, res){
   	resumeInfo.languagemodel.create({
   	  	title: req.body.title,
    		  proficiency: req.body.proficiency,
+        user_id: req.body.user_id,
 
  	 }).then(function(newmodel){
     		res.status(201);
@@ -745,7 +796,13 @@ server.put("/language/:id", ensureAuthentication,  function(req, res){
 
 //#### program #####
 server.get("/program", ensureAuthentication,  function(req, res){
-  resumeInfo.programmodel.find().then(function(model){
+  var model = [];
+  resumeInfo.programmodel.find().then(function(wholeModel){
+    wholeModel.forEach(function(item){
+      if (item.user_id == req.user._id){
+        model.push(item)
+      }
+    });
     res.json({
       programlist: model
     });
@@ -775,6 +832,7 @@ server.post("/program", ensureAuthentication,  function(req, res){
   	resumeInfo.programmodel.create({
   	  	title: req.body.title,
    		  proficiency: req.body.proficiency,
+        user_id: req.body.user_id,
 
  	 }).then(function(newmodel){
     		res.status(201);
@@ -826,7 +884,13 @@ server.put("/program/:id", ensureAuthentication,  function(req, res){
 
 //#### softskill #####
 server.get("/softskill", ensureAuthentication,  function(req, res){
-  resumeInfo.softskillmodel.find().then(function(model){
+  var model = [];
+  resumeInfo.softskillmodel.find().then(function(wholeModel){
+    wholeModel.forEach(function(item){
+      if (item.user_id == req.user._id){
+        model.push(item)
+      }
+    });
     res.json({
       softskilllist: model
     });
@@ -855,6 +919,7 @@ server.get("/softskill/:id", ensureAuthentication,  function(req, res){
 server.post("/softskill", ensureAuthentication, function(req, res){
   	resumeInfo.softskillmodel.create({
   	  	title: req.body.title,
+        user_id: req.body.user_id,
 
  	 }).then(function(newmodel){
     		res.status(201);
@@ -901,7 +966,13 @@ server.put("/softskill/:id", ensureAuthentication,  function(req, res){
 
 //#### award #####
 server.get("/award", ensureAuthentication,  function(req, res){
-  resumeInfo.awardmodel.find().then(function(model){
+  var model = [];
+  resumeInfo.awardmodel.find().then(function(wholeModel){
+    wholeModel.forEach(function(item){
+      if (item.user_id == req.user._id){
+        model.push(item)
+      }
+    });
     res.json({
       awardlist: model
     });
@@ -933,6 +1004,7 @@ server.post("/award", ensureAuthentication,  function(req, res){
         receivedfrom: req.body.receivedfrom,
    		  description: req.body.description,
         date:req.body.date,
+        user_id: req.body.user_id,
  	 }).then(function(newmodel){
     		res.status(201);
     		res.json({

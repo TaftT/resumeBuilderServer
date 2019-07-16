@@ -16,7 +16,7 @@
                                 </v-btn>
                         <v-spacer></v-spacer>
                         <v-toolbar-items>
-                            <v-btn flat @click="page = 'form' ">Input Form</v-btn>
+                            <v-btn flat @click="page = 'form'; checklogin() ">Input Form</v-btn>
                             <v-btn flat @click="page = 'savedinfo'; loadlists() ">Your Info</v-btn>
                             <v-btn flat @click="page = 'preview'; loadlists() ">Preview</v-btn>
                             <v-btn flat @click="page = 'login' ">Login</v-btn>
@@ -314,7 +314,7 @@
                                             item-value=""
                                             v-model="programsEdit.proficiency">
                                         </v-overflow-btn>
-                                        <v-btn @click="submitSkill()">Add Skill</v-btn>
+                                        <v-btn @click="submitProgram()">Add Skill</v-btn>
 
                                     </v-card>
                             </v-expansion-panel-content>

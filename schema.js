@@ -61,7 +61,7 @@ const statementSchema = mongoose.Schema({
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
-       default: mongoose.Types.ObjectId()
+
      }
 
 });
@@ -97,7 +97,7 @@ const workexpSchema = mongoose.Schema({
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
-       default: mongoose.Types.ObjectId()
+
      }
 
 });
@@ -124,7 +124,7 @@ const educationSchema = mongoose.Schema({
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
-       default: mongoose.Types.ObjectId()
+
      }
 
 });
@@ -146,7 +146,7 @@ const accomplishmentSchema = mongoose.Schema({
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
-       default: mongoose.Types.ObjectId()
+
      }
 
 });
@@ -173,7 +173,7 @@ const extracurricularSchema = mongoose.Schema({
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
-       default: mongoose.Types.ObjectId()
+
      }
 
 });
@@ -195,7 +195,7 @@ const languageSchema = mongoose.Schema({
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
-       default: mongoose.Types.ObjectId()
+
      }
 
 });
@@ -217,7 +217,7 @@ const programSchema = mongoose.Schema({
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
-       default: mongoose.Types.ObjectId()
+
      }
 
 });
@@ -256,7 +256,6 @@ const awardSchema = mongoose.Schema({
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
-       default: mongoose.Types.ObjectId()
      }
 
 });

@@ -1,5 +1,5 @@
-//var url = "http://localhost:3000";
-var url = "https://createresume.herokuapp.com";
+var url = "http://localhost:3000";
+//var url = "https://createresume.herokuapp.com";
 
 var app= new Vue ({
     el: "#app1",
@@ -7,10 +7,12 @@ var app= new Vue ({
     data: {
       username: "",
       password: "",
+      userID: "",//ADDED BY TAFT
       menu:false,
       modal: false,
       page: "form",
       color: "",
+
 
         educationlist:[],
         workexplist:[
@@ -39,9 +41,11 @@ var app= new Vue ({
             branding_statement: "",
             professional_title: "",
             linkedin: "",
+            user_id: ""//ADDED BY TAFT
         },
         statementEdit: {
           statement: "",
+          user_id: ""//ADDED BY TAFT
         },
         workexpEdit: {
             company: "",
@@ -51,29 +55,35 @@ var app= new Vue ({
             description: "",
             start_menu: false,
             end_menu: false,
+            user_id: ""//ADDED BY TAFT
         },
         educationEdit: {
           college: "",
           degree: "",
           gradyear: new Date().toISOString().substr(0, 10),
-          menu: false
+          menu: false,
+          user_id: ""//ADDED BY TAFT
         },
         accomplishmentEdit: {
           title: "",
           description: "",
+          user_id: ""//ADDED BY TAFT
         },
         extracurricularEdit: {
           title: "",
           description: "",
           date: "",
+          user_id: ""//ADDED BY TAFT
         },
         languagesEdit: {
           title: "",
           proficiency:  "",
+          user_id: ""//ADDED BY TAFT
         },
         programsEdit: {
           title: "",
           proficiency:  "",
+          user_id: ""//ADDED BY TAFT
         },
         softskillsEdit: {
           title: "",
@@ -83,7 +93,8 @@ var app= new Vue ({
           receivedfrom:  "",
           date: new Date().toISOString().substr(0, 10),
           description: "",
-          menu:false
+          menu:false,
+          user_id: ""//ADDED BY TAFT
         },
         proficiencylist: [
           "Beginner",
@@ -188,6 +199,7 @@ var app= new Vue ({
 
     methods: {
       loadlists: function() {
+      app.checklogin();//ADDED BY TAFT
       app.getData("statement")
       app.getData("workexp")
       app.getData("education")
@@ -220,7 +232,7 @@ var app= new Vue ({
   			});
   		},
 
-  		login: function() { //ADDED by TAFT
+  		login: function() { //CHANGED by TAFT
         console.log(this.username);
   			fetch(`${url}/users/login`, {
   				method: "POST",
@@ -239,8 +251,12 @@ var app= new Vue ({
   					})
   				}else if(response.status == 200){
             alert("logged in");
-            app.page = "form";
-            app.loadlists();
+            response.json().then( function(data){
+              app.userID = data.user_id
+              app.page = "form";
+              app.loadlists();
+
+            })
 
           }
   			});
@@ -598,6 +614,28 @@ var app= new Vue ({
         doc.save(this.personalinfoEdit.first_name+'_Resume.pdf');
       },
 
+      checklogin: function(){//ADDED BY TAFT
+        fetch(`${url}/users/checklogin`, {
+  				method: "GET",
+  				credentials: "include",
+  			}).then(function(response) {
+  				if (response.status == 403) {
+  					response.json().then(function(data) {
+  						alert(data.msg);
+              app.userID = ""
+              app.page = "login"
+  					})
+  				}else if(response.status == 200){
+            response.json().then( function(data){
+              app.userID = data.user_id
+
+            })
+
+          }
+  			});
+
+      },
+
 
       getData: function(want) {
         fetch(`${url}/${want}`,{
@@ -637,7 +675,10 @@ var app= new Vue ({
           });
         },
 
+
+
         submitStatement: function (){ //ADDED BY TAFT
+          app.statementEdit.user_id = app.userID
           fetch(`${url}/statement`, {
             credentials: "include",
             method:"POST",
@@ -660,6 +701,7 @@ var app= new Vue ({
         },
 
         submitNewWorkexp: function (){
+          app.workexpEdit.user_id = app.userID
           fetch(`${url}/workexp`, {
             credentials: "include",
             method:"POST",
@@ -688,6 +730,7 @@ var app= new Vue ({
         },
 
         submitEducation: function (){ //ADDED BY TAFT
+          app.educationEdit.user_id = app.userID
           fetch(`${url}/education`, {
             credentials: "include",
             method:"POST",
@@ -697,6 +740,8 @@ var app= new Vue ({
           body: JSON.stringify(app.educationEdit)
         }).then(function (response) {
           //response.json().then((data)=>{console.log(data.msg)})
+
+
 
           app.educationEdit=
            {
@@ -713,6 +758,7 @@ var app= new Vue ({
         },
 
         submitAccomplishment: function (){ //ADDED BY TAFT
+          app.accomplishmentEdit.user_id = app.userID
           fetch(`${url}/accomplishment`, {
             credentials: "include",
             method:"POST",
@@ -736,6 +782,7 @@ var app= new Vue ({
         },
 
         submitLanguage: function (){ //ADDED BY TAFT
+          app.languagesEdit.user_id = app.userID
           fetch(`${url}/language`, {
             credentials: "include",
             method:"POST",
@@ -759,6 +806,7 @@ var app= new Vue ({
         },
 
         submitProgram: function (){ //ADDED BY TAFT
+          app.programsEdit.user_id = app.userID
           fetch(`${url}/program`, {
             credentials: "include",
             method:"POST",
@@ -781,6 +829,7 @@ var app= new Vue ({
 
         },
         submitAward: function (){ //ADDED BY TAFT
+          app.awardsEdit.user_id = app.userID
           fetch(`${url}/award`, {
             credentials: "include",
             method:"POST",
@@ -807,6 +856,7 @@ var app= new Vue ({
         },
 
         submitExtracurricular: function (){ //ADDED BY TAFT
+          app.extracurricularEdit.user_id = app.userID
           fetch(`${url}/extracurricular`, {
             credentials: "include",
             method:"POST",
