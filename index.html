@@ -2,24 +2,25 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="style.css">
-		<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
 		<link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
         <meta charset="utf-8">
 	</head>
 	<div id="app1" v-cloak>
 		<v-app>
-			<v-content>
+			<v-content id="body">
                 <v-toolbar height=80>
                     <v-btn flat class="text-capitalize" @click="page = 'home' ">
                         <v-toolbar-title>Resume<span class="font-weight-light">Builder</span> </v-toolbar-title>
                                 </v-btn>
                         <v-spacer></v-spacer>
                         <v-toolbar-items>
-                            <v-btn flat @click="page = 'form'; checklogin() ">Input Form</v-btn>
-                            <v-btn flat @click="page = 'savedinfo'; loadlists() ">Your Info</v-btn>
-                            <v-btn flat @click="page = 'preview'; loadlists() ">Preview</v-btn>
-                            <v-btn flat @click="page = 'login' ">Login</v-btn>
+                                <v-btn flat @click="page = 'form'; checklogin() ">Input Form</v-btn>
+                                <v-btn flat @click="page = 'savedinfo'; loadlists() ">Your Info</v-btn>
+                                <v-btn flat @click="page = 'preview'; loadlists() ">Preview</v-btn>
+                                <v-btn flat @click="page = 'login' ">Login</v-btn>
                         </v-toolbar-items>
                 </v-toolbar>
 
@@ -84,24 +85,24 @@
                 </div>
 
                 <div v-show="page == 'home'">
-                    <v-container>
-                        <v-layout>
-                            <v-flex xs12 lg10 offset-lg1> <!-- changed -->
-                                <v-card class="pa-4">
+                        <v-container>
+                            <v-layout>
+                                <v-flex xs12 lg10 offset-lg1>
+                                    <v-card  elevation=5 flat class="pa-4">
 
-                                </v-card>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
-                </div>
+                                    </v-card>
+                                </v-flex>
+                            </v-layout>
+                        </v-container>
+                    </div>
 
                 <div v-show="page == 'form'">
                     <v-container>
                             <v-layout>
                                <v-flex xs12 lg10 offset-lg1>
-                                    <v-card class="pa-3">
+                                    <v-card class="pa-3" elevation=5>
                                         <v-card-text class="headline">Welcome to the ResumeBuilder!</v-card-text>
-                                        <v-card-text class="subheading">Enter in as much information as you can, but remember everything is optional. When you are done, go to the Your Info page to select which information you want included on your resume, then go to Preview to edit and customize your resume!</v-card-text>
+                                        <v-card-text class="subheading">Enter in as much information as you can, but remember everything is optional. To personalize what information will display on your resume, and to choose the arrangement of the information on your page, go to the <v-btn color="rgba(234, 238, 242, 1)" class="subheading text-capitalize pa-0 ma-1" @click="page = 'savedinfo'">Your Info</v-btn> tab.</v-card-text>
                                     </v-card>
                                 </v-flex>
                             </v-layout>
@@ -109,8 +110,8 @@
                     <v-container>
                     <v-container>
                         <v-layout>
-                                <v-flex xs12 lg10 offset-lg1>
-                                <v-card>
+                            <v-flex xs12 lg10 offset-lg1>
+                                <v-card elevation=10>
                                     <v-expansion-panel expand>
                                             <v-expansion-panel-content id="personalinformation">
                                                     <template v-slot:header> <v-card-text class="display-1">Personal Information</v-card-text></template>
@@ -197,7 +198,7 @@
                                                             v-on="on"
                                                         ></v-text-field>
                                                         </template>
-                                                        <v-date-picker v-model="workexpEdit.startdate" @input="workexpEdit.start_menu = false">
+                                                        <v-date-picker v-model="workexpEdit.startdate" @input="workexpEdit.start_menu = false" type="month">
 
                                                         </v-date-picker>
                                                     </v-menu>
@@ -222,7 +223,7 @@
                                                             v-on="on"
                                                         ></v-text-field>
                                                         </template>
-                                                        <v-date-picker v-model="workexpEdit.enddate" @input="workexpEdit.end_menu = false">
+                                                        <v-date-picker v-model="workexpEdit.enddate" @input="workexpEdit.end_menu = false" type="month">
 
                                                         </v-date-picker>
                                                     </v-menu>
@@ -236,8 +237,8 @@
                                         <v-card  flat v-for="school in educationlist">
                                                 <v-card-title>{{school.college}}, {{school.degree}} - {{school.gradyear}}</v-card-title>
 
-                                                <v-btn icon><v-icon color="red">delete</v-icon></v-btn>
-                                                <v-btn icon><v-icon color="red">edit</v-icon></v-btn>
+                                                <v-btn icon><v-icon color="grey">delete</v-icon></v-btn>
+                                                <v-btn icon><v-icon color="grey">edit</v-icon></v-btn>
                                             </v-card>
                                         <v-text-field box label="School attended" v-model="educationEdit.college"></v-text-field>
                                         <v-text-field box label="Degree" v-model="educationEdit.degree"></v-text-field>
@@ -270,7 +271,7 @@
                                             v-on="on"
                                         ></v-text-field>
                                         </template>
-                                        <v-date-picker v-model="educationEdit.gradyear" @input="educationEdit.menu = false">
+                                        <v-date-picker v-model="educationEdit.gradyear" @input="educationEdit.menu = false" type="month">
 
                                         </v-date-picker>
                                     </v-menu>
@@ -344,7 +345,7 @@
                                             v-on="on"
                                         ></v-text-field>
                                         </template>
-                                        <v-date-picker v-model="awardsEdit.date" @input="awardsEdit.menu = false">
+                                        <v-date-picker v-model="awardsEdit.date" @input="awardsEdit.menu = false" type="month">
 
                                         </v-date-picker>
                                     </v-menu>
@@ -380,7 +381,7 @@
                                                 v-on="on"
                                             ></v-text-field>
                                         </template>
-                                        <v-date-picker v-model="extracurricularEdit.date"></v-date-picker>
+                                        <v-date-picker v-model="extracurricularEdit.date" type="month"></v-date-picker>
                                     </v-menu>
                                     <v-btn @click="submitExtracurricular()">Add Extracurricular Activity</v-btn>
                                 </v-card>
@@ -412,6 +413,7 @@
                                         <v-card-text class="display-1">Personal Information</v-card-text>
                                         <v-card-text class="headline pa-1 ml-3">{{personalinfoEdit.first_name}} {{personalinfoEdit.last_name}}</v-card-text>
                                         <v-card-text class="headline pa-1 ml-3">{{personalinfoEdit.email}}</v-card-text>
+                                        <v-card-text class="headline pa-1 ml-3">{{personalinfoEdit.professional_title}}</v-card-text>
                                         <v-card-text class="headline pa-1 ml-3">{{personalinfoEdit.phone}}</v-card-text>
                                         <v-card-text class="headline pa-1 ml-3">{{personalinfoEdit.address}}</v-card-text>
                                         <v-card-text class="headline pa-1 ml-3">{{personalinfoEdit.city}}, {{personalinfoEdit.state}} {{personalinfoEdit.zip}} {{personalinfoEdit.country}}</v-card-text>
@@ -435,7 +437,7 @@
                                                     </v-flex>
                                                     <v-flex xs3>
                                                         <v-btn fab flat @click="includeStatement(exp)"><v-icon>add</v-icon></v-btn>
-                                                        <v-btn @click="deleteItem('statement',exp)" icon><v-icon color="red">delete</v-icon></v-btn>
+                                                        <v-btn @click="deleteItem('statement',exp)" icon><v-icon color="grey">delete</v-icon></v-btn>
 
                                                     </v-flex>
                                                 </v-layout>
@@ -464,7 +466,8 @@
                                                 </v-flex>
                                                 <v-flex xs2>
                                                     <v-btn fab flat @click="includeWork(exp)"><v-icon>add</v-icon></v-btn>
-                                                    <v-btn @click="deleteItem('workexp',exp)" icon><v-icon color="red">delete</v-icon></v-btn>
+																										<v-btn fab flat @click="removeFromDisplay('workexp',exp._id)"><v-icon>remove</v-icon></v-btn>	<!-- ADDED By Taft -->
+																										<v-btn @click="deleteItem('workexp',exp)" icon><v-icon color="grey">delete</v-icon></v-btn>
 
                                                 </v-flex>
                                             </v-layout>
@@ -492,7 +495,7 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeEducation(exp)"><v-icon>add</v-icon></v-btn>
-                                                        <v-btn @click="deleteItem('education',exp)" icon><v-icon color="red">delete</v-icon></v-btn>
+                                                        <v-btn @click="deleteItem('education',exp)" icon><v-icon color="grey">delete</v-icon></v-btn>
 
                                                 </v-flex>
                                             </v-layout>
@@ -520,7 +523,7 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeAccomplishment(exp)"><v-icon>add</v-icon></v-btn>
-                                                        <v-btn @click="deleteItem('accomplishment',exp)" icon><v-icon color="red">delete</v-icon></v-btn>
+                                                        <v-btn @click="deleteItem('accomplishment',exp)" icon><v-icon color="grey">delete</v-icon></v-btn>
 
                                                 </v-flex>
                                             </v-layout>
@@ -548,7 +551,7 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeAward(exp)"><v-icon>add</v-icon></v-btn>
-                                                        <v-btn @click="deleteItem('award',exp)" icon><v-icon color="red">delete</v-icon></v-btn>
+                                                        <v-btn @click="deleteItem('award',exp)" icon><v-icon color="grey">delete</v-icon></v-btn>
 
                                                 </v-flex>
                                             </v-layout>
@@ -574,7 +577,7 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeLanguage(exp)"><v-icon>add</v-icon></v-btn>
-                                                        <v-btn @click="deleteItem('language',exp)" icon><v-icon color="red">delete</v-icon></v-btn>
+                                                        <v-btn @click="deleteItem('language',exp)" icon><v-icon color="grey">delete</v-icon></v-btn>
 
                                                 </v-flex>
                                             </v-layout>
@@ -601,7 +604,7 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeExtracurricular(exp)"><v-icon>add</v-icon></v-btn>
-                                                        <v-btn @click="deleteItem('extracurricular',exp)" icon><v-icon color="red">delete</v-icon></v-btn>
+                                                        <v-btn @click="deleteItem('extracurricular',exp)" icon><v-icon color="grey">delete</v-icon></v-btn>
 
                                                 </v-flex>
                                             </v-layout>
@@ -627,7 +630,7 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeProgram(exp)"><v-icon>add</v-icon></v-btn>
-                                                        <v-btn @click="deleteItem('program',exp)" icon><v-icon color="red">delete</v-icon></v-btn>
+                                                        <v-btn @click="deleteItem('program',exp)" icon><v-icon color="grey">delete</v-icon></v-btn>
 
                                                 </v-flex>
                                             </v-layout>
@@ -653,7 +656,7 @@
                                                 </v-flex>
                                                 <v-flex xs3>
                                                         <v-btn fab flat @click="includeSkill(exp)"><v-icon>add</v-icon></v-btn>
-                                                        <v-btn @click="deleteItem('softskill',exp)" icon><v-icon color="red">delete</v-icon></v-btn>
+                                                        <v-btn @click="deleteItem('softskill',exp)" icon><v-icon color="grey">delete</v-icon></v-btn>
 
                                                 </v-flex>
                                             </v-layout>
@@ -682,12 +685,12 @@
                                             </v-list-tile>
                                           </v-list>
                                     </v-menu>
-                                </div> <!-- Changes start here-->
-                                                <v-spacer></v-spacer>
-                                <v-btn fab @click="newKellyColorPickerMain()" id="colorMain" value="#54aedb"></v-btn>
-                                                <v-toolbar-text>Main Color</v-toolbar-text>
-                                                <v-btn fab @click="newKellyColorPickerAccent()" id="colorAccent" value="#54aedb"></v-btn>
-                                                <v-toolbar-text>Accent Color</v-toolbar-text>
+                                </div>
+                                <v-spacer></v-spacer>
+                                <v-btn fab @click="newKellyColorPickerMain()" id="colorMain" value="rgb(84, 174, 219)"></v-btn>
+                                <v-toolbar-title class="text-uppercase font-weight-thin pr-3">Main Color</v-toolbar-title>
+                                <v-btn fab @click="newKellyColorPickerAccent()" id="colorAccent" value="rgb(84, 174, 219)"></v-btn>
+                                <v-toolbar-title class="text-uppercase font-weight-thin pr-3">Accent Color</v-toolbar-title>
 
                             </v-toolbar>
                             <v-container>
@@ -708,7 +711,7 @@
                                 </v-layout>
                             </v-container>
                             <v-container>
-                                <v-container v-if="template == 'malia'">
+                                <v-container grid-list-lg v-if="template == 'malia'">
                                         <v-layout justify-center row-wrap>
                                                 <v-flex xs12 sm10>
                                                     <v-card>
@@ -867,53 +870,81 @@
                                             <v-flex>
                                                 <v-card xs12 sm10>
                                                     <v-responsive :aspect-ratio="8.5/11">
-                                                        <v-layout id="zone0">
+                                                        <v-layout id="zone0" class="pa-0">
                                                             <v-flex xs4></v-flex>
                                                             <v-flex xs8 height=15%>
-                                                                <v-card class="ma-4 pa-4 text-xs-right" :color="selected_color_main" >
-                                                                <v-card-text class="display-1 pa-1 ">{{personalinfoEdit.first_name}}{{personalinfoEdit.last_name}}</v-card-text>
-                                                                <v-card-text class="headline pa-1 ">{{personalinfoEdit.email}}</v-card-text>
-                                                                <v-card-text class="title pa-1 ">{{personalinfoEdit.phone}}</v-card-text>
+                                                                <v-card class="ma-4 pa-3 text-xs-right" :color="selected_color_main" >
+                                                                    <v-card-text class="display-1 pa-1 ">{{personalinfoEdit.first_name}} {{personalinfoEdit.last_name}} | {{personalinfoEdit.professional_title}}</v-card-text>
+                                                                    <v-card-text class="headline pa-1 "></v-card-text>
+                                                                    <v-card-text class="headline pa-1 ">{{personalinfoEdit.email}}</v-card-text>
+                                                                    <v-card-text class="title pa-1 ">{{personalinfoEdit.phone}}</v-card-text>
                                                                 </v-card>
                                                             </v-flex>
                                                         </v-layout>
-                                                        <div v-for="item in zone1" class="mt-3 mb-3">
-                                                            <v-card v-if="zone1_type == 'statement'" class="ml-3 mr-3 pa-4">
-                                                                <v-card-text class="font-italic">{{item.statement}}</v-card-text>
+                                                        <div id="zone1" class="mb-3">
+                                                            <v-card v-if="zone1_type == 'statement'" flat class="ml-3 mr-3 pa-4">
+                                                                <v-card-text>Branding Statement</v-card-text>
+                                                                <div v-for="item in zone1" class="pa-2">
+                                                                    <v-card-text class="font-italic">{{item.statement}}</v-card-text>
+                                                                </div>
                                                             </v-card>
-                                                            <v-card v-if="zone1_type == 'workexp'" class="ml-3 mr-3 pa-4">
-                                                                <v-card-text class="pa-1 headline">{{item.company}} | {{item.title}} - <span class="title grey--text">{{item.startdate}}-{{item.enddate}}</span></v-card-text>
-                                                                <v-card-text class="pa-1">{{item.description}}</v-card-text>
+                                                            <v-card v-if="zone1_type == 'workexp'" flat class="ml-3 mr-3 pa-4">
+                                                                <v-card-text :class="{'title': $vuetify.breakpoint.smOnly, 'headline': $vuetify.breakpoint.mdOnly, 'display-1': $vuetify.breakpoint.lgOnly}">Work Experience</v-card-text>
+                                                                <div v-for="item in zone1" class="pa-2">
+                                                                    <v-card-text class="pa-1 headline">{{item.company}} | {{item.title}} - <span class="title grey--text">{{item.startdate}} - {{item.enddate}}</span></v-card-text>
+                                                                    <v-card-text class="pa-1">{{item.description}}</v-card-text>
+                                                                </div>
                                                             </v-card>
-                                                            <v-card v-if="zone1_type == 'education'" class="ml-3 mr-3 pa-4">
-                                                                <v-card-text class="pa-1 headline">{{item.college}}</v-card-text>
-                                                                <v-card-text class="pa-1 title">{{item.degree}} - <span class="title grey--text">{{item.gradyear}}</span></v-card-text>
-                                                                <v-card-text class="pa-1"></v-card-text>
+                                                            <v-card v-if="zone1_type == 'education'" flat class="ml-3 mr-3 pa-4">
+                                                                <v-card-text :class="{'title': $vuetify.breakpoint.smOnly, 'headline': $vuetify.breakpoint.mdOnly, 'display-1': $vuetify.breakpoint.lgOnly}">Education</v-card-text>
+                                                                <div v-for="item in zone1" class="pa-2">
+                                                                    <v-card-text class="pa-1 headline">{{item.college}}</v-card-text>
+                                                                    <v-card-text class="pa-1 title">{{item.degree}} - <span class="title grey--text">{{item.gradyear}}</span></v-card-text>
+                                                                    <v-card-text class="pa-1"></v-card-text>
+                                                                </div>
                                                             </v-card>
-                                                            <v-card v-if="zone1_type == 'accomplishment'" class="ml-3 mr-3 pa-4">
-                                                                <v-card-text class="pa-1 headline">{{item.title}}</v-card-text>
-                                                                <v-card-text class="pa-1">{{item.description}}</v-card-text>
+                                                            <v-card v-if="zone1_type == 'accomplishment'" flat class="ml-3 mr-3 pa-4">
+                                                                <v-card-text>Accomplishments</v-card-text>
+                                                                <div v-for="item in zone1" class="pa-2">
+                                                                    <v-card-text class="pa-1 headline">{{item.title}}</v-card-text>
+                                                                    <v-card-text class="pa-1">{{item.description}}</v-card-text>
+                                                                </div>
                                                             </v-card>
-                                                            <v-card v-if="zone1_type == 'extracurricular'" class="ml-3 mr-3 pa-4">
-                                                                <v-card-text class="pa-1 headline">{{item.title}} - {{item.date}}</v-card-text>
-                                                                <v-card-text class="pa-1">{{item.description}}</v-card-text>
+                                                            <v-card v-if="zone1_type == 'extracurricular'" flat class="ml-3 mr-3 pa-4">
+                                                                <v-card-text>Extracurriculars</v-card-text>
+                                                                <div v-for="item in zone1" class="pa-2">
+                                                                    <v-card-text class="pa-1 headline">{{item.title}} - {{item.date}}</v-card-text>
+                                                                    <v-card-text class="pa-1">{{item.description}}</v-card-text>
+                                                                </div>
                                                             </v-card>
-                                                            <v-card v-if="zone1_type == 'language'" class="ml-3 mr-3 pa-4">
-                                                                <v-card-text class="pa-1">{{item.title}} | {{item.proficiency}}</v-card-text>
-                                                            </v-card>
-                                                            <v-card v-if="zone1_type == 'programs'" class="ml-3 mr-3 pa-4">
+                                                            <v-card v-if="zone1_type == 'language'" flat class="ml-3 mr-3 pa-4">
+                                                                <v-card-text>Languages</v-card-text>
+                                                                <div v-for="item in zone1" class="pa-2">
                                                                     <v-card-text class="pa-1">{{item.title}} | {{item.proficiency}}</v-card-text>
+                                                                </div>
                                                             </v-card>
-                                                            <v-card v-if="zone1_type == 'skills'" class="ml-3 mr-3 pa-4">
-                                                                <v-card-text class="pa-1 headline">{{item.title}}</v-card-text>
+                                                            <v-card v-if="zone1_type == 'programs'" flat class="ml-3 mr-3 pa-4">
+                                                                <v-card-text>Programs</v-card-text>
+                                                                <div v-for="item in zone1" class="pa-2">
+                                                                    <v-card-text class="pa-1">{{item.title}} | {{item.proficiency}}</v-card-text>
+                                                                </div>
                                                             </v-card>
-                                                            <v-card v-if="zone1_type == 'award'" class="ml-3 mr-3 pa-4">
-                                                                <v-card-text class="pa-1 headline">{{item.title}} - {{item.date}}</v-card-text>
-                                                                <v-card-text class="pa-1 title">Received from {{item.receivedfrom}}</v-card-text>
-                                                                <v-card-text class="pa-1">{{item.description}}</v-card-text>
+                                                            <v-card v-if="zone1_type == 'skills'" flat class="ml-3 mr-3 pa-4">
+                                                                <v-card-text>Skills</v-card-text>
+                                                                <div v-for="item in zone1" class="pa-2">
+                                                                    <v-card-text class="pa-1 headline">{{item.title}}</v-card-text>
+                                                                </div>
+                                                            </v-card>
+                                                            <v-card v-if="zone1_type == 'award'" flat class="ml-3 mr-3 pa-4">
+                                                                <v-card-text>Skills</v-card-text>
+                                                                <div v-for="item in zone1" class="pa-2">
+                                                                    <v-card-text class="pa-1 headline">{{item.title}} - {{item.date}}</v-card-text>
+                                                                    <v-card-text class="pa-1 title">Received from {{item.receivedfrom}}</v-card-text>
+                                                                    <v-card-text class="pa-1">{{item.description}}</v-card-text>
+                                                                </div>
                                                             </v-card>
                                                         </div>
-                                                        <div v-for="item in zone2" class="mt-3 mb-3">
+                                                        <!-- <div v-for="item in zone2" class="mt-3 mb-3">
                                                             <v-card v-if="zone2_type == 'statement'" class="ml-3 mr-3 pa-4">
                                                                 <v-card-text class="font-italic">{{item.statement}}</v-card-text>
                                                             </v-card>
@@ -1128,7 +1159,7 @@
                                                                     <v-card-text class="pa-1 title">Received from {{item.receivedfrom}}</v-card-text>
                                                                     <v-card-text class="pa-1">{{item.description}}</v-card-text>
                                                                 </v-card>
-                                                        </div>
+                                                        </div> -->
                                                     </v-responsive>
                                                 </v-card>
                                             </v-flex>
