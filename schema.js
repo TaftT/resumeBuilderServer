@@ -61,7 +61,7 @@ const statementSchema = mongoose.Schema({
      displayShow:{
        type: Boolean,
        required: true,
-       default: flase
+       default: false
      },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -102,7 +102,7 @@ const workexpSchema = mongoose.Schema({
     displayShow:{
       type: Boolean,
       required: true,
-      default: flase
+      default: false
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -134,7 +134,7 @@ const educationSchema = mongoose.Schema({
     displayShow:{
       type: Boolean,
       required: true,
-      default: flase
+      default: false
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -161,7 +161,7 @@ const accomplishmentSchema = mongoose.Schema({
     displayShow:{
       type: Boolean,
       required: true,
-      default: flase
+      default: false
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -193,7 +193,7 @@ const extracurricularSchema = mongoose.Schema({
     displayShow:{
       type: Boolean,
       required: true,
-      default: flase
+      default: false
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -220,7 +220,7 @@ const languageSchema = mongoose.Schema({
     displayShow:{
       type: Boolean,
       required: true,
-      default: flase
+      default: false
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -247,7 +247,7 @@ const programSchema = mongoose.Schema({
     displayShow:{
       type: Boolean,
       required: true,
-      default: flase
+      default: false
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -265,7 +265,7 @@ const softskillSchema = mongoose.Schema({
       displayShow:{
         type: Boolean,
         required: true,
-        default: flase
+        default: false
       },
 
 });
@@ -296,7 +296,7 @@ const awardSchema = mongoose.Schema({
     displayShow:{
       type: Boolean,
       required: true,
-      default: flase
+      default: false
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -346,7 +346,7 @@ const saveTemplateLayout = mongoose.Schema({
     displayShow:{
       type: Boolean,
       required: true,
-      default: flase
+      default: false
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
