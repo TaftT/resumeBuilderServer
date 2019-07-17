@@ -675,50 +675,50 @@ var app= new Vue ({
           });
         },
 
-        saveTemplateLayout:  function (){//ADDED BY TAFT
-          this.savedTemplate= {
-            statementposition: this.statementposition,
-            workexpposition: this.workexpposition,
-            educationposition: this.educationposition,
-            accomplishmentposition: this.accomplishmentposition,
-            extracurricularposition: this.extracurricularposition,
-            languagesposition: this.languagesposition,
-            programsposition: this.programsposition,
-            softskillsposition: this.softskillsposition,
-            awardsposition: this.awardsposition,
-            selected_color_main: this.selected_color_main,
-            selected_color_accent: this.selected_color_accent,
-            zone1: this.zone1,
-            zone2: this.zone2,
-            zone3: this.zone3,
-            zone4: this.zone4,
-            zone5: this.zone5,
-            zone6: this.zone6,
-            zone7: this.zone7,
-          }
-      },
-
-      loadSaveTemplateLayout:  function (){//ADDED BY TAFT
-          this.statementposition = this.savedTemplate.statementposition;
-          this.workexpposition = this.savedTemplate.workexpposition;
-          this.educationposition = this.savedTemplate.educationposition;
-          this.accomplishmentposition = this.savedTemplate.accomplishmentposition;
-          this.extracurricularposition = this.savedTemplate.extracurricularposition;
-          this.languagesposition = this.savedTemplate.languagesposition;
-          this.programsposition = this.savedTemplate.programsposition;
-          this.softskillsposition = this.savedTemplate.softskillsposition;
-          this.awardsposition = this.savedTemplate.awardsposition;
-          this.selected_color_main = this.savedTemplate.selected_color_main;
-          this.selected_color_accent = this.savedTemplate.selected_color_accent;
-          this.zone1 = this.savedTemplate.zone1;
-          this.zone2 = this.savedTemplate.zone2;
-          this.zone3 = this.savedTemplate.zone3;
-          this.zone4 = this.savedTemplate.zone4;
-          this.zone5 = this.savedTemplate.zone5;
-          this.zone6 = this.savedTemplate.zone6;
-          this.zone7 = this.savedTemplate.zone7;
-        }
-    },
+    //     saveTemplateLayout:  function (){//ADDED BY TAFT
+    //       this.savedTemplate= {
+    //         statementposition: this.statementposition,
+    //         workexpposition: this.workexpposition,
+    //         educationposition: this.educationposition,
+    //         accomplishmentposition: this.accomplishmentposition,
+    //         extracurricularposition: this.extracurricularposition,
+    //         languagesposition: this.languagesposition,
+    //         programsposition: this.programsposition,
+    //         softskillsposition: this.softskillsposition,
+    //         awardsposition: this.awardsposition,
+    //         selected_color_main: this.selected_color_main,
+    //         selected_color_accent: this.selected_color_accent,
+    //         zone1: this.zone1,
+    //         zone2: this.zone2,
+    //         zone3: this.zone3,
+    //         zone4: this.zone4,
+    //         zone5: this.zone5,
+    //         zone6: this.zone6,
+    //         zone7: this.zone7,
+    //       }
+    //   },
+    //
+    //   loadSaveTemplateLayout:  function (){//ADDED BY TAFT
+    //       this.statementposition = this.savedTemplate.statementposition;
+    //       this.workexpposition = this.savedTemplate.workexpposition;
+    //       this.educationposition = this.savedTemplate.educationposition;
+    //       this.accomplishmentposition = this.savedTemplate.accomplishmentposition;
+    //       this.extracurricularposition = this.savedTemplate.extracurricularposition;
+    //       this.languagesposition = this.savedTemplate.languagesposition;
+    //       this.programsposition = this.savedTemplate.programsposition;
+    //       this.softskillsposition = this.savedTemplate.softskillsposition;
+    //       this.awardsposition = this.savedTemplate.awardsposition;
+    //       this.selected_color_main = this.savedTemplate.selected_color_main;
+    //       this.selected_color_accent = this.savedTemplate.selected_color_accent;
+    //       this.zone1 = this.savedTemplate.zone1;
+    //       this.zone2 = this.savedTemplate.zone2;
+    //       this.zone3 = this.savedTemplate.zone3;
+    //       this.zone4 = this.savedTemplate.zone4;
+    //       this.zone5 = this.savedTemplate.zone5;
+    //       this.zone6 = this.savedTemplate.zone6;
+    //       this.zone7 = this.savedTemplate.zone7;
+    //     }
+    // },
 
       removeFromList: function (itemlist,objid){// ADDED BY TAFT
           var filtered = itemlist.filter(function(item){

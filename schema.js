@@ -58,6 +58,11 @@ const statementSchema = mongoose.Schema({
     		required: true,
         default: new Date().toDateString()
  		 },
+     displayShow:{
+       type: Boolean,
+       required: true,
+       default: flase
+     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
@@ -94,6 +99,11 @@ const workexpSchema = mongoose.Schema({
        required: true,
        default: new Date().toDateString()
     },
+    displayShow:{
+      type: Boolean,
+      required: true,
+      default: flase
+    },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
@@ -121,6 +131,11 @@ const educationSchema = mongoose.Schema({
        required: true,
        default: new Date().toDateString()
     },
+    displayShow:{
+      type: Boolean,
+      required: true,
+      default: flase
+    },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
@@ -142,6 +157,11 @@ const accomplishmentSchema = mongoose.Schema({
        type: String,
        required: true,
        default: new Date().toDateString()
+    },
+    displayShow:{
+      type: Boolean,
+      required: true,
+      default: flase
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -170,6 +190,11 @@ const extracurricularSchema = mongoose.Schema({
        required: true,
        default: new Date().toDateString()
     },
+    displayShow:{
+      type: Boolean,
+      required: true,
+      default: flase
+    },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
@@ -191,6 +216,11 @@ const languageSchema = mongoose.Schema({
        type: String,
        required: true,
        default: new Date().toDateString()
+    },
+    displayShow:{
+      type: Boolean,
+      required: true,
+      default: flase
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -214,6 +244,11 @@ const programSchema = mongoose.Schema({
        required: true,
        default: new Date().toDateString()
     },
+    displayShow:{
+      type: Boolean,
+      required: true,
+      default: flase
+    },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
@@ -227,6 +262,11 @@ const softskillSchema = mongoose.Schema({
    		 	type: String,
     		required: true,
   		},
+      displayShow:{
+        type: Boolean,
+        required: true,
+        default: flase
+      },
 
 });
 
@@ -252,6 +292,67 @@ const awardSchema = mongoose.Schema({
        type: String,
        required: true,
        default: new Date().toDateString()
+    },
+    displayShow:{
+      type: Boolean,
+      required: true,
+      default: flase
+    },
+     user_id: {
+       type: String, //ObjectId needed here but error coming back saying undefined
+       required: true,
+     }
+
+});
+
+const saveTemplateLayout = mongoose.Schema({
+ 		 statementposition: {
+   		 	type: String,
+    		required: true,
+  		},
+      workexpposition: {
+    		 	type: String,
+     		required: true,
+   		},
+      educationposition: {
+    		 	type: String,
+     		required: true,
+   		},
+      accomplishmentposition: {
+    		 	type: String,
+     		required: true,
+   		},
+      extracurricularposition: {
+    		 	type: String,
+     		required: true,
+   		},
+      languagesposition: {
+    		 	type: String,
+     		required: true,
+   		},
+      programsposition: {
+    		type: String,
+     		required: true,
+   		},
+  	  softskillsposition: {
+   			type: String,
+    		required: true,
+ 		 },
+     zone1: [{
+   			zone_id: {
+          type: String,
+        },
+
+ 		 }],
+     saveddate: {
+       type: String,
+       required: true,
+       default: new Date().toDateString()
+    },
+    displayShow:{
+      type: Boolean,
+      required: true,
+      default: flase
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
