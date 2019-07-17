@@ -338,12 +338,6 @@ const saveTemplateLayout = mongoose.Schema({
    			type: String,
     		required: true,
  		 },
-     zone1: [{
-   			zone_id: {
-          type: String,
-        },
-
- 		 }],
      saveddate: {
        type: String,
        required: true,
