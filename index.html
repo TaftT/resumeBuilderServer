@@ -500,10 +500,11 @@
                                                     <v-card-text class="ml-4 pl-2">{{exp.description}}</v-card-text><br>
                                                 </v-flex>
                                                 <v-flex xs2>
-                                                    <v-btn fab flat @click="addToDisplay(exp,'workexp')" v-if="!exp.displayShow">{{exp.displayShow}}
+
+                                                    <v-btn fab flat @click="addToDisplay(exp,'workexp')" v-if="!exp.displayShow">
                                                         <v-icon big>check_box_outline_blank</v-icon>
                                                     </v-btn>
-                                                    <v-btn fab flat @click="removeFromDisplay('workexp',exp._id); apply('workexp'); exp.displayShow = !exp.displayShow" v-if="exp.displayShow">{{exp.displayShow}}
+                                                    <v-btn fab flat @click="addToDisplay(exp,'workexp')" v-if="exp.displayShow">
                                                         <v-icon big>check_box</v-icon>
                                                     </v-btn>
                                                     <v-btn @click="deleteItem('workexp',exp); apply('workexp')" icon>

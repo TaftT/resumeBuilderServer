@@ -1,5 +1,5 @@
-var url = "http://localhost:3000";
-//var url = "https://createresume.herokuapp.com";
+//var url = "http://localhost:3000";
+var url = "https://createresume.herokuapp.com";
 
 var app= new Vue ({
     el: "#app1",
@@ -634,60 +634,92 @@ var app= new Vue ({
       },
 
       includeDisplay: function () {
-        this.getData();
+        var newdisplay=[]
+        this.loadlists();
+        app.statementdisplay= [];
+        app.workexpdisplay= [];
+        app.educationdisplay= [];
+        app.accomplishmentdisplay= [];
+        app.extracurriculardisplay= [];
+        app.languagesdisplay= [];
+        app.programsdisplay= [];
+        app.softskillsdisplay= [];
+        app.awardsdisplay= [];
+
         app.educationlist.forEach(function(item){
           if(item.displayShow == true){
-            app.educationdisplay.push(item)
+            newdisplay.push(item);
+            app.educationdisplay=newdisplay;
+            newdisplay=[];
           }
         });
         app.workexplist.forEach(function(item){
           if(item.displayShow == true){
-            app.workexpdisplay.push(item)
+            newdisplay.push(item);
+            app.workexpdisplay=newdisplay
+            newdisplay=[];
           }
         });
         app.accomplishmentlist.forEach(function(item){
           if(item.displayShow == true){
-            app.accomplishmentdisplay.push(item)
+            newdisplay.push(item);
+            app.accomplishmentdisplay=newdisplay
+            newdisplay=[];
           }
         });
         app.extracurricularlist.forEach(function(item){
           if(item.displayShow == true){
-            app.extracurriculardisplay.push(item)
+            newdisplay.push(item);
+            app.extracurriculardisplay=newdisplay
+            newdisplay=[];
           }
         });
         app.languageslist.forEach(function(item){
           if(item.displayShow == true){
-            app.languagesdisplay.push(item)
+            newdisplay.push(item);
+            app.languagesdisplay=newdisplay
+            newdisplay=[];
           }
         });
         app.programslist.forEach(function(item){
           if(item.displayShow == true){
-            app.programsdisplay.push(item)
+            newdisplay.push(item);
+            app.programsdisplay=newdisplay
+            newdisplay=[];
           }
         });
         app.softskillslist.forEach(function(item){
           if(item.displayShow == true){
-            app.softskillsdisplay.push(item)
+            newdisplay.push(item);
+            app.softskillsdisplay=newdisplay
+            newdisplay=[];
           }
         });
         app.awardslist.forEach(function(item){
           if(item.displayShow == true){
-            app.awardsdisplay.push(item)
+            newdisplay.push(item);
+            app.awardsdisplay=newdisplay
+            newdisplay=[];
           }
         });
         app.statementlist.forEach(function(item){
           if(item.displayShow == true){
-            app.statementdisplay.push(item)
+            newdisplay.push(item);
+            app.statementdisplay=newdisplay
+            newdisplay=[];
           }
         });
 
 
       },
 
-      addToDisplay: function (item,what) {
-        item.displayShow != item.displayShow;
-        fetch(`${url}/${what}/${item._id}`, {
+      addToDisplay: function (item,want) {
+        console.log(item.displayShow),
+        item.displayShow = !item.displayShow;
+        console.log(item.displayShow),
+        fetch(`${url}/${want}/${item._id}`, {
           method:"PUT",
+          credentials: "include",
           headers:{
             "Content-type": "application/json"
           },
@@ -698,7 +730,6 @@ var app= new Vue ({
               alert(data.msg)
             });
           } else {
-            app.getData(what);
             app.includeDisplay();
           }
         });

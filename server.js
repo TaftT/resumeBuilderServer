@@ -243,6 +243,9 @@ server.put("/personalinfo/:id", ensureAuthentication,  function(req, res){
       if (req.body.email != undefined){
         item.email = req.body.email;
       }
+      if (req.body.displayShow != undefined){
+        item.displayShow = req.body.displayShow;
+      }
       item.saveddate = new Date().toDateString()
 
       item.save().then(function(){
@@ -326,6 +329,9 @@ server.put("/statement/:id", ensureAuthentication,  function(req, res){
     } else{
       if (req.body.statement != undefined){
         item.statement = req.body.statement;
+      }
+      if (req.body.displayShow != undefined){
+        item.displayShow = req.body.displayShow;
       }
       item.saveddate = new Date().toDateString()
 
@@ -426,6 +432,9 @@ server.put("/workexp/:id", ensureAuthentication,  function(req, res){
       if (req.body.description != undefined){
         item.description = req.body.description;
       }
+      if (req.body.displayShow != undefined){
+        item.displayShow = req.body.displayShow;
+      }
       item.saveddate = new Date().toDateString()
 
       item.save().then(function(){
@@ -516,6 +525,9 @@ server.put("/education/:id", ensureAuthentication,  function(req, res){
       if (req.body.gradyear != undefined){
         item.gradyear = req.body.gradyear;
       }
+      if (req.body.displayShow != undefined){
+        item.displayShow = req.body.displayShow;
+      }
       item.saveddate = new Date().toDateString()
 
       item.save().then(function(){
@@ -601,6 +613,9 @@ server.put("/accomplishment/:id", ensureAuthentication,  function(req, res){
       }
       if (req.body.description != undefined){
         item.description = req.body.description;
+      }
+      if (req.body.displayShow != undefined){
+        item.displayShow = req.body.displayShow;
       }
       item.saveddate = new Date().toDateString()
 
@@ -692,6 +707,9 @@ server.put("/extracurricular/:id", ensureAuthentication,  function(req, res){
       if (req.body.date != undefined){
         item.date = req.body.date;
       }
+      if (req.body.displayShow != undefined){
+        item.displayShow = req.body.displayShow;
+      }
       item.saveddate = new Date().toDateString()
 
       item.save().then(function(){
@@ -778,6 +796,9 @@ server.put("/language/:id", ensureAuthentication,  function(req, res){
       }
       if (req.body.proficiency != undefined){
         item.proficiency = req.body.proficiency;
+      }
+      if (req.body.displayShow != undefined){
+        item.displayShow = req.body.displayShow;
       }
 
       item.saveddate = new Date().toDateString()
@@ -867,6 +888,9 @@ server.put("/program/:id", ensureAuthentication,  function(req, res){
       if (req.body.proficiency != undefined){
         item.proficiency = req.body.proficiency;
       }
+      if (req.body.displayShow != undefined){
+        item.displayShow = req.body.displayShow;
+      }
 
       item.saveddate = new Date().toDateString()
 
@@ -950,6 +974,9 @@ server.put("/softskill/:id", ensureAuthentication,  function(req, res){
     } else{
       if (req.body.title != undefined){
         item.title = req.body.title;
+      }
+      if (req.body.displayShow != undefined){
+        item.displayShow = req.body.displayShow;
       }
 
       item.save().then(function(){
@@ -1043,6 +1070,9 @@ server.put("/award/:id", ensureAuthentication,  function(req, res){
       }
       if (req.body.date != undefined){
         item.date = req.body.date;
+      }
+      if (req.body.displayShow != undefined){
+        item.displayShow = req.body.displayShow;
       }
       item.saveddate = new Date().toDateString()
 
