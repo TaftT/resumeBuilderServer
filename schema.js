@@ -267,6 +267,10 @@ const softskillSchema = mongoose.Schema({
         required: true,
         default: false
       },
+      user_id: {
+        type: String, //ObjectId needed here but error coming back saying undefined
+        required: true,
+      }
 
 });
 
