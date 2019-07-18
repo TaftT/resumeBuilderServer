@@ -235,6 +235,7 @@ var app= new Vue ({
         app.getData("program");
         app.getData("softskill");
         app.getData("award");
+        app.includeDisplay()
         },
 
       register: function() {
@@ -635,7 +636,6 @@ var app= new Vue ({
 
       includeDisplay: function () {
         var newdisplay=[]
-        this.loadlists();
         app.statementdisplay= [];
         app.workexpdisplay= [];
         app.educationdisplay= [];
@@ -646,6 +646,7 @@ var app= new Vue ({
         app.softskillsdisplay= [];
         app.awardsdisplay= [];
 
+
         app.educationlist.forEach(function(item){
           if(item.displayShow == true){
             newdisplay.push(item);
@@ -654,10 +655,13 @@ var app= new Vue ({
           }
         });
         app.workexplist.forEach(function(item){
+
+
           if(item.displayShow == true){
             newdisplay.push(item);
             app.workexpdisplay=newdisplay
             newdisplay=[];
+
           }
         });
         app.accomplishmentlist.forEach(function(item){
@@ -714,9 +718,9 @@ var app= new Vue ({
       },
 
       addToDisplay: function (item,want) {
-        console.log(item.displayShow),
+
         item.displayShow = !item.displayShow;
-        console.log(item.displayShow),
+
         fetch(`${url}/${want}/${item._id}`, {
           method:"PUT",
           credentials: "include",
@@ -806,6 +810,7 @@ var app= new Vue ({
             if(want=="award"){
               app.awardslist = data.awardlist
             }
+            app.includeDisplay();
 
             });
           });
