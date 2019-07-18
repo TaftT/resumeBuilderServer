@@ -22,7 +22,7 @@ server.use(function(req, res, next) {
 });
 server.options("*", function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Content-type");
-  res.header("Access-Control-Allow-Methods", "DELETE")
+  res.header("Access-Control-Allow-Methods", "DELETE, PUT")
   next();
 });
 server.use(express.json());

@@ -71,6 +71,7 @@ var app= new Vue ({
           title: "",
           description: "",
           date: "",
+          menu: false,
           user_id: ""
         },
         languagesEdit: {
@@ -159,7 +160,15 @@ var app= new Vue ({
       softskillsposition: 0,
       awardsposition: 0,
 
-      position1: {},
+      statementpositions: ["1", "2", "3", "4", "5", "6", "7"],
+      workexppositions: ["1", "2", "3", "4", "5", "6", "7"],
+      educationpositions: ["1", "2", "3", "4", "5", "6", "7"],
+      accomplishmentpositions: ["1", "2", "3", "4", "5", "6", "7"],
+      extracurricularpositions: ["1", "2", "3", "4", "5", "6", "7"],
+      languagespositions: ["1", "2", "3", "4", "5", "6", "7"],
+      programspositions: ["1", "2", "3", "4", "5", "6", "7"],
+      softskillspositions: ["1", "2", "3", "4", "5", "6", "7"],
+      awardspositions: ["1", "2", "3", "4", "5", "6", "7"],
 
       zone1: [],
       zone2: [],
@@ -177,6 +186,16 @@ var app= new Vue ({
       zone6_type: "",
       zone7_type: "",
 
+      workexpcheck: false,
+      educationcheck: false,
+      accomplishmentscheck: false,
+      extracurricularscheck: false,
+      languagescheck: false,
+      programscheck: false,
+      softskillscheck: false,
+      statementcheck: false,
+      awardscheck: false,
+
 
       emailRules: [
         v => !!v || 'E-mail is required',
@@ -192,7 +211,7 @@ var app= new Vue ({
 
 
     methods: {
-      toPrint: function(divID) { //changed
+      toPrint: function(divID) {
         var divElements = document.getElementById(divID).innerHTML;
         var oldPage = document.body.innerHTML;
 
@@ -240,7 +259,7 @@ var app= new Vue ({
   			});
   		},
 
-  		login: function() { //CHANGED by TAFT
+  		login: function() {
         console.log(this.username);
   			fetch(`${url}/users/login`, {
   				method: "POST",
@@ -576,7 +595,7 @@ var app= new Vue ({
 
 
       newKellyColorPickerMain: function () {
-        addEventListener("click", function () { //changed
+        addEventListener("click", function () {
             app.selected_color_main = document.getElementById("colorMain").style.backgroundColor;
         }, {passive: true});
         if (this.pickingColorMain == false) {
@@ -595,7 +614,7 @@ var app= new Vue ({
         };
       },
       newKellyColorPickerAccent: function () {
-        addEventListener("click", function () { //changed
+        addEventListener("click", function () {
             app.selected_color_accent = document.getElementById("colorAccent").style.backgroundColor;
         }, {passive: true});
         if (this.pickingColor == false) {
@@ -613,7 +632,6 @@ var app= new Vue ({
           this.pickingColor = false;
         };
       },
-
 
       includeDisplay: function () {
         this.getData();
@@ -685,9 +703,6 @@ var app= new Vue ({
           }
         });
       },
-
-
-
 
 
       pdfSave: function () {
@@ -765,7 +780,7 @@ var app= new Vue ({
           });
         },
 
-        removeFromList: function (itemlist,objid){// ADDED BY TAFT
+        removeFromList: function (itemlist,objid){
           var filtered = itemlist.filter(function(item){
             return item._id != objid
         });
@@ -773,7 +788,7 @@ var app= new Vue ({
 
       },
 
-      removeFromDisplay: function (whatlist,objid){// ADDED BY TAFT
+      removeFromDisplay: function (whatlist,objid){
         if(whatlist="workexp"){
           app.workexpdisplay= app.removeFromList(app.workexpdisplay,objid)
         }
@@ -805,7 +820,7 @@ var app= new Vue ({
       },
 
         submitStatement: function (){
-          app.checklogin()  //ADDED BY TAFT
+          app.checklogin()
           app.statementEdit.user_id = app.userID
           fetch(`${url}/statement`, {
             credentials: "include",
@@ -829,7 +844,7 @@ var app= new Vue ({
         },
 
         submitNewWorkexp: function (){
-          app.checklogin()  //ADDED BY TAFT
+          app.checklogin()
           app.workexpEdit.user_id = app.userID
           fetch(`${url}/workexp`, {
             credentials: "include",
@@ -859,7 +874,7 @@ var app= new Vue ({
         },
 
         submitEducation: function (){
-          app.checklogin()  //ADDED BY TAFT
+          app.checklogin()
           app.educationEdit.user_id = app.userID
           fetch(`${url}/education`, {
             credentials: "include",
@@ -888,7 +903,7 @@ var app= new Vue ({
         },
 
         submitAccomplishment: function (){
-          app.checklogin()  //ADDED BY TAFT
+          app.checklogin()
           app.accomplishmentEdit.user_id = app.userID
           fetch(`${url}/accomplishment`, {
             credentials: "include",
@@ -913,7 +928,7 @@ var app= new Vue ({
         },
 
         submitLanguage: function (){
-          app.checklogin()  //ADDED BY TAFT
+          app.checklogin()
           app.languagesEdit.user_id = app.userID
           fetch(`${url}/language`, {
             credentials: "include",
@@ -938,7 +953,7 @@ var app= new Vue ({
         },
 
         submitProgram: function (){
-          app.checklogin() //ADDED BY TAFT
+          app.checklogin()
           app.programsEdit.user_id = app.userID
           fetch(`${url}/program`, {
             credentials: "include",
@@ -962,7 +977,7 @@ var app= new Vue ({
 
         },
         submitAward: function (){
-          app.checklogin() //ADDED BY TAFT
+          app.checklogin()
           app.awardsEdit.user_id = app.userID
           fetch(`${url}/award`, {
             credentials: "include",
@@ -990,7 +1005,7 @@ var app= new Vue ({
         },
 
         submitExtracurricular: function (){
-          app.checklogin()//ADDED BY TAFT
+          app.checklogin()
           app.extracurricularEdit.user_id = app.userID
           fetch(`${url}/extracurricular`, {
             credentials: "include",
@@ -1007,6 +1022,7 @@ var app= new Vue ({
             title: "",
             description: "",
             date: "",
+            menu:false
           }
           app.getData("extracurricular");
 
@@ -1014,7 +1030,8 @@ var app= new Vue ({
 
 
         },
-        submitSoftskill: function (){ //Changed BY TAFT
+        submitSoftskill: function (){
+          app.checklogin()
           app.checklogin()
           app.softskillsEdit.user_id = app.userID
           fetch(`${url}/softskill`, {
@@ -1037,8 +1054,10 @@ var app= new Vue ({
 
         },
 
+
         deleteItem:  function(thing,item){
-          console.log("Trying to deletes")
+          console.log("Trying to deletes");
+          app.removeFromDisplay(thing, item._id);
           fetch(`${url}/${thing}/${item._id}`,
           {
             credentials: "include",
@@ -1052,6 +1071,7 @@ var app= new Vue ({
                 alert(data.msg)
               })
             }
+
 
           });
 
