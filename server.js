@@ -1088,6 +1088,92 @@ server.put("/award/:id", ensureAuthentication,  function(req, res){
   });
 });
 
+server.get("/position", ensureAuthentication,  function(req, res){
+  var model = [];
+  resumeInfo.positionmodel.find().then(function(wholeModel){
+    wholeModel.forEach(function(item){
+      if (item.user_id == req.user._id){
+        model.push(item)
+      }
+    });
+    res.json({
+      awardlist: model
+    });
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
+server.post("/position", ensureAuthentication,  function(req, res){
+  	resumeInfo.awardmodel.create({
+  	  	statementposition: req.body.statementposition,
+        workexpposition: req.body.workexpposition,
+   		  educationposition: req.body.educationposition,
+        extracurricularposition:req.body.extracurricularposition,
+        languagesposition:req.body.languagesposition,
+        programsposition:req.body.programsposition,
+        softskillsposition:req.body.softskillsposition,
+        awardsposition:req.body.awardsposition,
+        user_id: req.body.user_id
+ 	 }).then(function(newmodel){
+    		res.status(201);
+    		res.json({
+      		newmodel: newmodel
+    	});
+  	}).catch(function(error){
+   	 	res.status(400).json({msg : error.message});
+ 	 });
+});
+
+server.put("/position/:id", ensureAuthentication,  function(req, res){
+  resumeInfo.awardmodel.findById(req.params.id).then(function(item){
+    if(item == null){
+      res.status(404);
+      res.json({
+        msg: `there is no award item with id of ${req.params.id}`
+      });
+    } else{
+      if (req.body.statementposition != undefined){
+        item.statementposition = req.body.statementposition;
+      }
+      if (req.body.workexpposition != undefined){
+        item.workexpposition = req.body.workexpposition;
+      }
+      if (req.body.educationposition != undefined){
+        item.educationposition = req.body.educationposition;
+      }
+      if (req.body.accomplishmentposition != undefined){
+        item.accomplishmentposition = req.body.accomplishmentposition;
+      }
+      if (req.body.extracurricularposition != undefined){
+        item.extracurricularposition = req.body.extracurricularposition;
+      }
+      if (req.body.languagesposition != undefined){
+        item.languagesposition = req.body.languagesposition;
+      }
+      if (req.body.programsposition != undefined){
+        item.programsposition = req.body.programsposition;
+      }
+      if (req.body.softskillsposition != undefined){
+        item.softskillsposition = req.body.softskillsposition;
+      }
+      if (req.body.awardsposition != undefined){
+        item.awardsposition = req.body.awardsposition;
+      }
+      item.saveddate = new Date().toDateString()
+
+      item.save().then(function(){
+        res.status(200);
+        res.json({
+          education: item
+        });
+      })
+    }
+  }).catch(function(error){
+    res.status(400).json({msg : error.message});
+  });
+});
+
 
 mongoose.connect("mongodb+srv://pocolocomoco:mocolocopoco@cluster0-ztwj9.mongodb.net/ResumeBuilder?retryWrites=true&w=majority", {
  	 useNewUrlParser: true

@@ -311,46 +311,54 @@ const awardSchema = mongoose.Schema({
 
 const saveTemplateLayout = mongoose.Schema({
  		 statementposition: {
-   		 	type: String,
+   		 	type: Number,
     		required: true,
+        default: 0
   		},
       workexpposition: {
-    		 	type: String,
-     		required: true,
+        type: Number,
+      required: true,
+       default: 0
    		},
       educationposition: {
-    		 	type: String,
-     		required: true,
+        type: Number,
+      required: true,
+       default: 0
    		},
       accomplishmentposition: {
-    		 	type: String,
-     		required: true,
+        type: Number,
+      required: true,
+       default: 0
    		},
       extracurricularposition: {
-    		 	type: String,
-     		required: true,
+        type: Number,
+      required: true,
+       default: 0
    		},
       languagesposition: {
-    		 	type: String,
-     		required: true,
+        type: Number,
+        required: true,
+        default: 0
    		},
       programsposition: {
-    		type: String,
-     		required: true,
+        type: Number,
+      required: true,
+       default: 0
    		},
   	  softskillsposition: {
-   			type: String,
-    		required: true,
+        type: Number,
+      required: true,
+       default: 0
  		 },
+     awardsposition: {
+       type: Number,
+       required: true,
+       default: 0
+    },
      saveddate: {
        type: String,
        required: true,
        default: new Date().toDateString()
-    },
-    displayShow:{
-      type: Boolean,
-      required: true,
-      default: false
     },
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
@@ -369,6 +377,7 @@ var languagemodel = mongoose.model("language", languageSchema);
 var programmodel = mongoose.model("program", programSchema);
 var softskillmodel = mongoose.model("softskill", softskillSchema);
 var awardmodel = mongoose.model("award", awardSchema);
+var positionmodel = mongoose.model("position", saveTemplateLayout);
 module.exports = {
   personalinfomodel:personalinfomodel,
   statementmodel:statementmodel,
@@ -380,4 +389,5 @@ module.exports = {
   programmodel:programmodel,
   softskillmodel:softskillmodel,
   awardmodel:awardmodel,
+  positionmodel:positionmodel,
 };
