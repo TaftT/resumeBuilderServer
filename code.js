@@ -6,16 +6,26 @@ var app= new Vue ({
 
     data: {
       loadinglists: false,
-      username: "",
-      password: "",
+      username: "", 
+      password: "", 
       userID: "",
       menu:false,
       modal: false,
       page: "home",
       color: "",
+      panel: 0, 
+      panel1: 0, 
+      panel2: 0, 
+      panel3: 0, 
+      panel4: 0, 
+      panel5: 0, 
+      panel6: 0, 
+      panel7: 0, 
+      panel8: 0, 
+      panel9: 0, 
 
         educationlist:[],
-        workexplist:[
+        workexplist:[            
         ],
         accomplishmentlist: [],
         extracurricularlist:[],
@@ -25,7 +35,7 @@ var app= new Vue ({
         awardslist:[],
         statementlist:[],
 
-
+        
         personalinfoEdit:
         {
             first_name:"",
@@ -33,7 +43,7 @@ var app= new Vue ({
             address: "",
             city:"",
             state:"",
-            zip:"",
+            zip:"", 
             country: "",
             email: "",
             phone: "",
@@ -117,7 +127,7 @@ var app= new Vue ({
         pickingColor: false,
         color_brightness: 6,
         accent: 0,
-
+        
       template: "malia",
       templateLabel: "Choose a Template",
       templates: [
@@ -150,7 +160,7 @@ var app= new Vue ({
           name: "Template 7"
         },
       ],
-
+      
       statementdisplay: [],
       workexpdisplay: [],
       educationdisplay: [],
@@ -162,16 +172,6 @@ var app= new Vue ({
       awardsdisplay: [],
 
       add_remove: "",
-
-      statementposition: 0,
-      workexpposition: 0,
-      educationposition: 0,
-      accomplishmentposition: 0,
-      extracurricularposition: 0,
-      languagesposition: 0,
-      programsposition: 0,
-      softskillsposition: 0,
-      awardsposition: 0,
 
       positionEdit: {
         statementposition: 0,
@@ -186,15 +186,15 @@ var app= new Vue ({
         user_id: "",
       },
 
-      statementpositions: ["1", "2", "3", "4", "5", "6", "7"],
-      workexppositions: ["1", "2", "3", "4", "5", "6", "7"],
-      educationpositions: ["1", "2", "3", "4", "5", "6", "7"],
-      accomplishmentpositions: ["1", "2", "3", "4", "5", "6", "7"],
-      extracurricularpositions: ["1", "2", "3", "4", "5", "6", "7"],
-      languagespositions: ["1", "2", "3", "4", "5", "6", "7"],
-      programspositions: ["1", "2", "3", "4", "5", "6", "7"],
-      softskillspositions: ["1", "2", "3", "4", "5", "6", "7"],
-      awardspositions: ["1", "2", "3", "4", "5", "6", "7"],
+      statementpositions: [1,2,3,4,5,6,7],
+      workexppositions: [1,2,3,4,5,6,7],
+      educationpositions: [1,2,3,4,5,6,7],
+      accomplishmentpositions: [1,2,3,4,5,6,7],
+      extracurricularpositions: [1,2,3,4,5,6,7],
+      languagespositions: [1,2,3,4,5,6,7],
+      programspositions: [1,2,3,4,5,6,7],
+      softskillspositions: [1,2,3,4,5,6,7],
+      awardspositions: [1,2,3,4,5,6,7],
 
       zone1: [],
       zone2: [],
@@ -222,15 +222,15 @@ var app= new Vue ({
       statementcheck: false,
       awardscheck: false,
 
-      loginError: false,
-      loginErrorMsg: "",
-      loginSuccess: false,
-      registerSuccess: false,
+      loginError: false, 
+      loginErrorMsg: "", 
+      loginSuccess: false, 
+      registerSuccess: false, 
 
-      addError: false,
-      addErrorMsg: "",
-      deleteError: false,
-      deleteErrorMsg: "",
+      addError: false, 
+      addErrorMsg: "", 
+      deleteError: false, 
+      deleteErrorMsg: "", 
 
 
       emailRules: [
@@ -241,10 +241,11 @@ var app= new Vue ({
         v => !!v || 'This field is required',
       ],
     },
+
     created: function () {
-
+      
     },
-
+  
 
     methods: {
       toPrint: function(divID) {
@@ -275,50 +276,49 @@ var app= new Vue ({
     }).then(function(response) {
       if (response.status == 422 || response.status == 400) {
         response.json().then(function(data) {
-          app.loginError = true; //changed
-          console.log("Error", data.msg);//changed
-          app.loginErrorMsg = "Username and Password are required"; //changed
+          app.loginError = true; 
+          console.log("Error", data.msg);
+          app.loginErrorMsg = "Username and Password are required"; 
         })
       } else if (response.status == 201) {
         app.loginError = false; // changed
-        app.registerSuccess = true;//changed
-        app.page = "form"; //changed
-        app.newPosition();
+        app.registerSuccess = true;
+        app.page = "form"; 
       }
     });
   },
 
-  		login: function() {
-        console.log(this.username);
-  			fetch(`${url}/users/login`, {
-  				method: "POST",
-  				credentials: "include",
-  				headers: {
-  					"Content-type": "application/json"
-  				},
-  				body: JSON.stringify({
-  					username: this.username,
-  					password: this.password
-  				})
-  			}).then(function(response) {
-  				if (response.status == 403) {
-  					response.json().then(function(data) {
-  						app.loginError = true; //changed
-              app.loginErrorMsg = data.msg; //changed
-  					})
-  				}else if(response.status == 200){
-              app.loginError = false; // changed
-              app.loginSuccess = true;//changed
-            response.json().then( function(data){
-              app.userID = data.user_id
-              app.page = "form";
-              app.loadlists();
+  login: function() {
+    console.log(this.username);
+    fetch(`${url}/users/login`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.username,
+        password: this.password
+      })
+    }).then(function(response) {
+      if (response.status == 403) {
+        response.json().then(function(data) {
+          app.loginError = true; 
+          app.loginErrorMsg = data.msg; 
+        })
+      }else if(response.status == 200){
+          app.loginError = false; // changed
+          app.loginSuccess = true;
+        response.json().then( function(data){
+          app.userID = data.user_id
+          app.page = "form";
+          app.loadlists();
 
-            })
+        })
 
-          }
-  			});
-  		},
+      }
+    });
+  },
 
 
       phoneNum: function () {
@@ -373,257 +373,6 @@ var app= new Vue ({
         this.add_remove = "remove";
         return true;
       },
-
-
-      apply: function (type) {
-        var display = [];
-        if (type == "workexp") {
-          display = this.workexpdisplay;
-          if (this.workexpposition == "1") {
-            this.apply1(type,display,);
-          }
-          else if (this.workexpposition == "2") {
-            this.apply2(type,display);
-          }
-          else if (this.workexpposition == "3") {
-            this.apply3(type,display);
-          }
-          else if (this.workexpposition == "4") {
-            this.apply4(type,display);
-          }
-          else if (this.workexpposition == "5") {
-            this.apply5(type,display);
-          }
-          else if (this.workexpposition == "6") {
-            this.apply6(type,display);
-          }
-          else if (this.workexpposition == "7") {
-            this.apply7(type,display);
-          }
-        }
-        else if (type == "education") {
-          display = this.educationdisplay;
-          if (this.educationposition == "1") {
-            this.apply1(type, display);
-          }
-          else if (this.educationposition == "2") {
-            this.apply2(type, display);
-          }
-          else if (this.educationposition == "3") {
-            this.apply3(type, display);
-          }
-          else if (this.educationposition == "4") {
-            this.apply4(type, display);
-          }
-          else if (this.educationposition == "5") {
-            this.apply5(type, display);
-          }
-          else if (this.educationposition == "6") {
-            this.apply6(type, display);
-          }
-          else if (this.educationposition == "7") {
-            this.apply7(type, display);
-          }
-        }
-        else if (type == "statement") {
-          display = this.statementdisplay;
-          if (this.statementposition == "1") {
-            this.apply1(type, display);
-          }
-          else if (this.statementposition == "2") {
-            this.apply2(type, display);
-          }
-          else if (this.statementposition == "3") {
-            this.apply3(type, display);
-          }
-          else if (this.statementposition == "4") {
-            this.apply4(type, display);
-          }
-          else if (this.statementposition == "5") {
-            this.apply5(type, display);
-          }
-          else if (this.statementposition == "6") {
-            this.apply6(type, display);
-          }
-          else if (this.statementposition == "7") {
-            this.apply7(type, display);
-          }
-        }
-        else if (type == "accomplishment") {
-          display = this.accomplishmentdisplay;
-          if (this.accomplishmentposition == "1") {
-            this.apply1(type, display);
-          }
-          else if (this.accomplishmentposition == "2") {
-            this.apply2(type, display);
-          }
-          else if (this.accomplishmentposition == "3") {
-            this.apply3(type, display);
-          }
-          else if (this.accomplishmentposition == "4") {
-            this.apply4(type, display);
-          }
-          else if (this.accomplishmentposition == "5") {
-            this.apply5(type, display);
-          }
-          else if (this.accomplishmentposition == "6") {
-            this.apply6(type, display);
-          }
-          else if (this.accomplishmentposition == "7") {
-            this.apply7(type, display);
-          }
-        }
-        else if (type == "award") {
-          display = this.awardsdisplay;
-          if (this.awardsposition == "1") {
-            this.apply1(type, display);
-          }
-          else if (this.awardsposition == "2") {
-            this.apply2(type, display);
-          }
-          else if (this.awardsposition == "3") {
-            this.apply3(type, display);
-          }
-          else if (this.awardsposition == "4") {
-            this.apply4(type, display);
-          }
-          else if (this.awardsposition == "5") {
-            this.apply5(type, display);
-          }
-          else if (this.awardsposition == "6") {
-            this.apply6(type, display);
-          }
-          else if (this.awardsposition == "7") {
-            this.apply7(type, display);
-          }
-        }
-        else if (type == "language") {
-          display = this.languagesdisplay;
-          if (this.languagesposition == "1") {
-            this.apply1(type, display);
-          }
-          else if (this.languagesposition == "2") {
-            this.apply2(type, display);
-          }
-          else if (this.languagesposition == "3") {
-            this.apply3(type, display);
-          }
-          else if (this.languagesposition == "4") {
-            this.apply4(type, display);
-          }
-          else if (this.languagesposition == "5") {
-            this.apply5(type, display);
-          }
-          else if (this.languagesposition == "6") {
-            this.apply6(type, display);
-          }
-          else if (this.languagesposition == "7") {
-            this.apply7(type, display);
-          }
-        }
-        else if (type == "extracurricular") {
-          display = this.extracurriculardisplay;
-          if (this.extracurricularposition == "1") {
-            this.apply1(type, display);
-          }
-          else if (this.extracurricularposition == "2") {
-            this.apply2(type, display);
-          }
-          else if (this.extracurricularposition == "3") {
-            this.apply3(type, display);
-          }
-          else if (this.extracurricularposition == "4") {
-            this.apply4(type, display);
-          }
-          else if (this.extracurricularposition == "5") {
-            this.apply5(type, display);
-          }
-          else if (this.extracurricularposition == "6") {
-            this.apply6(type, display);
-          }
-          else if (this.extracurricularposition == "7") {
-            this.apply7(type, display);
-          }
-        }
-        else if (type == "programs") {
-          display = this.programsdisplay;
-          if (this.programsposition == "1") {
-            this.apply1(type, display);
-          }
-          else if (this.programsposition == "2") {
-            this.apply2(type, display);
-          }
-          else if (this.programsposition == "3") {
-            this.apply3(type, display);
-          }
-          else if (this.programsposition == "4") {
-            this.apply4(type, display);
-          }
-          else if (this.programsposition == "5") {
-            this.apply5(type, display);
-          }
-          else if (this.programsposition == "6") {
-            this.apply6(type, display);
-          }
-          else if (this.programsposition == "7") {
-            this.apply7(type, display);
-          }
-        }
-        else if (type == "skills") {
-          display = this.softskillsdisplay;
-          if (this.softskillsposition == "1") {
-            this.apply1(type, display);
-          }
-          else if (this.softskillsposition == "2") {
-            this.apply2(type, display);
-          }
-          else if (this.softskillsposition == "3") {
-            this.apply3(type, display);
-          }
-          else if (this.softskillsposition == "4") {
-            this.apply4(type, display);
-          }
-          else if (this.softskillsposition == "5") {
-            this.apply5(type, display);
-          }
-          else if (this.softskillsposition == "6") {
-            this.apply6(type, display);
-          }
-          else if (this.softskillsposition == "7") {
-            this.apply7(type, display);
-          }
-        }
-      },
-
-      apply1: function (type, display) {
-        this.zone1 = display;
-        this.zone1_type = type;
-      },
-      apply2: function (type, display) {
-        this.zone2 = display;
-        this.zone2_type = type;
-      },
-      apply3: function (type, display) {
-          this.zone3 = display;
-          this.zone3_type = type;
-      },
-      apply4: function (type, display) {
-          this.zone4 = display;
-          this.zone4_type = type;
-      },
-      apply5: function (type, display) {
-          this.zone5 = display;
-          this.zone5_type = type;
-      },
-      apply6: function (type, display) {
-          this.zone6 = display;
-          this.zone6_type = type;
-      },
-      apply7: function (type, display) {
-          this.zone7 = display;
-          this.zone7_type = type;
-      },
-
 
       newKellyColorPickerMain: function () {
         addEventListener("click", function () {
@@ -703,7 +452,7 @@ var app= new Vue ({
           await app.getData("program");
           await app.getData("softskill");
           await app.getData("award");
-          app.setPosition();
+          // app.setPosition();
           app.includeDisplay();
 
         app.loadinglists = false;
@@ -800,15 +549,16 @@ var app= new Vue ({
           credentials: "include"
         }).then(function (response) { //then executes when browser has received response from browser
           response.json().then(function (data) {
-            app.statementposition = data. statementposition;
-            app.workexpposition = data.workexpposition;
-            app.educationposition = data.educationposition;
-            app.accomplishmentposition = data.accomplishmentposition;
-            app.extracurricularposition = data.extracurricularposition;
-            app.languagesposition = data.languagesposition;
-            app.programsposition = data.programsposition;
-            app.softskillsposition = data.softskillsposition;
-            app.awardsposition = data.awardsposition;
+            app.positionEdit.statementposition = data.statementposition;
+            app.positionEdit.workexpposition = data.workexpposition;
+            app.positionEdit.educationposition = data.educationposition;
+            app.positionEdit.accomplishmentposition = data.accomplishmentposition;
+            app.positionEdit.extracurricularposition = data.extracurricularposition;
+            app.positionEdit.languagesposition = data.languagesposition;
+            app.positionEdit.programsposition = data.programsposition;
+            app.positionEdit.softskillsposition = data.softskillsposition;
+            app.positionEdit.awardsposition = data.awardsposition;
+            console.log("ran");
             app.setZone();
           });
         });
@@ -840,14 +590,14 @@ var app= new Vue ({
       },
 
       setPosition: function () {
-        item.displayShow = !item.displayShow;
-        fetch(`${url}/position/${item._id}`, {
+        
+        fetch(`${url}/position`, {
           method:"PUT",
           credentials: "include",
           headers:{
             "Content-type": "application/json"
           },
-          body: JSON.stringify(item)
+          body: JSON.stringify(app.positionEdit)
         }).then(function (response) {
           if (response.status == 400){
             response.json().then(function (data) {
@@ -855,47 +605,57 @@ var app= new Vue ({
             });
           }
           app.getPosition();
+          app.setZone();
         });
       },
-
       setZone:function (){
-        sortToZone(app.statementposition,app.statementdisplay);
-        sortToZone(app.workexpposition,app.workexpdisplay);
-        sortToZone(app.educationposition,app.statementdisplay);
-        sortToZone(app.extracurricularposition,app.statementdisplay);
-        sortToZone(app.languagesposition,app.languagesdisplay);
-        sortToZone(app.programsposition,app.programsdisplay);
-        sortToZone(app.softskillsposition,app.softskillsdisplay);
-        sortToZone(app.awardsposition,app.awardsdisplay);
-        sortToZone(app.accomplishmentposition,app.accomplishmentdisplay);
-
+        app.sortToZone(app.positionEdit.statementposition,app.statementdisplay, "statement");
+        app.sortToZone(app.positionEdit.workexpposition,app.workexpdisplay, "workexp");
+        app.sortToZone(app.positionEdit.educationposition,app.statementdisplay, "education");
+        app.sortToZone(app.positionEdit.extracurricularposition,app.statementdisplay, "extracurricular");
+        app.sortToZone(app.positionEdit.languagesposition,app.languagesdisplay, "language");
+        app.sortToZone(app.positionEdit.programsposition,app.programsdisplay, "programs");
+        app.sortToZone(app.positionEdit.softskillsposition,app.softskillsdisplay, "skills");
+        app.sortToZone(app.positionEdit.awardsposition,app.awardsdisplay, "award");
+        app.sortToZone(app.positionEdit.accomplishmentposition,app.accomplishmentdisplay, "accomplishment");
+        console.log("sorted zones");
       },
 
-      sortToZone: function (position,displayList) {
+      sortToZone: function (position,displayList,type) {
+        console.log(displayList);
+        console.log("here");
+        console.log(position);
+        
         if(position == 1){
-          app.zone1=displayList
+          app.zone1=displayList;
+          app.zone1_type=type;
+          console.log("added to zone 1");
         }
         if(position == 2){
-          app.zone2=displayList
+          app.zone2=displayList;
+          app.zone2_type=type;
         }
         if(position == 3){
           app.zone3=displayList
+          app.zone3_type=type;
         }
         if(position == 4){
           app.zone4=displayList
+          app.zone4_type=type;
         }
         if(position == 5){
           app.zone5=displayList
+          app.zone5_type=type;
         }
         if(position == 6){
-          app.zone6=displayList
+          app.zone6=displayList;
+          app.zone6_type=type;
         }
         if(position == 7){
-          app.zone7=displayList
+          app.zone7=displayList;
+          app.zone7_type=type;
         }
       },
-
-
 
 
       pdfSave: function () {
@@ -1264,8 +1024,8 @@ var app= new Vue ({
               app.getData(thing);
             } else if(response.status == 400){
               response.json().then(function(data){
-                app.deleteError = true; //changed
-                app.deleteErrorMsg = data.msg; //changed
+                app.deleteError = true; 
+                app.deleteErrorMsg = data.msg;
               })
             }
 
@@ -1279,14 +1039,15 @@ var app= new Vue ({
 
     },
     computed: {
-        category_title_font: function () {
-          return {
-            'subheading': this.$vuetify.breakpoint.xsOnly,
-            'title': this.$vuetify.breakpoint.smOnly,
-            'headline': this.$vuetify.breakpoint.mdOnly,
-            'display-1': this.$vuetify.breakpoint.lgOnly
-          }
+      
+      binding () {
+        const binding = {}
 
-        }
-      },
+        if (this.$vuetify.breakpoint.mdAndDown) binding.column = true
+
+        return binding
+    },
+},
+
+      
 })

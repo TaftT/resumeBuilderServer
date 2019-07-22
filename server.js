@@ -157,10 +157,10 @@ server.get("/users/checklogin",ensureAuthentication, function(req, res) {
 
 //#### personalinfo #####
 server.get("/personalinfo", ensureAuthentication,  function(req, res){
-  resumeInfo.personalinfomodel.find().then(function(model){
-    res.json({
-      personalinfo: model
-    });
+  resumeInfo.positionmodel.findOne({user_id : req.user._id}).then(function(item){
+    res.json(
+      item
+    );
   }).catch(function(error){
     res.status(400).json({msg : error.message});
   });
@@ -212,55 +212,49 @@ server.delete("/personalinfo/:id", ensureAuthentication,  function(req, res){
   });
 });
 
-server.put("/personalinfo/:id", ensureAuthentication,  function(req, res){
-  resumeInfo.personalinfomodel.findById(req.params.id).then(function(item){
-    if(item == null){
-      res.status(404);
-      res.json({
-        msg: `there is no personal info with id of ${req.params.id}`
-      });
-    } else{
-      if (req.body.first_name != undefined){
-        item.first_name = req.body.first_name;
-      }
-      if (req.body.last_name != undefined){
-        item.last_name = req.body.last_name;
-      }
-      if (req.body.address != undefined){
-        item.address = req.body.address;
-      }
-      if (req.body.city != undefined){
-        item.city = req.body.city;
-      }
-      if (req.body.state != undefined){
-        item.state = req.body.state;
-      }
-      if (req.body.zip != undefined){
-        item.zip = req.body.zip;
-      }
-      if (req.body.country != undefined){
-        item.country = req.body.country;
-      }
-      if (req.body.email != undefined){
-        item.email = req.body.email;
-      }
-      if (req.body.displayShow != undefined){
-        item.displayShow = req.body.displayShow;
-      }
-      item.saveddate = new Date().toDateString()
+server.put("/personalinfo", ensureAuthentication,  function(req, res){
+  var returnitem = {};
+  resumeInfo.positionmodel.findOne({user_id : req.user._id}).then(function(item){
 
-      item.save().then(function(){
-        res.status(200);
-        res.json({
-          item: item
-        });
-      })
+    if (req.body.first_name != undefined){
+      item.first_name = req.body.first_name;
     }
-  }).catch(function(error){
-    res.status(400).json({msg : error.message});
-  });
+    if (req.body.last_name != undefined){
+      item.last_name = req.body.last_name;
+    }
+    if (req.body.address != undefined){
+      item.address = req.body.address;
+    }
+    if (req.body.city != undefined){
+      item.city = req.body.city;
+    }
+    if (req.body.state != undefined){
+      item.state = req.body.state;
+    }
+    if (req.body.zip != undefined){
+      item.zip = req.body.zip;
+    }
+    if (req.body.country != undefined){
+      item.country = req.body.country;
+    }
+    if (req.body.email != undefined){
+      item.email = req.body.email;
+    }
+    if (req.body.displayShow != undefined){
+      item.displayShow = req.body.displayShow;
+    }
+    item.saveddate = new Date().toDateString()
+        returnitem = item;
+    item.save().then(function(){
+      res.status(200);
+      res.json({
+        position: returnitem
+      });
+    })
+}).catch(function(error){
+  res.status(400).json({msg : error.message});
 });
-
+});
 
 //#### statement #####
 server.get("/statement", ensureAuthentication,  function(req, res){
