@@ -1,13 +1,13 @@
-var url = "http://localhost:3000";
-//var url = "https://createresume.herokuapp.com";
+//var url = "http://localhost:3000";
+var url = "https://createresume.herokuapp.com";
 
 var app= new Vue ({
     el: "#app1",
 
     data: {
       loadinglists: false,
-      username: "",
-      password: "",
+      username: "", 
+      password: "", 
       userID: "",
       menu:false,
       modal: false,
@@ -15,7 +15,7 @@ var app= new Vue ({
       color: "",
 
         educationlist:[],
-        workexplist:[
+        workexplist:[            
         ],
         accomplishmentlist: [],
         extracurricularlist:[],
@@ -25,7 +25,7 @@ var app= new Vue ({
         awardslist:[],
         statementlist:[],
 
-
+        
         personalinfoEdit:
         {
             first_name:"",
@@ -33,7 +33,7 @@ var app= new Vue ({
             address: "",
             city:"",
             state:"",
-            zip:"",
+            zip:"", 
             country: "",
             email: "",
             phone: "",
@@ -117,7 +117,7 @@ var app= new Vue ({
         pickingColor: false,
         color_brightness: 6,
         accent: 0,
-
+        
       template: "malia",
       templateLabel: "Choose a Template",
       templates: [
@@ -130,15 +130,27 @@ var app= new Vue ({
           name: "Template 2"
         },
         {
-          model: "taft",
+          model: "basezones",
           name: "Template 3"
         },
         {
           model: "sharon",
           name: "Template 4"
         },
+        {
+          model: "template5",
+          name: "Template 5"
+        },
+        {
+          model: "template6",
+          name: "Template 6"
+        },
+        {
+          model: "template7",
+          name: "Template 7"
+        },
       ],
-
+      
       statementdisplay: [],
       workexpdisplay: [],
       educationdisplay: [],
@@ -161,7 +173,7 @@ var app= new Vue ({
       softskillsposition: 0,
       awardsposition: 0,
 
-      positionEdit:{
+      positionEdit: {
         statementposition: 0,
         workexpposition: 0,
         educationposition: 0,
@@ -210,6 +222,16 @@ var app= new Vue ({
       statementcheck: false,
       awardscheck: false,
 
+      loginError: false, 
+      loginErrorMsg: "", 
+      loginSuccess: false, 
+      registerSuccess: false, 
+
+      addError: false, 
+      addErrorMsg: "", 
+      deleteError: false, 
+      deleteErrorMsg: "", 
+
 
       emailRules: [
         v => !!v || 'E-mail is required',
@@ -220,9 +242,9 @@ var app= new Vue ({
       ],
     },
     created: function () {
-
+      
     },
-
+  
 
     methods: {
       toPrint: function(divID) {
@@ -239,27 +261,31 @@ var app= new Vue ({
   },
 
 
-      register: function() {
-  			fetch(`${url}/users/register`, {
-  				method: "POST",
-  				credentials: "include",
-  				headers: {
-  					"Content-type": "application/json"
-  				},
-  				body: JSON.stringify({
-  					username: this.username,
-  					password: this.password
-  				})
-  			}).then(function(response) {
-  				if (response.status == 422 || response.status == 400) {
-  					response.json().then(function(data) {
-  						alert(data.msg);
-  					})
-  				} else if (response.status == 201) {
-  					console.log("registered");
-  				}
-  			});
-  		},
+  register: function() {
+    fetch(`${url}/users/register`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.username,
+        password: this.password
+      })
+    }).then(function(response) {
+      if (response.status == 422 || response.status == 400) {
+        response.json().then(function(data) {
+          app.loginError = true; //changed
+          console.log("Error", data.msg);//changed
+          app.loginErrorMsg = "Username and Password are required"; //changed
+        })
+      } else if (response.status == 201) {
+        app.loginError = false; // changed
+        app.registerSuccess = true;//changed
+        app.page = "form"; //changed
+      }
+    });
+  },
 
   		login: function() {
         console.log(this.username);
@@ -276,19 +302,23 @@ var app= new Vue ({
   			}).then(function(response) {
   				if (response.status == 403) {
   					response.json().then(function(data) {
-  						alert(data.msg);
+  						app.loginError = true; //changed
+              app.loginErrorMsg = data.msg; //changed
   					})
   				}else if(response.status == 200){
-            alert("logged in");
+              app.loginError = false; // changed
+              app.loginSuccess = true;//changed
             response.json().then( function(data){
               app.userID = data.user_id
               app.page = "form";
+              app.loadlists();
 
             })
 
           }
   			});
   		},
+
 
       phoneNum: function () {
         var x = this.personalinfoEdit.phone.replace(/\D/g, '').match(`(\d{0,3})(\d{0,3})(\d{0,4})`);
@@ -650,15 +680,19 @@ var app= new Vue ({
         }).then(function (response) {
           if (response.status == 400){
             response.json().then(function (data) {
-              alert(data.msg)
+              app.addError = true; // changed
+              app.addErrorMsg = data.msg; // changed
             });
+          } else {
+            app.addError = false; // changed
+            app.includeDisplay();
           }
         });
       },
 
       loadlists: async function() {
         app.loadinglists = true;
-        if (app.checklogin()){
+        app.checklogin()
           console.log("starting loadlist");
           await app.getData("statement");
           await app.getData("workexp");
@@ -670,9 +704,9 @@ var app= new Vue ({
           await app.getData("softskill");
           await app.getData("award");
           app.includeDisplay();
-        }
+        
         app.loadinglists = false;
-        console.log("reloading")
+        console.log("reloading");
         },
 
       includeDisplay: function () {
@@ -822,7 +856,7 @@ var app= new Vue ({
         });
       },
 
-      },
+      
 
       pdfSave: function () {
         var doc = new jsPDF();
@@ -1186,11 +1220,12 @@ var app= new Vue ({
             method: "DELETE"
           }).then(function(response){
             if (response.status == 204){
-              console.log("Deleted Item")
+              console.log("Deleted Item");
               app.getData(thing);
             } else if(response.status == 400){
               response.json().then(function(data){
-                alert(data.msg)
+                app.deleteError = true; //changed
+                app.deleteErrorMsg = data.msg; //changed
               })
             }
 
@@ -1201,14 +1236,14 @@ var app= new Vue ({
 
 
 
-    },
 
+    },
     computed: {
         category_title_font: function () {
           return {
-            'subheading': this.$vuetify.breakpoint.xsOnly,
-            'title': this.$vuetify.breakpoint.smOnly,
-            'headline': this.$vuetify.breakpoint.mdOnly,
+            'subheading': this.$vuetify.breakpoint.xsOnly, 
+            'title': this.$vuetify.breakpoint.smOnly, 
+            'headline': this.$vuetify.breakpoint.mdOnly, 
             'display-1': this.$vuetify.breakpoint.lgOnly
           }
 

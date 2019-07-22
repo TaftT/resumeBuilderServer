@@ -1,3 +1,4 @@
+
 const express = require("express");
 const expressSession = require("express-session"); // npm install express-session
 //const cors = require("cors");
@@ -1097,7 +1098,7 @@ server.get("/position", ensureAuthentication,  function(req, res){
       }
     });
     res.json({
-      awardlist: model
+      position: model
     });
   }).catch(function(error){
     res.status(400).json({msg : error.message});
@@ -1105,7 +1106,7 @@ server.get("/position", ensureAuthentication,  function(req, res){
 });
 
 server.post("/position", ensureAuthentication,  function(req, res){
-  	resumeInfo.awardmodel.create({
+  	resumeInfo.positionmodel.create({
   	  	statementposition: req.body.statementposition,
         workexpposition: req.body.workexpposition,
    		  educationposition: req.body.educationposition,
@@ -1125,54 +1126,51 @@ server.post("/position", ensureAuthentication,  function(req, res){
  	 });
 });
 
-server.put("/position/:id", ensureAuthentication,  function(req, res){
-  resumeInfo.awardmodel.findById(req.params.id).then(function(item){
-    if(item == null){
-      res.status(404);
-      res.json({
-        msg: `there is no award item with id of ${req.params.id}`
-      });
-    } else{
-      if (req.body.statementposition != undefined){
-        item.statementposition = req.body.statementposition;
-      }
-      if (req.body.workexpposition != undefined){
-        item.workexpposition = req.body.workexpposition;
-      }
-      if (req.body.educationposition != undefined){
-        item.educationposition = req.body.educationposition;
-      }
-      if (req.body.accomplishmentposition != undefined){
-        item.accomplishmentposition = req.body.accomplishmentposition;
-      }
-      if (req.body.extracurricularposition != undefined){
-        item.extracurricularposition = req.body.extracurricularposition;
-      }
-      if (req.body.languagesposition != undefined){
-        item.languagesposition = req.body.languagesposition;
-      }
-      if (req.body.programsposition != undefined){
-        item.programsposition = req.body.programsposition;
-      }
-      if (req.body.softskillsposition != undefined){
-        item.softskillsposition = req.body.softskillsposition;
-      }
-      if (req.body.awardsposition != undefined){
-        item.awardsposition = req.body.awardsposition;
-      }
-      item.saveddate = new Date().toDateString()
+server.put("/position", ensureAuthentication,  function(req, res){
+  //var model = [];
+  var returnitem = {};
+  resumeInfo.positionmodel.findOne({user_id : req.user._id}).then(function(item){
 
-      item.save().then(function(){
-        res.status(200);
-        res.json({
-          education: item
-        });
-      })
-    }
-  }).catch(function(error){
-    res.status(400).json({msg : error.message});
-  });
+        if (req.body.statementposition != undefined){
+          item.statementposition = req.body.statementposition;
+        }
+        if (req.body.workexpposition != undefined){
+          item.workexpposition = req.body.workexpposition;
+        }
+        if (req.body.educationposition != undefined){
+          item.educationposition = req.body.educationposition;
+        }
+        if (req.body.accomplishmentposition != undefined){
+          item.accomplishmentposition = req.body.accomplishmentposition;
+        }
+        if (req.body.extracurricularposition != undefined){
+          item.extracurricularposition = req.body.extracurricularposition;
+        }
+        if (req.body.languagesposition != undefined){
+          item.languagesposition = req.body.languagesposition;
+        }
+        if (req.body.programsposition != undefined){
+          item.programsposition = req.body.programsposition;
+        }
+        if (req.body.softskillsposition != undefined){
+          item.softskillsposition = req.body.softskillsposition;
+        }
+        if (req.body.awardsposition != undefined){
+          item.awardsposition = req.body.awardsposition;
+        }
+        returnitem = item;
+    item.save().then(function(){
+      res.status(200);
+      res.json({
+        position: returnitem
+      });
+    })
+}).catch(function(error){
+  res.status(400).json({msg : error.message});
 });
+});
+
+
 
 
 mongoose.connect("mongodb+srv://pocolocomoco:mocolocopoco@cluster0-ztwj9.mongodb.net/ResumeBuilder?retryWrites=true&w=majority", {

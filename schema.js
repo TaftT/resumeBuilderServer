@@ -389,5 +389,5 @@ module.exports = {
   programmodel:programmodel,
   softskillmodel:softskillmodel,
   awardmodel:awardmodel,
-  positionmodel:positionmodel,
+  positionmodel:positionmodel
 };
