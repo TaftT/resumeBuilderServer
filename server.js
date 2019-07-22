@@ -1090,16 +1090,11 @@ server.put("/award/:id", ensureAuthentication,  function(req, res){
 });
 
 server.get("/position", ensureAuthentication,  function(req, res){
-  var model = [];
-  resumeInfo.positionmodel.find().then(function(wholeModel){
-    wholeModel.forEach(function(item){
-      if (item.user_id == req.user._id){
-        model.push(item)
-      }
-    });
-    res.json({
-      position: model
-    });
+  resumeInfo.positionmodel.findOne({user_id : req.user._id}).then(function(item){
+
+    res.json(
+      item
+    );
   }).catch(function(error){
     res.status(400).json({msg : error.message});
   });
