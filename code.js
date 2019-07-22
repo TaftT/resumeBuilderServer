@@ -6,8 +6,8 @@ var app= new Vue ({
 
     data: {
       loadinglists: false,
-      username: "", 
-      password: "", 
+      username: "",
+      password: "",
       userID: "",
       menu:false,
       modal: false,
@@ -15,7 +15,7 @@ var app= new Vue ({
       color: "",
 
         educationlist:[],
-        workexplist:[            
+        workexplist:[
         ],
         accomplishmentlist: [],
         extracurricularlist:[],
@@ -25,7 +25,7 @@ var app= new Vue ({
         awardslist:[],
         statementlist:[],
 
-        
+
         personalinfoEdit:
         {
             first_name:"",
@@ -33,7 +33,7 @@ var app= new Vue ({
             address: "",
             city:"",
             state:"",
-            zip:"", 
+            zip:"",
             country: "",
             email: "",
             phone: "",
@@ -117,7 +117,7 @@ var app= new Vue ({
         pickingColor: false,
         color_brightness: 6,
         accent: 0,
-        
+
       template: "malia",
       templateLabel: "Choose a Template",
       templates: [
@@ -150,7 +150,7 @@ var app= new Vue ({
           name: "Template 7"
         },
       ],
-      
+
       statementdisplay: [],
       workexpdisplay: [],
       educationdisplay: [],
@@ -222,15 +222,15 @@ var app= new Vue ({
       statementcheck: false,
       awardscheck: false,
 
-      loginError: false, 
-      loginErrorMsg: "", 
-      loginSuccess: false, 
-      registerSuccess: false, 
+      loginError: false,
+      loginErrorMsg: "",
+      loginSuccess: false,
+      registerSuccess: false,
 
-      addError: false, 
-      addErrorMsg: "", 
-      deleteError: false, 
-      deleteErrorMsg: "", 
+      addError: false,
+      addErrorMsg: "",
+      deleteError: false,
+      deleteErrorMsg: "",
 
 
       emailRules: [
@@ -242,9 +242,9 @@ var app= new Vue ({
       ],
     },
     created: function () {
-      
+
     },
-  
+
 
     methods: {
       toPrint: function(divID) {
@@ -283,6 +283,7 @@ var app= new Vue ({
         app.loginError = false; // changed
         app.registerSuccess = true;//changed
         app.page = "form"; //changed
+        app.newPosition();
       }
     });
   },
@@ -594,7 +595,6 @@ var app= new Vue ({
         }
       },
 
-
       apply1: function (type, display) {
         this.zone1 = display;
         this.zone1_type = type;
@@ -703,8 +703,9 @@ var app= new Vue ({
           await app.getData("program");
           await app.getData("softskill");
           await app.getData("award");
+          app.setPosition();
           app.includeDisplay();
-        
+
         app.loadinglists = false;
         console.log("reloading");
         },
@@ -808,6 +809,7 @@ var app= new Vue ({
             app.programsposition = data.programsposition;
             app.softskillsposition = data.softskillsposition;
             app.awardsposition = data.awardsposition;
+            app.setZone();
           });
         });
 
@@ -856,7 +858,45 @@ var app= new Vue ({
         });
       },
 
-      
+      setZone:function (){
+        sortToZone(app.statementposition,app.statementdisplay);
+        sortToZone(app.workexpposition,app.workexpdisplay);
+        sortToZone(app.educationposition,app.statementdisplay);
+        sortToZone(app.extracurricularposition,app.statementdisplay);
+        sortToZone(app.languagesposition,app.languagesdisplay);
+        sortToZone(app.programsposition,app.programsdisplay);
+        sortToZone(app.softskillsposition,app.softskillsdisplay);
+        sortToZone(app.awardsposition,app.awardsdisplay);
+        sortToZone(app.accomplishmentposition,app.accomplishmentdisplay);
+
+      },
+
+      sortToZone: function (position,displayList) {
+        if(position == 1){
+          app.zone1=displayList
+        }
+        if(position == 2){
+          app.zone2=displayList
+        }
+        if(position == 3){
+          app.zone3=displayList
+        }
+        if(position == 4){
+          app.zone4=displayList
+        }
+        if(position == 5){
+          app.zone5=displayList
+        }
+        if(position == 6){
+          app.zone6=displayList
+        }
+        if(position == 7){
+          app.zone7=displayList
+        }
+      },
+
+
+
 
       pdfSave: function () {
         var doc = new jsPDF();
@@ -1241,9 +1281,9 @@ var app= new Vue ({
     computed: {
         category_title_font: function () {
           return {
-            'subheading': this.$vuetify.breakpoint.xsOnly, 
-            'title': this.$vuetify.breakpoint.smOnly, 
-            'headline': this.$vuetify.breakpoint.mdOnly, 
+            'subheading': this.$vuetify.breakpoint.xsOnly,
+            'title': this.$vuetify.breakpoint.smOnly,
+            'headline': this.$vuetify.breakpoint.mdOnly,
             'display-1': this.$vuetify.breakpoint.lgOnly
           }
 

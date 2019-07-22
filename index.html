@@ -32,7 +32,7 @@
                             <v-btn flat @click="page = 'preview'; loadlists()" class=" subheadingDef">Preview</v-btn>
                             <v-btn flat @click="page = 'login'" class="subheadingDef">Login</v-btn>
                     </v-toolbar-items>
-                    
+
                 </v-toolbar>
                 <div v-show="page == 'login'">
                         <v-card class="mt-5 white--text display-1Def" color="rgba(85, 82, 89, 0.8)">
@@ -86,7 +86,7 @@
                                                 <p class="subheadingDef text-xs-left mb-2">Enter a secure password for the account: </p>
                                                 <v-text-field  prepend-icon="lock" name="Password" label="Password" type="password" v-model="password" class="mb-4 mx-2"></v-text-field>
                                                 <v-card-actions align="center">
-                                                    <v-btn @click="register()" color="color: rgba(234, 238, 242, 1)" class="mx-auto">SIGN UP</v-btn>
+                                                    <v-btn @click="register()" color="color: rgba(234, 238, 242, 1)" class="mx-auto">SIGN UP</v-btn><!-- ADDED BY TAFT -->
                                                 </v-card-actions>
                                             </v-form>
                                         </v-card>
@@ -131,7 +131,7 @@
                                 <v-layout align-center fill-height>
                                     <v-flex xs10 offset-xs1>
                                         <v-card-text class="headlineDef text-xs-center">
-                                            <h3 class="mb-4 font-weight-thin"> 
+                                            <h3 class="mb-4 font-weight-thin">
                                             Build the perfect resume today!</h3>
                                             <v-btn large @click="page = 'form'">Get Started</v-btn>
                                         </v-card-text>
@@ -193,7 +193,7 @@
                                     </v-flex>
                                     <v-flex xs6 offset-xs1>
                                         <v-card-text class="my-auto subheadingDefDef text-xs-center">
-                                            <h3 class="font-weight-thin"> 
+                                            <h3 class="font-weight-thin">
                                             All templates are fully customizable. With advanced color selection, user-selected section layouts, and advanced information selection, creating the perfect template is smooth and effortless.  </h3>
                                         </v-card-text>
                                     </v-flex>
@@ -205,7 +205,7 @@
                                 <v-layout align-center justify-space-between row fill-height>
                                     <v-flex xs6 offset-xs1>
                                         <v-card-text class="my-auto subheadingDefDef text-xs-center">
-                                            <h3 class="font-weight-thin"> 
+                                            <h3 class="font-weight-thin">
                                             Creating a personalized resume for every job application has never been more smooth. With a free, personalized account, all user information is saved simultaniously so it can be added or removed from the resume at any time without deletion.</h3>
                                         </v-card-text>
                                     </v-flex>
@@ -220,7 +220,7 @@
                                 </v-layout>
                             </v-card>
                         </v-card>
-                        
+
                     </div>
 
                     <div v-show="page == 'form'">
@@ -235,7 +235,7 @@
                                     </v-card>
                                     <v-card v-show="registerSuccess == true" class="mb-4">
                                         <v-layout align-center justify-space-between row fill-height>
-                                            <v-card-text class="body-2DefDef green--text text-xs-left" > You have successfully 
+                                            <v-card-text class="body-2DefDef green--text text-xs-left" > You have successfully
                                             registered! All information entered will now be saved for future use.</v-card-text>
                                             <v-btn flat small width="5px" color="green" @click="registerSuccess = false"><v-icon>close</v-icon></v-btn>
                                         </v-layout>
@@ -249,7 +249,7 @@
                                 </v-layout>
                             </v-container>
                         <v-container>
-                        
+
                         <v-container>
                             <v-layout>
                                 <v-flex xs12 lg10 offset-lg1>
@@ -341,10 +341,10 @@
                                                             ></v-text-field>
                                                             </template>
                                                             <v-date-picker v-model="workexpEdit.startdate" @input="workexpEdit.start_menu = false" type="month">
-        
+
                                                             </v-date-picker>
                                                         </v-menu>
-        
+
                                                         <v-menu
                                                             v-model="workexpEdit.end_menu"
                                                             :close-on-content-click="false"
@@ -379,7 +379,7 @@
                                             <v-expansion-panel-content id="education">
                                                     <template v-slot:header> <v-card-text class="display-1Def">Education</v-card-text></template>
                                                     <v-card class="ma-2 pa-4">
-                                                        
+
                                                         <v-text-field box label="School attended" v-model="educationEdit.college"></v-text-field>
                                                         <v-text-field box label="Degree" v-model="educationEdit.degree"></v-text-field>
                                                         <template v-slot:activator="{ on }">
@@ -412,7 +412,7 @@
                                                         ></v-text-field>
                                                         </template>
                                                         <v-date-picker v-model="educationEdit.gradyear" @input="educationEdit.menu = false" type="month">
-                                                            
+
                                                         </v-date-picker>
                                                     </v-menu>
                                                     <v-btn @click="submitEducation()">Add Education</v-btn>
@@ -491,7 +491,7 @@
                                                         ></v-text-field>
                                                         </template>
                                                         <v-date-picker v-model="awardsEdit.date" @input="awardsEdit.menu = false" type="month">
-                                                            
+
                                                         </v-date-picker>
                                                     </v-menu>
                                                         <v-textarea auto-grow rows="2"
@@ -542,9 +542,9 @@
                                             </v-expansion-panel-content>
 
                                         </v-expansion-panel>
-                            
+
                                     </v-card>
-                
+
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -725,7 +725,7 @@
                                                     <v-flex xs10>
                                                         <v-card-text class="headlineDef pa-1 ml-3">{{exp.title}}</v-card-text>
                                                         <v-card-text class="ml-4 pl-2">{{exp.description}}</v-card-text>
-                                                        
+
                                                     </v-flex>
                                                     <v-flex xs2>
                                                             <v-btn fab flat @click="addToDisplay(exp,'accomplishment')" v-if="!exp.displayShow">
@@ -952,14 +952,14 @@
                                             </v-list-tile>
                                             </v-list>
                                     </v-menu>
-                                </div> 
+                                </div>
                                 <v-spacer></v-spacer>
                                 <v-btn flat @click="toPrint('printPDF')">Print Document</v-btn>
                                 <v-btn fab @click="newKellyColorPickerMain()" id="colorMain" value="rgb(84, 174, 219)"></v-btn>
                                 <v-toolbar-title class="text-uppercase font-weight-thin pr-3">Main Color</v-toolbar-title>
                                 <v-btn fab @click="newKellyColorPickerAccent()" id="colorAccent" value="rgb(84, 174, 219)"></v-btn>
                                 <v-toolbar-title class="text-uppercase font-weight-thin pr-3">Accent Color</v-toolbar-title>
-                
+
                         </v-toolbar>
                         <v-container>
                             <v-layout>
@@ -969,7 +969,7 @@
                                             <canvas id="color-picker-main" width="150" height="150" style="width: 150px; height: 150px;"></canvas>
                                         </v-card-text>
                                     </v-card>
-        
+
                                     <v-card id="fixedPos" v-show="pickingColor">
                                         <v-card-text>
                                             <canvas id="color-picker-accent" width="150" height="150" style="width: 150px; height: 150px;"></canvas>
@@ -1481,7 +1481,7 @@
                                                                             </div>
                                                                         </v-card-text>
                                                                     </v-card>
-                                                                </v-flex> 
+                                                                </v-flex>
                                                             </v-layout>
                                                         </div>
                                                     </v-card>
@@ -1943,7 +1943,7 @@
                                                 </div>
                                             </v-card>
                                         </v-flex>
-                                        
+
                                     </v-layout>
                             </v-container>
                             <v-container grid-list-xs fluid v-show="template == 'template5'">
@@ -2154,7 +2154,7 @@
                                                             </v-card>
                                                         </div>
                                                     </v-flex>
-                                                </v-layout>  
+                                                </v-layout>
                                                 <v-layout>
                                                     <v-flex xs5>
                                                         <div id="zone4" class="mb-3">
@@ -2412,7 +2412,7 @@
                                             </div>
                                         </v-card>
                                     </v-flex>
-                                    
+
                                 </v-layout>
                             </v-container>
                             <v-container grid-list-xs fluid v-show="template == 'template6'">
@@ -2869,7 +2869,7 @@
                                                 </div>
                                             </v-card>
                                         </v-flex>
-                                        
+
                                     </v-layout>
                             </v-container>
                             <v-container grid-list-xs fluid v-show="template == 'template7'">
@@ -3321,7 +3321,7 @@
                                             </div>
                                         </v-card>
                                     </v-flex>
-                                    
+
                                 </v-layout>
                             </v-container>
 
@@ -3773,7 +3773,7 @@
                                                 </div>
                                             </v-card>
                                         </v-flex>
-                                        
+
                                     </v-layout>
                             </v-container>
                         </v-container>

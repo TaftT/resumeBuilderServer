@@ -1110,6 +1110,7 @@ server.post("/position", ensureAuthentication,  function(req, res){
   	  	statementposition: req.body.statementposition,
         workexpposition: req.body.workexpposition,
    		  educationposition: req.body.educationposition,
+        accomplishmentposition: req.body.accomplishmentposition,
         extracurricularposition:req.body.extracurricularposition,
         languagesposition:req.body.languagesposition,
         programsposition:req.body.programsposition,
