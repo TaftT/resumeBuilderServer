@@ -240,8 +240,8 @@ server.put("/personalinfo", ensureAuthentication,  function(req, res){
     if (req.body.email != undefined){
       item.email = req.body.email;
     }
-    if (req.body.displayShow != undefined){
-      item.displayShow = req.body.displayShow;
+    if (req.body.user_id != undefined){
+      item.user_id = req.body.user_id;
     }
     item.saveddate = new Date().toDateString()
         returnitem = item;
