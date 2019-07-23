@@ -6,26 +6,26 @@ var app= new Vue ({
 
     data: {
       loadinglists: false,
-      username: "", 
-      password: "", 
+      username: "",
+      password: "",
       userID: "",
       menu:false,
       modal: false,
       page: "home",
       color: "",
-      panel: 0, 
-      panel1: 0, 
-      panel2: 0, 
-      panel3: 0, 
-      panel4: 0, 
-      panel5: 0, 
-      panel6: 0, 
-      panel7: 0, 
-      panel8: 0, 
-      panel9: 0, 
+      panel: 0,
+      panel1: 0,
+      panel2: 0,
+      panel3: 0,
+      panel4: 0,
+      panel5: 0,
+      panel6: 0,
+      panel7: 0,
+      panel8: 0,
+      panel9: 0,
 
         educationlist:[],
-        workexplist:[            
+        workexplist:[
         ],
         accomplishmentlist: [],
         extracurricularlist:[],
@@ -35,7 +35,7 @@ var app= new Vue ({
         awardslist:[],
         statementlist:[],
 
-        
+
         personalinfoEdit:
         {
             first_name:"",
@@ -43,7 +43,7 @@ var app= new Vue ({
             address: "",
             city:"",
             state:"",
-            zip:"", 
+            zip:"",
             country: "",
             email: "",
             phone: "",
@@ -127,7 +127,7 @@ var app= new Vue ({
         pickingColor: false,
         color_brightness: 6,
         accent: 0,
-        
+
       template: "malia",
       templateLabel: "Choose a Template",
       templates: [
@@ -160,7 +160,7 @@ var app= new Vue ({
           name: "Template 7"
         },
       ],
-      
+
       statementdisplay: [],
       workexpdisplay: [],
       educationdisplay: [],
@@ -172,6 +172,7 @@ var app= new Vue ({
       awardsdisplay: [],
 
       add_remove: "",
+
 
       positionEdit: {
         statementposition: 0,
@@ -222,15 +223,15 @@ var app= new Vue ({
       statementcheck: false,
       awardscheck: false,
 
-      loginError: false, 
-      loginErrorMsg: "", 
-      loginSuccess: false, 
-      registerSuccess: false, 
+      loginError: false,
+      loginErrorMsg: "",
+      loginSuccess: false,
+      registerSuccess: false,
 
-      addError: false, 
-      addErrorMsg: "", 
-      deleteError: false, 
-      deleteErrorMsg: "", 
+      addError: false,
+      addErrorMsg: "",
+      deleteError: false,
+      deleteErrorMsg: "",
 
 
       emailRules: [
@@ -243,9 +244,9 @@ var app= new Vue ({
     },
 
     created: function () {
-      
+
     },
-  
+
 
     methods: {
       toPrint: function(divID) {
@@ -276,14 +277,14 @@ var app= new Vue ({
     }).then(function(response) {
       if (response.status == 422 || response.status == 400) {
         response.json().then(function(data) {
-          app.loginError = true; 
+          app.loginError = true;
           console.log("Error", data.msg);
-          app.loginErrorMsg = "Username and Password are required"; 
+          app.loginErrorMsg = "Username and Password are required";
         })
       } else if (response.status == 201) {
         app.loginError = false; // changed
         app.registerSuccess = true;
-        app.page = "form"; 
+        app.page = "form";
       }
     });
   },
@@ -303,8 +304,8 @@ var app= new Vue ({
     }).then(function(response) {
       if (response.status == 403) {
         response.json().then(function(data) {
-          app.loginError = true; 
-          app.loginErrorMsg = data.msg; 
+          app.loginError = true;
+          app.loginErrorMsg = data.msg;
         })
       }else if(response.status == 200){
           app.loginError = false; // changed
@@ -577,7 +578,7 @@ var app= new Vue ({
         body: JSON.stringify(app.positionEdit)
       }).then(function (response) {
         //response.json().then((data)=>{console.log(data.msg)})
-        app.statementposition = response. statementposition;
+        app.statementposition = response.statementposition;
         app.workexpposition = response.workexpposition;
         app.educationposition = response.educationposition;
         app.accomplishmentposition = response.accomplishmentposition;
@@ -590,7 +591,7 @@ var app= new Vue ({
       },
 
       setPosition: function () {
-        
+
         fetch(`${url}/position`, {
           method:"PUT",
           credentials: "include",
@@ -608,11 +609,12 @@ var app= new Vue ({
           app.setZone();
         });
       },
+
       setZone:function (){
         app.sortToZone(app.positionEdit.statementposition,app.statementdisplay, "statement");
         app.sortToZone(app.positionEdit.workexpposition,app.workexpdisplay, "workexp");
-        app.sortToZone(app.positionEdit.educationposition,app.statementdisplay, "education");
-        app.sortToZone(app.positionEdit.extracurricularposition,app.statementdisplay, "extracurricular");
+        app.sortToZone(app.positionEdit.educationposition,app.educationdisplay, "education");
+        app.sortToZone(app.positionEdit.extracurricularposition,app.extracurriculardisplay, "extracurricular");
         app.sortToZone(app.positionEdit.languagesposition,app.languagesdisplay, "language");
         app.sortToZone(app.positionEdit.programsposition,app.programsdisplay, "programs");
         app.sortToZone(app.positionEdit.softskillsposition,app.softskillsdisplay, "skills");
@@ -625,7 +627,8 @@ var app= new Vue ({
         console.log(displayList);
         console.log("here");
         console.log(position);
-        
+        app.overideZone(position);
+
         if(position == 1){
           app.zone1=displayList;
           app.zone1_type=type;
@@ -655,6 +658,38 @@ var app= new Vue ({
           app.zone7=displayList;
           app.zone7_type=type;
         }
+      },
+
+      overideZone: function (position) {
+        if(app.positionEdit.statementposition == position){
+          app.positionEdit.statementposition = 0
+        }
+        if(app.positionEdit.workexpposition == position){
+          app.positionEdit.workexpposition = 0
+        }
+        if(app.positionEdit.educationposition == position){
+          app.positionEdit.educationposition = 0
+        }
+        if(app.positionEdit.extracurricularposition == position){
+          app.positionEdit.extracurricularposition = 0
+        }
+        if(app.positionEdit.languagesposition == position){
+          app.positionEdit.languagesposition = 0
+        }
+        if(app.positionEdit.programsposition == position){
+          app.positionEdit.programsposition = 0
+        }
+        if(app.positionEdit.softskillsposition == position){
+          app.positionEdit.softskillsposition = 0
+        }
+        if(app.positionEdit.awardsposition == position){
+          app.positionEdit.awardsposition = 0
+        }
+        if(app.positionEdit.accomplishmentposition == position){
+          app.positionEdit.accomplishmentposition = 0
+        }
+
+
       },
 
 
@@ -1024,7 +1059,7 @@ var app= new Vue ({
               app.getData(thing);
             } else if(response.status == 400){
               response.json().then(function(data){
-                app.deleteError = true; 
+                app.deleteError = true;
                 app.deleteErrorMsg = data.msg;
               })
             }
@@ -1039,7 +1074,7 @@ var app= new Vue ({
 
     },
     computed: {
-      
+
       binding () {
         const binding = {}
 
@@ -1049,5 +1084,5 @@ var app= new Vue ({
     },
 },
 
-      
+
 })

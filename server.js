@@ -157,7 +157,7 @@ server.get("/users/checklogin",ensureAuthentication, function(req, res) {
 
 //#### personalinfo #####
 server.get("/personalinfo", ensureAuthentication,  function(req, res){
-  resumeInfo.positionmodel.findOne({user_id : req.user._id}).then(function(item){
+  resumeInfo.personalinfomodel.findOne({user_id : req.user._id}).then(function(item){
     res.json(
       item
     );
