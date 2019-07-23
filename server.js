@@ -197,7 +197,7 @@ server.post("/personalinfo", ensureAuthentication,  function(req, res){
  	 }).then(function(newmodel){
     		res.status(201);
     		res.json({
-      		newmodel: newmodel
+      		personalinfo: newmodel
     	});
   	}).catch(function(error){
    	 	res.status(400).json({msg : error.message});
@@ -215,7 +215,7 @@ server.delete("/personalinfo/:id", ensureAuthentication,  function(req, res){
 
 server.put("/personalinfo", ensureAuthentication,  function(req, res){
   var returnitem = {};
-  resumeInfo.positionmodel.findOne({user_id : req.user._id}).then(function(item){
+  resumeInfo.personalinfomodel.findOne({user_id : req.user._id}).then(function(item){
 
     if (req.body.first_name != undefined){
       item.first_name = req.body.first_name;
@@ -249,7 +249,7 @@ server.put("/personalinfo", ensureAuthentication,  function(req, res){
     item.save().then(function(){
       res.status(200);
       res.json({
-        position: returnitem
+        personalinfo: returnitem
       });
     })
 }).catch(function(error){
