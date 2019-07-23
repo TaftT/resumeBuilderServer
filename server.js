@@ -237,7 +237,7 @@ server.put("/personalinfo", ensureAuthentication,  function(req, res){
       item.zip = req.body.zip;
     }
     if (req.body.phone != undefined){
-      item.zip = req.body.phone;
+      item.phone = req.body.phone;
     }
     if (req.body.country != undefined){
       item.country = req.body.country;

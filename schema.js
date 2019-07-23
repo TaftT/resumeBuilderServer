@@ -15,7 +15,7 @@ const personalinfoSchema = mongoose.Schema({
 
  		 },
      phone: {
-   			type: String,
+   			type: Number,
     		required: false,
 
  		 },
