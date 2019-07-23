@@ -193,6 +193,7 @@ server.post("/personalinfo", ensureAuthentication,  function(req, res){
         zip: req.body.zip,
         country: req.body.country,
         email: req.body.email,
+        user_id: req.body.user_id
  	 }).then(function(newmodel){
     		res.status(201);
     		res.json({
