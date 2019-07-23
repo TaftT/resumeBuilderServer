@@ -3,37 +3,37 @@ const mongoose = require("mongoose");
 const personalinfoSchema = mongoose.Schema({
  		 first_name: {
    		 	type: String,
-    		required: true,
+    		required: false,
   		},
   	  last_name: {
    			type: String,
-    		required: true,
+    		required: false,
  		 },
  		 address: {
    			type: String,
-    		required: true,
+    		required: false,
 
  		 },
      city: {
    			type: String,
-    		required: true,
+    		required: false,
 
  		 },
      state: {
    			type: String,
-    		required: true,
+    		required: false,
  		 },
 		zip: {
     	type: Number,
-    	required: true,
+    	required: false,
  		 },
      country: {
    			type: String,
-    		required: true,
+    		required: false,
  		 },
      email: {
    			type: String,
-    		required: true,
+    		required: false,
  		 },
      saveddate: {
        type: String,
