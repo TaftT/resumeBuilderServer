@@ -14,6 +14,11 @@ const personalinfoSchema = mongoose.Schema({
     		required: false,
 
  		 },
+     phone: {
+   			type: String,
+    		required: false,
+
+ 		 },
      city: {
    			type: String,
     		required: false,

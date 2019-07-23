@@ -710,7 +710,7 @@
                                                             <v-list-tile
                                                                 v-for="(position, index) in statementpositions"
                                                                 :key="index"
-                                                                @click="positionEdit.statementposition = position; setPosition()"
+                                                                @click="positionEdit.statementposition = position; setPosition(position, 'statement')"
                                                                 >
                                                                 <v-list-tile-title>{{ position }}</v-list-tile-title>
                                                             </v-list-tile>
@@ -747,7 +747,7 @@
                                                     <v-list-tile
                                                         v-for="(position, index) in workexppositions"
                                                         :key="index"
-                                                        @click="positionEdit.workexpposition = position; setPosition()"
+                                                        @click="positionEdit.workexpposition = position; setPosition(position, 'workexp')"
                                                         >
                                                         <v-list-tile-title>{{ position }}</v-list-tile-title>
                                                     </v-list-tile>
@@ -788,7 +788,7 @@
                                                         <v-list-tile
                                                             v-for="(position, index) in educationpositions"
                                                             :key="index"
-                                                            @click="positionEdit.educationposition = position; setPosition()"
+                                                            @click="positionEdit.educationposition = position; setPosition(position, 'education')"
                                                             >
                                                             <v-list-tile-title>{{ position }}</v-list-tile-title>
                                                         </v-list-tile>
@@ -826,7 +826,7 @@
                                                     <v-list-tile
                                                         v-for="(position, index) in accomplishmentpositions"
                                                         :key="index"
-                                                        @click="positionEdit.accomplishmentposition = position; setPosition()"
+                                                        @click="positionEdit.accomplishmentposition = position; setPosition(position, 'accomplishment')"
                                                         >
                                                         <v-list-tile-title>{{ position }}</v-list-tile-title>
                                                     </v-list-tile>
@@ -865,7 +865,7 @@
                                                     <v-list-tile
                                                         v-for="(position, index) in awardspositions"
                                                         :key="index"
-                                                        @click="positionEdit.awardsposition = position; setPosition()"
+                                                        @click="positionEdit.awardsposition = position; setPosition(position, 'awards')"
                                                         >
                                                         <v-list-tile-title>{{ position }}</v-list-tile-title>
                                                     </v-list-tile>
@@ -904,7 +904,7 @@
                                                     <v-list-tile
                                                         v-for="(position, index) in languagespositions"
                                                         :key="index"
-                                                        @click="positionEdit.languagesposition = position; setPosition()"
+                                                        @click="positionEdit.languagesposition = position; setPosition(position, 'languages')"
                                                         >
                                                         <v-list-tile-title>{{ position }}</v-list-tile-title>
                                                     </v-list-tile>
@@ -941,7 +941,7 @@
                                                         <v-list-tile
                                                             v-for="(position, index) in extracurricularpositions"
                                                             :key="index"
-                                                            @click="positionEdit.extracurricularposition = position; setPosition()"
+                                                            @click="positionEdit.extracurricularposition = position; setPosition(position, 'extracurricular')"
                                                             >
                                                             <v-list-tile-title>{{ position }}</v-list-tile-title>
                                                         </v-list-tile>
@@ -979,7 +979,7 @@
                                                         <v-list-tile
                                                             v-for="(position, index) in programspositions"
                                                             :key="index"
-                                                            @click="positionEdit.programsposition = position; setPosition()"
+                                                            @click="positionEdit.programsposition = position; setPosition(position, 'programs')"
                                                             >
                                                             <v-list-tile-title>{{ position }}</v-list-tile-title>
                                                         </v-list-tile>
@@ -1016,7 +1016,7 @@
                                                     <v-list-tile
                                                         v-for="(position, index) in softskillspositions"
                                                         :key="index"
-                                                        @click="positionEdit.softskillsposition = position; setPosition()"
+                                                        @click="positionEdit.softskillsposition = position; setPosition(position, 'softskills')"
                                                         >
                                                         <v-list-tile-title>{{ position }}</v-list-tile-title>
                                                     </v-list-tile>

@@ -590,8 +590,8 @@ var app= new Vue ({
       });
       },
 
-      setPosition: function () {
-
+      setPosition: function (position,type) {
+        app.overideZone(position, type);
         fetch(`${url}/position`, {
           method:"PUT",
           credentials: "include",
@@ -624,10 +624,6 @@ var app= new Vue ({
       },
 
       sortToZone: function (position,displayList,type) {
-        console.log(displayList);
-        console.log("here");
-        console.log(position);
-        app.overideZone(position);
 
         if(position == 1){
           app.zone1=displayList;
@@ -660,32 +656,37 @@ var app= new Vue ({
         }
       },
 
-      overideZone: function (position) {
-        if(app.positionEdit.statementposition == position){
+      checkPosition: function (position) {
+
+      },
+
+      overideZone: function (position, type) {
+        console.log("over")
+        if(app.positionEdit.statementposition == position && type != "statement"){
           app.positionEdit.statementposition = 0
         }
-        if(app.positionEdit.workexpposition == position){
+        if(app.positionEdit.workexpposition == position && type != "workexp"){
           app.positionEdit.workexpposition = 0
         }
-        if(app.positionEdit.educationposition == position){
+        if(app.positionEdit.educationposition == position && type != "education"){
           app.positionEdit.educationposition = 0
         }
-        if(app.positionEdit.extracurricularposition == position){
+        if(app.positionEdit.extracurricularposition == position && type != "extracurricular"){
           app.positionEdit.extracurricularposition = 0
         }
-        if(app.positionEdit.languagesposition == position){
+        if(app.positionEdit.languagesposition == position && type != "languages"){
           app.positionEdit.languagesposition = 0
         }
-        if(app.positionEdit.programsposition == position){
+        if(app.positionEdit.programsposition == position && type != "programs"){
           app.positionEdit.programsposition = 0
         }
-        if(app.positionEdit.softskillsposition == position){
+        if(app.positionEdit.softskillsposition == position && type != "softskills"){
           app.positionEdit.softskillsposition = 0
         }
-        if(app.positionEdit.awardsposition == position){
+        if(app.positionEdit.awardsposition == position && type != "awards"){
           app.positionEdit.awardsposition = 0
         }
-        if(app.positionEdit.accomplishmentposition == position){
+        if(app.positionEdit.accomplishmentposition == position && type != "accomplishment"){
           app.positionEdit.accomplishmentposition = 0
         }
 

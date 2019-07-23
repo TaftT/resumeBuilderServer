@@ -190,6 +190,7 @@ server.post("/personalinfo", ensureAuthentication,  function(req, res){
         address: req.body.address,
         city: req.body.city,
         state: req.body.state,
+        phone: req.body.phone,
         zip: req.body.zip,
         country: req.body.country,
         email: req.body.email,
@@ -234,6 +235,9 @@ server.put("/personalinfo", ensureAuthentication,  function(req, res){
     }
     if (req.body.zip != undefined){
       item.zip = req.body.zip;
+    }
+    if (req.body.phone != undefined){
+      item.zip = req.body.phone;
     }
     if (req.body.country != undefined){
       item.country = req.body.country;
