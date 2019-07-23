@@ -43,7 +43,6 @@ const personalinfoSchema = mongoose.Schema({
      user_id: {
        type: String, //ObjectId needed here but error coming back saying undefined
        required: true,
-       default: mongoose.Types.ObjectId()
      }
 
 });
