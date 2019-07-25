@@ -6,6 +6,7 @@ var app= new Vue ({
 
     data: {
       loadinglists: false,
+      islogin:false,
       username: "",
       password: "",
       userID: "",
@@ -144,7 +145,7 @@ var app= new Vue ({
           name: "Template 3"
         },
         {
-          model: "sharon",
+          model: "template4",
           name: "Template 4"
         },
         {
@@ -321,6 +322,15 @@ var app= new Vue ({
     });
   },
 
+  logout: function() {
+    fetch(`${url}/users/logout`, {
+      method: "GET",
+      credentials: "include",
+    }).then(function(response) {
+    });
+
+  },
+
 
       phoneNum: function () {
         var x = this.personalinfoEdit.phone.replace(/\D/g, '').match(`(\d{0,3})(\d{0,3})(\d{0,4})`);
@@ -442,7 +452,8 @@ var app= new Vue ({
 
       loadlists: async function() {
         app.loadinglists = true;
-        app.checklogin()
+        await app.checklogin()
+        if(app.islogin){
           console.log("starting loadlist");
           await app.getData("statement");
           await app.getData("workexp");
@@ -455,7 +466,7 @@ var app= new Vue ({
           await app.getData("award");
           // app.setPosition();
           app.includeDisplay();
-
+        }
         app.loadinglists = false;
         console.log("reloading");
         },
@@ -559,15 +570,15 @@ var app= new Vue ({
             app.positionEdit.programsposition = data.programsposition;
             app.positionEdit.softskillsposition = data.softskillsposition;
             app.positionEdit.awardsposition = data.awardsposition;
-            console.log("ran");
+
             app.setZone();
           });
         });
 
       },
 
-      newPosition: function (){
-        app.checklogin()
+      newPosition: async function (){
+        await app.checklogin()
         app.positionEdit.user_id = app.userID
         fetch(`${url}/position`, {
           credentials: "include",
@@ -590,8 +601,8 @@ var app= new Vue ({
       });
       },
 
-      setPosition: function (position,type) {
-        app.overideZone(position, type);
+      setPosition: function () {
+
         fetch(`${url}/position`, {
           method:"PUT",
           credentials: "include",
@@ -656,43 +667,6 @@ var app= new Vue ({
         }
       },
 
-      checkPosition: function (position) {
-
-      },
-
-      overideZone: function (position, type) {
-        console.log("over")
-        if(app.positionEdit.statementposition == position && type != "statement"){
-          app.positionEdit.statementposition = 0
-        }
-        if(app.positionEdit.workexpposition == position && type != "workexp"){
-          app.positionEdit.workexpposition = 0
-        }
-        if(app.positionEdit.educationposition == position && type != "education"){
-          app.positionEdit.educationposition = 0
-        }
-        if(app.positionEdit.extracurricularposition == position && type != "extracurricular"){
-          app.positionEdit.extracurricularposition = 0
-        }
-        if(app.positionEdit.languagesposition == position && type != "languages"){
-          app.positionEdit.languagesposition = 0
-        }
-        if(app.positionEdit.programsposition == position && type != "programs"){
-          app.positionEdit.programsposition = 0
-        }
-        if(app.positionEdit.softskillsposition == position && type != "softskills"){
-          app.positionEdit.softskillsposition = 0
-        }
-        if(app.positionEdit.awardsposition == position && type != "awards"){
-          app.positionEdit.awardsposition = 0
-        }
-        if(app.positionEdit.accomplishmentposition == position && type != "accomplishment"){
-          app.positionEdit.accomplishmentposition = 0
-        }
-
-
-      },
-
 
       pdfSave: function () {
         var doc = new jsPDF();
@@ -709,26 +683,26 @@ var app= new Vue ({
       },
 
       checklogin: function(){
+        return new Promise(resolve => {
         fetch(`${url}/users/checklogin`, {
   				method: "GET",
   				credentials: "include",
   			}).then(function(response) {
   				if (response.status == 403) {
   					response.json().then(function(data) {
-  						alert(data.msg);
               app.userID = ""
-              app.page = "login"
-              return false
+              app.islogin = false;
+              resolve(true);
   					})
   				}else if(response.status == 200){
             response.json().then( function(data){
               app.userID = data.user_id
-              return true
-
+              app.islogin = true
+              resolve(true);
             })
-
           }
   			});
+        });
 
       },
 
@@ -768,6 +742,7 @@ var app= new Vue ({
             if(want=="award"){
               app.awardslist = data.awardlist
             }
+
             resolve(true);
 
             });
@@ -814,235 +789,261 @@ var app= new Vue ({
 
       },
 
-        submitStatement: function (){
-          app.checklogin()
-          app.statementEdit.user_id = app.userID
-          fetch(`${url}/statement`, {
-            credentials: "include",
-            method:"POST",
-            headers:{
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(app.statementEdit)
-        }).then(function (response) {
-          //response.json().then((data)=>{console.log(data.msg)})
+        submitStatement: async function (){
+          await app.checklogin()
+          if(app.islogin){
+            app.statementEdit.user_id = app.userID
+            fetch(`${url}/statement`, {
+              credentials: "include",
+              method:"POST",
+              headers:{
+                "Content-type": "application/json"
+              },
+              body: JSON.stringify(app.statementEdit)
+            }).then(function (response) {
+              //response.json().then((data)=>{console.log(data.msg)})
 
-          app.statementEdit=
-           {
-            statement: ""
+              app.statementEdit=
+              {
+                statement: ""
+              }
+              app.getData("statement");
+
+            });
+
+          } else {
+            alert("login test")
           }
-          app.getData("statement");
-
-        });
         },
 
-        submitNewWorkexp: function (){
-          app.checklogin()
-          app.workexpEdit.user_id = app.userID
-          fetch(`${url}/workexp`, {
-            credentials: "include",
-            method:"POST",
-            headers:{
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(app.workexpEdit)
-        }).then(function (response) {
-          //response.json().then((data)=>{console.log(data.msg)})
+        submitNewWorkexp: async function (){
+          await app.checklogin()
+          if(app.islogin){
+            app.workexpEdit.user_id = app.userID
+            fetch(`${url}/workexp`, {
+              credentials: "include",
+              method:"POST",
+              headers:{
+                "Content-type": "application/json"
+              },
+              body: JSON.stringify(app.workexpEdit)
+            }).then(function (response) {
+              //response.json().then((data)=>{console.log(data.msg)})
 
-          app.workexpEdit={
-            company: "",
-            title: "",
-            startdate: new Date().toISOString().substr(0, 10),
-            enddate: new Date().toISOString().substr(0, 10),
-            description: "",
-            start_menu: false,
-            end_menu: false,
-            position: 0,
+              app.workexpEdit={
+                company: "",
+                title: "",
+                startdate: new Date().toISOString().substr(0, 10),
+                enddate: new Date().toISOString().substr(0, 10),
+                description: "",
+                start_menu: false,
+                end_menu: false,
+                position: 0,
+              }
+              app.getData("workexp");
+
+            });
+
           }
-          app.getData("workexp");
-
-        });
 
 
         },
 
-        submitEducation: function (){
-          app.checklogin()
-          app.educationEdit.user_id = app.userID
-          fetch(`${url}/education`, {
-            credentials: "include",
-            method:"POST",
-            headers:{
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(app.educationEdit)
-        }).then(function (response) {
-          //response.json().then((data)=>{console.log(data.msg)})
+        submitEducation: async function (){
+          await app.checklogin()
+          if(app.islogin){
+            app.educationEdit.user_id = app.userID
+            fetch(`${url}/education`, {
+              credentials: "include",
+              method:"POST",
+              headers:{
+                "Content-type": "application/json"
+              },
+              body: JSON.stringify(app.educationEdit)
+            }).then(function (response) {
+              //response.json().then((data)=>{console.log(data.msg)})
+              app.educationEdit=
+              {
+                college: "",
+                degree: "",
+                gradyear: new Date().toISOString().substr(0, 10),
+                menu: false
+              }
+              app.getData("education");
 
+            });
 
-
-          app.educationEdit=
-           {
-            college: "",
-            degree: "",
-            gradyear: new Date().toISOString().substr(0, 10),
-            menu: false
           }
-          app.getData("education");
-
-        });
 
 
         },
 
-        submitAccomplishment: function (){
-          app.checklogin()
-          app.accomplishmentEdit.user_id = app.userID
-          fetch(`${url}/accomplishment`, {
-            credentials: "include",
-            method:"POST",
-            headers:{
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(app.accomplishmentEdit)
-        }).then(function (response) {
-          //response.json().then((data)=>{console.log(data.msg)})
+        submitAccomplishment: async function (){
+          await app.checklogin()
+          if(app.islogin){
+            app.accomplishmentEdit.user_id = app.userID
+            fetch(`${url}/accomplishment`, {
+              credentials: "include",
+              method:"POST",
+              headers:{
+                "Content-type": "application/json"
+              },
+              body: JSON.stringify(app.accomplishmentEdit)
+            }).then(function (response) {
+              //response.json().then((data)=>{console.log(data.msg)})
 
-          app.accomplishmentEdit=
-           {
-            title: "",
-            description: "",
+              app.accomplishmentEdit=
+              {
+                title: "",
+                description: "",
+              }
+              app.getData("accomplishment");
+
+            });
+
           }
-          app.getData("accomplishment");
-
-        });
 
 
         },
 
-        submitLanguage: function (){
-          app.checklogin()
-          app.languagesEdit.user_id = app.userID
-          fetch(`${url}/language`, {
-            credentials: "include",
-            method:"POST",
-            headers:{
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(app.languagesEdit)
-        }).then(function (response) {
-          //response.json().then((data)=>{console.log(data.msg)})
+        submitLanguage: async function (){
+          await app.checklogin()
+          if(app.islogin){
+            app.languagesEdit.user_id = app.userID
+            fetch(`${url}/language`, {
+              credentials: "include",
+              method:"POST",
+              headers:{
+                "Content-type": "application/json"
+              },
+              body: JSON.stringify(app.languagesEdit)
+            }).then(function (response) {
+              //response.json().then((data)=>{console.log(data.msg)})
 
-          app.languagesEdit=
-           {
-              title: "",
-              proficiency:  "",
-            }
-          app.getData("language");
+              app.languagesEdit=
+              {
+                title: "",
+                proficiency:  "",
+              }
+              app.getData("language");
 
-        });
+            });
 
-
-        },
-
-        submitProgram: function (){
-          app.checklogin()
-          app.programsEdit.user_id = app.userID
-          fetch(`${url}/program`, {
-            credentials: "include",
-            method:"POST",
-            headers:{
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(app.programsEdit)
-        }).then(function (response) {
-          //response.json().then((data)=>{console.log(data.msg)})
-
-          app.programsEdit=
-           {
-              title: "",
-              proficiency:  "",
-            }
-          app.getData("program");
-
-        });
-
-
-        },
-        submitAward: function (){
-          app.checklogin()
-          app.awardsEdit.user_id = app.userID
-          fetch(`${url}/award`, {
-            credentials: "include",
-            method:"POST",
-            headers:{
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(app.awardsEdit)
-        }).then(function (response) {
-          //response.json().then((data)=>{console.log(data.msg)})
-
-          app.awardsEdit=
-           {
-            title: "",
-            receivedfrom:  "",
-            date: new Date().toISOString().substr(0, 10),
-            description: "",
-            menu:false
           }
-          app.getData("award");
-
-        });
 
 
         },
 
-        submitExtracurricular: function (){
-          app.checklogin()
-          app.extracurricularEdit.user_id = app.userID
-          fetch(`${url}/extracurricular`, {
-            credentials: "include",
-            method:"POST",
-            headers:{
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(app.extracurricularEdit)
-        }).then(function (response) {
-          //response.json().then((data)=>{console.log(data.msg)})
+        submitProgram: async function (){
+          await app.checklogin()
+          if(app.islogin){
+            app.programsEdit.user_id = app.userID
+            fetch(`${url}/program`, {
+              credentials: "include",
+              method:"POST",
+              headers:{
+                "Content-type": "application/json"
+              },
+              body: JSON.stringify(app.programsEdit)
+            }).then(function (response) {
+              //response.json().then((data)=>{console.log(data.msg)})
 
-          app.extracurricularEdit=
-           {
-            title: "",
-            description: "",
-            date: "",
-            menu:false
+              app.programsEdit=
+              {
+                title: "",
+                proficiency:  "",
+              }
+              app.getData("program");
+
+            });
+
           }
-          app.getData("extracurricular");
-
-        });
 
 
         },
-        submitSoftskill: function (){
-          app.checklogin()
-          app.softskillsEdit.user_id = app.userID
-          fetch(`${url}/softskill`, {
-            credentials: "include",
-            method:"POST",
-            headers:{
-            "Content-type": "application/json"
-          },
-          body: JSON.stringify(app.softskillsEdit)
-        }).then(function (response) {
-          //response.json().then((data)=>{console.log(data.msg)})
+        submitAward: async function (){
+          await app.checklogin()
+          if(app.islogin){
+            app.awardsEdit.user_id = app.userID
+            fetch(`${url}/award`, {
+              credentials: "include",
+              method:"POST",
+              headers:{
+                "Content-type": "application/json"
+              },
+              body: JSON.stringify(app.awardsEdit)
+            }).then(function (response) {
+              //response.json().then((data)=>{console.log(data.msg)})
 
-          app.softskillsEdit=
-           {
-            title: "",
+              app.awardsEdit=
+              {
+                title: "",
+                receivedfrom:  "",
+                date: new Date().toISOString().substr(0, 10),
+                description: "",
+                menu:false
+              }
+              app.getData("award");
+
+            });
+
           }
-          app.getData("softskill");
 
-        });
+
+        },
+
+        submitExtracurricular: async function (){
+          await app.checklogin()
+          if(app.islogin){
+            app.extracurricularEdit.user_id = app.userID
+            fetch(`${url}/extracurricular`, {
+              credentials: "include",
+              method:"POST",
+              headers:{
+                "Content-type": "application/json"
+              },
+              body: JSON.stringify(app.extracurricularEdit)
+            }).then(function (response) {
+              //response.json().then((data)=>{console.log(data.msg)})
+
+              app.extracurricularEdit=
+              {
+                title: "",
+                description: "",
+                date: "",
+                menu:false
+              }
+              app.getData("extracurricular");
+
+            });
+
+          }
+
+
+        },
+        submitSoftskill: async function (){
+          await app.checklogin()
+          if(app.islogin){
+            app.softskillsEdit.user_id = app.userID
+            fetch(`${url}/softskill`, {
+              credentials: "include",
+              method:"POST",
+              headers:{
+                "Content-type": "application/json"
+              },
+              body: JSON.stringify(app.softskillsEdit)
+            }).then(function (response) {
+              //response.json().then((data)=>{console.log(data.msg)})
+
+              app.softskillsEdit=
+              {
+                title: "",
+              }
+              app.getData("softskill");
+
+            });
+
+          }
 
         },
 

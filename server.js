@@ -148,6 +148,12 @@ server.get("/users/login/success", function(req, res) {
   });
 });
 
+server.get("/users/logout", function(req, res) {
+  req.logout();
+  res.status(200);
+  res.send();
+});
+
 server.get("/users/checklogin",ensureAuthentication, function(req, res) {
   res.json({
       msg: `Welcome ${req.user.username}`,
