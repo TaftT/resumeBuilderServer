@@ -7,26 +7,26 @@ var app= new Vue ({
     data: {
       islogin: false,
       loadinglists: false,
-      username: "", 
-      password: "", 
+      username: "",
+      password: "",
       userID: "",
       menu:false,
       modal: false,
       page: "home",
       color: "",
-      panel: 0, 
-      panel1: 0, 
-      panel2: 0, 
-      panel3: 0, 
-      panel4: 0, 
-      panel5: 0, 
-      panel6: 0, 
-      panel7: 0, 
-      panel8: 0, 
-      panel9: 0, 
+      panel: 0,
+      panel1: 0,
+      panel2: 0,
+      panel3: 0,
+      panel4: 0,
+      panel5: 0,
+      panel6: 0,
+      panel7: 0,
+      panel8: 0,
+      panel9: 0,
 
         educationlist:[],
-        workexplist:[            
+        workexplist:[
         ],
         accomplishmentlist: [],
         extracurricularlist:[],
@@ -36,7 +36,7 @@ var app= new Vue ({
         awardslist:[],
         statementlist:[],
 
-        
+
         personalinfoEdit:
         {
             first_name:"",
@@ -44,7 +44,7 @@ var app= new Vue ({
             address: "",
             city:"",
             state:"",
-            zip:"", 
+            zip:"",
             country: "",
             email: "",
             phone: "",
@@ -128,7 +128,7 @@ var app= new Vue ({
         pickingColor: false,
         color_brightness: 6,
         accent: 0,
-        
+
       template: "malia",
       templateLabel: "Choose a Template",
       templates: [
@@ -161,7 +161,7 @@ var app= new Vue ({
           name: "Template 7"
         },
       ],
-      
+
       statementdisplay: [],
       workexpdisplay: [],
       educationdisplay: [],
@@ -174,7 +174,7 @@ var app= new Vue ({
 
       add_remove: "",
 
-      
+
       positionEdit: {
         statementposition: 0,
         workexpposition: 0,
@@ -226,15 +226,15 @@ var app= new Vue ({
       statementcheck: false,
       awardscheck: false,
 
-      loginError: false, 
-      loginErrorMsg: "", 
-      loginSuccess: false, 
-      registerSuccess: false, 
+      loginError: false,
+      loginErrorMsg: "",
+      loginSuccess: false,
+      registerSuccess: false,
 
-      addError: false, 
-      addErrorMsg: "", 
-      deleteError: false, 
-      deleteErrorMsg: "", 
+      addError: false,
+      addErrorMsg: "",
+      deleteError: false,
+      deleteErrorMsg: "",
 
 
       emailRules: [
@@ -251,9 +251,9 @@ var app= new Vue ({
     },
 
     created: function () {
-      
+
     },
-  
+
 
     methods: {
       toPrint: function(divID) { //changed
@@ -300,9 +300,13 @@ var app= new Vue ({
           app.loginErrorMsg = "Username and Password are required";
         })
       } else if (response.status == 201) {
+        app.checklogin();
+        app.newPosition();
+        app.newPersonalInfo();
         app.loginError = false; // changed
         app.registerSuccess = true;
         app.page = "form";
+
       }
     });
   },
@@ -355,12 +359,12 @@ var app= new Vue ({
   },
 
 
-      phoneNum: function () {
-        var x = this.personalinfoEdit.phone.replace(/\D/g, '').match(`(\d{0,3})(\d{0,3})(\d{0,4})`);
-        return (
-          x = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '')
-        );
-      },
+      // phoneNum: function () {
+      //   var x = this.personalinfoEdit.phone.replace(/\D/g, '').match(`(\d{0,3})(\d{0,3})(\d{0,4})`);
+      //   return (
+      //     x = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '')
+      //   );
+      // },
 
       clearlists: function() {
         app.educationlist = []
@@ -381,9 +385,10 @@ var app= new Vue ({
         app.programsdisplay= []
         app.softskillsdisplay= []
         app.awardsdisplay= []
+        app.personalinfoEdit={}
       },
 
-  
+
 
       newKellyColorPickerMain: function () {
         addEventListener("click", function () {
@@ -465,11 +470,98 @@ var app= new Vue ({
           await app.getData("softskill");
           await app.getData("award");
           // app.setPosition();
+          app.getPersonalInfo();
           app.includeDisplay();
         }
         app.loadinglists = false;
         console.log("reloading");
         },
+
+        newPersonalInfo: async function (){
+          console.log("created new personal info object")
+
+          await app.checklogin()
+          var newuserinfo = {
+          first_name: "First",
+          last_name: "Last",
+          address: "123 Address",
+          city: "City",
+          state: "State",
+          phone: "555-555-5555",
+          zip: 55555,
+          country: "Country",
+          email: "Email@email.com",
+          user_id: app.userID
+          }
+
+          fetch(`${url}/personalinfo`, {
+            credentials: "include",
+            method:"POST",
+            headers:{
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify(newuserinfo)
+        }).then(function (response) {
+          response.json().then((response)=>{
+            console.log(response.personalinfo.first_name)
+            app.personalinfoEdit.first_name = response.personalinfo.first_name
+            app.personalinfoEdit.last_name = response.personalinfo.last_name
+            app.personalinfoEdit.address = response.personalinfo.address
+            app.personalinfoEdit.city = response.personalinfo.city
+            app.personalinfoEdit.state = response.personalinfo.state
+            app.personalinfoEdit.phone = response.personalinfo.phone
+            app.personalinfoEdit.zip = response.personalinfo.zip
+            app.personalinfoEdit.country = response.personalinfo.country
+            app.personalinfoEdit.email = response.personalinfo.email
+            app.personalinfoEdit.user_id = response.personalinfo.user_id
+
+          })
+
+        });
+        },
+
+        getPersonalInfo: function(){
+       fetch(`${url}/personalinfo`,{
+         credentials: "include"
+       }).then(function(response){
+         response.json().then(function(data){
+           app.personalinfoEdit = data
+         })
+       })
+     },
+
+     PersonalInfoUpdate: function(){
+
+       fetch(`${url}/personalinfo`, {
+         method:"PUT",
+         headers:{
+         "Content-type": "application/json"
+         },
+         credentials: "include",
+         body: JSON.stringify(app.personalinfoEdit)
+
+
+     }).then(function (response) {
+       app.personalinfoEdit={
+         first_name :app.personalinfoEdit.first_name,
+         last_name:app.personalinfoEdit.last_name,
+         address:app.personalinfoEdit.address,
+         city:app.personalinfoEdit.city,
+         state:app.personalinfoEdit.state,
+         zip:app.personalinfoEdit.zip ,
+         country:app.personalinfoEdit.country,
+         email:app.personalinfoEdit.email,
+         phone:app.personalinfoEdit.phone,
+         branding_statement:app.personalinfoEdit.branding_statement,
+         professional_title:app.personalinfoEdit.title,
+         linkedin: app.personalinfoEdit.linkedin,
+       }
+
+     app.getData("personalinfo");
+   })
+     },
+
+
 
       includeDisplay: function () {
         var newdisplay=[]
@@ -578,6 +670,7 @@ var app= new Vue ({
       },
 
       newPosition: async function (){
+        console.log("created new position object")
         await app.checklogin()
         app.positionEdit.user_id = app.userID
         fetch(`${url}/position`, {
@@ -1076,7 +1169,7 @@ var app= new Vue ({
 
     },
     computed: {
-      
+
       binding () {
         const binding = {}
 
@@ -1093,5 +1186,5 @@ var app= new Vue ({
     },
 },
 
-      
+
 })

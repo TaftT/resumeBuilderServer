@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="hannahstyle1.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto:350,300,400,500,700,900|Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
 		 <!-- <link href="https://fonts.googleapis.com/css?family=Arvo:400,700|Cairo:200,300,400,600,700,900|EB+Garamond:400,500,600,700,800|Karla:400,700|Libre+Baskerville:400,700|Merriweather:300,400,700,900|Montserrat:100,200,300,400,500,600,700,800,900|Source+Serif+Pro:400,600,700&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css?family=Arvo:400,700|Cairo:200,300,400,600,700,900|EB+Garamond:400,500,600,700,800|Karla:400,700|Libre+Baskerville:400,700|Merriweather:300,400,700,900|Montserrat:100,200,300,400,500,600,700,800,900|Source+Serif+Pro:400,600,700&display=swap" rel="stylesheet"> added fonts -->
@@ -35,7 +35,7 @@
                             <v-btn v-show="islogin == false" flat @click="page = 'login'" class="subheadingDef">Login</v-btn> <!-- changed -->
                         <v-btn v-show="islogin != false" flat @click="logout()" class="subheadingDef">Log Out</v-btn> <!-- changed -->
                     </v-toolbar-items>
-                    
+
                 </v-toolbar>
                 <div v-show="page == 'login'">
                         <v-card class="mt-5 white--text display-1Def" color="rgba(85, 82, 89, 0.8)">
@@ -89,7 +89,7 @@
                                                 <p class="subheadingDef text-xs-left mb-2">Enter a secure password for the account: </p>
                                                 <v-text-field  prepend-icon="lock" name="Password" label="Password" type="password" v-model="password" class="mb-4 mx-2"></v-text-field>
                                                 <v-card-actions align="center">
-                                                    <v-btn @click="register(); newPosition()" color="color: rgba(234, 238, 242, 1)" class="mx-auto">SIGN UP</v-btn>
+                                                    <v-btn @click="register(); " color="color: rgba(234, 238, 242, 1)" class="mx-auto">SIGN UP</v-btn>
                                                 </v-card-actions>
                                             </v-form>
                                         </v-card>
@@ -132,7 +132,7 @@
                                     <v-btn flat large class="white--text font-weight-bold" @click="page = 'form'">Get Started</v-btn>
                                 </v-layout>
                         </v-card>
-                        
+
                         <v-card tile class="homeMargin">
                             <v-card flat>
                                 <v-layout align-center justify-start row fill-height>
@@ -193,8 +193,8 @@
                                         </v-card>
                                     </v-flex>
                                     <v-flex xs6 offset-xs1>
-                                            <v-card-text class="my-auto subheadingDef text-xs-center"> 
-                                            <h3 class="font-weight-thin"> 
+                                            <v-card-text class="my-auto subheadingDef text-xs-center">
+                                            <h3 class="font-weight-thin">
                                             All templates are fully customizable. With advanced color selection, user-selected section layouts, and advanced information selection, creating the perfect template is smooth and effortless.  </h3>
                                         </v-card-text>
                                         <v-layout justify-center class="mt-5"> <!-- changed -->
@@ -211,7 +211,7 @@
                                 <v-layout align-center justify-space-between row fill-height>
                                     <v-flex xs6 offset-xs1>
                                         <v-card-text class="my-auto subheadingDef text-xs-center">
-                                            <h3 class="font-weight-thin"> 
+                                            <h3 class="font-weight-thin">
                                             Creating a personalized resume for every job application has never been more smooth. With a free, personalized account, all user information is saved simultaniously so it can be added or removed from the resume at any time without deletion.</h3>
                                         </v-card-text>
                                     </v-flex>
@@ -231,7 +231,7 @@
                                 <v-layout align-center fill-height>
                                     <v-flex xs10 offset-xs1>
                                         <v-card-text class="headlineDef text-xs-center">
-                                            <h3 class="mb-4 font-weight-thin"> 
+                                            <h3 class="mb-4 font-weight-thin">
                                             Build the perfect resume today!</h3>
                                             <v-btn large @click="page = 'form'">Get Started</v-btn>
                                         </v-card-text>
@@ -253,7 +253,7 @@
                                     </v-card>
                                     <v-card v-show="registerSuccess == true" class="mb-4">
                                         <v-layout align-center justify-space-between row fill-height>
-                                            <v-card-text class="body-2Def green--text text-xs-left" > You have successfully 
+                                            <v-card-text class="body-2Def green--text text-xs-left" > You have successfully
                                             registered! All information entered will now be saved for future use.</v-card-text>
                                             <v-btn flat small width="5px" color="green" @click="registerSuccess = false"><v-icon>close</v-icon></v-btn>
                                         </v-layout>
@@ -267,7 +267,7 @@
                                 </v-layout>
                             </v-container>
                         <v-container>
-                        
+
                         <v-container>
                             <v-layout>
                                 <v-flex xs12 lg10 offset-lg1>
@@ -293,7 +293,7 @@
                                                                                 <v-text-field label="Professional Title (ex. Web Developer)" v-model="personalinfoEdit.professional_title"></v-text-field>
                                                                             </v-flex>
                                                                             <v-flex xs6 pa-3>
-                                                                                    <v-text-field label="Phone number"  v-model="personalinfoEdit.phone" placeholder="(555) 555-5555" required :counter="14" :rules="fieldRules" id="phone" :oninput="phoneNum()" ></v-text-field>
+                                                                                    <v-text-field label="Phone number"  v-model="personalinfoEdit.phone" placeholder="(555) 555-5555" required :counter="14" :rules="fieldRules" id="phone"  ></v-text-field>
                                                                             </v-flex>
                                                                         </v-layout>
                                                                         <v-layout>
@@ -325,14 +325,14 @@
                                                                                 <v-text-field label="Country" v-model="personalinfoEdit.country"></v-text-field>
                                                                             </v-flex>
                                                                         </v-layout>
-                                                                        <v-btn @click="">Update Personal Info</v-btn>
+                                                                        <v-btn @click="PersonalInfoUpdate()">Update Personal Info</v-btn>
                                                                     </v-card-text>
                                                                 </v-card>
                                                         </v-expansion-panel-content>
-                                                    </v-expansion-panel> 
-                                                </v-card> 
-                                                <v-card> 
-                                                    <v-expansion-panel v-model="panel1"> 
+                                                    </v-expansion-panel>
+                                                </v-card>
+                                                <v-card>
+                                                    <v-expansion-panel v-model="panel1">
                                                         <v-expansion-panel-content>
                                                             <template v-slot:header><v-card-text class="display-1Def">Personal branding statement</v-card-text></template>
                                                             <v-card class="ma-2 pa-4">
@@ -340,10 +340,10 @@
                                                                 <v-btn @click="submitStatement()">Add branding statement</v-btn>
                                                             </v-card>
                                                         </v-expansion-panel-content>
-                                                    </v-expansion-panel> 
-                                                </v-card> 
-                                                <v-card> 
-                                                    <v-expansion-panel v-model="panel2"> 
+                                                    </v-expansion-panel>
+                                                </v-card>
+                                                <v-card>
+                                                    <v-expansion-panel v-model="panel2">
                                                         <v-expansion-panel-content id="workexperience">
                                                                 <template v-slot:header> <v-card-text class="display-1Def">Work experience</v-card-text></template>
                                                                 <v-card class="ma-2 pa-4">
@@ -370,10 +370,10 @@
                                                                         ></v-text-field>
                                                                         </template>
                                                                         <v-date-picker v-model="workexpEdit.startdate" @input="workexpEdit.start_menu = false" type="month">
-                    
+
                                                                         </v-date-picker>
                                                                     </v-menu>
-                    
+
                                                                     <v-menu
                                                                         v-model="workexpEdit.end_menu"
                                                                         :close-on-content-click="false"
@@ -405,14 +405,14 @@
                                                                     <v-btn @click="submitNewWorkexp()">Add Work Experience</v-btn>
                                                                 </v-card>
                                                             </v-expansion-panel-content>
-                                                        </v-expansion-panel> 
-                                                    </v-card> 
-                                                    <v-card> 
-                                                        <v-expansion-panel v-model="panel3"> 
+                                                        </v-expansion-panel>
+                                                    </v-card>
+                                                    <v-card>
+                                                        <v-expansion-panel v-model="panel3">
                                                         <v-expansion-panel-content id="education">
                                                                 <template v-slot:header> <v-card-text class="display-1Def">Education</v-card-text></template>
                                                                 <v-card class="ma-2 pa-4">
-                                                                    
+
                                                                     <v-text-field box label="School attended" v-model="educationEdit.college"></v-text-field>
                                                                     <v-text-field box label="Degree" v-model="educationEdit.degree"></v-text-field>
                                                                     <template v-slot:activator="{ on }">
@@ -445,18 +445,18 @@
                                                                     ></v-text-field>
                                                                     </template>
                                                                     <v-date-picker v-model="educationEdit.gradyear" @input="educationEdit.menu = false" type="month">
-                                                                        
+
                                                                     </v-date-picker>
                                                                 </v-menu>
                                                                 <v-btn @click="submitEducation()">Add Education</v-btn>
 
                                                                 </v-card>
                                                         </v-expansion-panel-content>
-                                                    </v-expansion-panel> 
-                                                </v-card> 
+                                                    </v-expansion-panel>
+                                                </v-card>
 
-                                                <v-card> 
-                                                    <v-expansion-panel v-model="panel4"> 
+                                                <v-card>
+                                                    <v-expansion-panel v-model="panel4">
 
                                                         <v-expansion-panel-content id="accomplishments">
                                                                 <template v-slot:header> <v-card-text class="display-1Def">Accomplishments</v-card-text></template>
@@ -472,12 +472,12 @@
 
                                                                 </v-card>
                                                         </v-expansion-panel-content>
-                                                    </v-expansion-panel> 
-                                                </v-card> 
+                                                    </v-expansion-panel>
+                                                </v-card>
                                             </v-flex>
                                             <v-flex xs12 lg6>
-                                                <v-card> 
-                                                    <v-expansion-panel v-model="panel5"> 
+                                                <v-card>
+                                                    <v-expansion-panel v-model="panel5">
 
                                                         <v-expansion-panel-content id="languages">
                                                                 <template v-slot:header> <v-card-text class="display-1Def">Languages</v-card-text></template>
@@ -493,10 +493,10 @@
 
                                                                 </v-card>
                                                         </v-expansion-panel-content>
-                                                    </v-expansion-panel> 
-                                                </v-card> 
-                                                <v-card> 
-                                                    <v-expansion-panel v-model="panel6"> 
+                                                    </v-expansion-panel>
+                                                </v-card>
+                                                <v-card>
+                                                    <v-expansion-panel v-model="panel6">
 
                                                         <v-expansion-panel-content id="techskills">
                                                                 <template v-slot:header> <v-card-text class="display-1Def">Programs & Software</v-card-text></template>
@@ -512,10 +512,10 @@
 
                                                                 </v-card>
                                                         </v-expansion-panel-content>
-                                                    </v-expansion-panel> 
-                                                </v-card> 
-                                                <v-card> 
-                                                    <v-expansion-panel v-model="panel7"> 
+                                                    </v-expansion-panel>
+                                                </v-card>
+                                                <v-card>
+                                                    <v-expansion-panel v-model="panel7">
 
                                                         <v-expansion-panel-content id="awards">
                                                                 <template v-slot:header> <v-card-text class="display-1Def">Awards</v-card-text></template>
@@ -543,7 +543,7 @@
                                                                     ></v-text-field>
                                                                     </template>
                                                                     <v-date-picker v-model="awardsEdit.date" @input="awardsEdit.menu = false" type="month">
-                                                                        
+
                                                                     </v-date-picker>
                                                                 </v-menu>
                                                                     <v-textarea auto-grow rows="2"
@@ -551,10 +551,10 @@
                                                                     <v-btn @click="submitAward()">Add Award</v-btn>
                                                                 </v-card>
                                                         </v-expansion-panel-content>
-                                                    </v-expansion-panel> 
-                                                </v-card> 
-                                                <v-card> 
-                                                    <v-expansion-panel v-model="panel8"> 
+                                                    </v-expansion-panel>
+                                                </v-card>
+                                                <v-card>
+                                                    <v-expansion-panel v-model="panel8">
 
                                                         <v-expansion-panel-content id="extracurricularEdit">
                                                             <template v-slot:header> <v-card-text class="display-1Def">Extracurricular</v-card-text></template>
@@ -588,10 +588,10 @@
                                                                 <v-btn @click="submitExtracurricular()">Add Extracurricular Activity</v-btn>
                                                             </v-card>
                                                         </v-expansion-panel-content>
-                                                    </v-expansion-panel> 
-                                                </v-card> 
-                                                <v-card> 
-                                                    <v-expansion-panel v-model="panel9"> 
+                                                    </v-expansion-panel>
+                                                </v-card>
+                                                <v-card>
+                                                    <v-expansion-panel v-model="panel9">
 
                                                         <v-expansion-panel-content id="softskillsEdit">
                                                                 <template v-slot:header> <v-card-text class="display-1Def">Soft Skill</v-card-text></template>
@@ -600,13 +600,13 @@
                                                                     <v-btn @click="submitSoftskill()">Add Soft Skills</v-btn>
                                                                 </v-card>
                                                         </v-expansion-panel-content>
-                                                    
+
                                                     </v-expansion-panel>
-                                                </v-card> 
+                                                </v-card>
                                             </v-flex>
                                         </v-layout>
                                     </v-card>
-                
+
                                 </v-flex>
                             </v-layout>
                         </v-container>
@@ -614,8 +614,8 @@
 
                     <div v-show="page == 'savedinfo'">
                         <v-container>
-                                <v-layout v-bind="binding"> 
-                                    <v-flex xs12 md3> 
+                                <v-layout v-bind="binding">
+                                    <v-flex xs12 md3>
                                         <v-card class="ma-3 pa-3">
                                             <p class="titleDef font-weight-light">Click the checkbox icon to add or remove the piece of information to/from the current resume.</p>
                                         </v-card>
@@ -637,11 +637,11 @@
                                                             </v-list-tile>
                                                             </v-list>
                                                     </v-menu>
-                                                </div> 
+                                                </div>
                                                 <div>
                                                     <v-container grid-list-lg v-if="template == 'malia'">
                                                         <v-card id="smallPage">
-                                                            <v-card id="padding" class="align-content-center" justify-center flat :color="selected_color_main"> 
+                                                            <v-card id="padding" class="align-content-center" justify-center flat :color="selected_color_main">
                                                                 <v-layout>
                                                                     <v-flex  xs8 offset-xs4>
                                                                         <v-card color="red" class="align-content-center justify-content-center">
@@ -676,31 +676,31 @@
                                                                 </v-flex>
                                                                 <v-flex xs-8>
                                                                     <v-card flat color="yellow">
-                                                                                <h1 class="subheadingDef"> Zone 2 </h1> 
+                                                                                <h1 class="subheadingDef"> Zone 2 </h1>
                                                                     </v-card>
                                                                     <v-card flat color="orange">
                                                                                 <h1 class="subheadingDef"> Zone 3 </h1>
                                                                     </v-card>
                                                                     <v-card flat color="green">
-                                                                                <h1 class="subheadingDef"> Zone 4 </h1> 
+                                                                                <h1 class="subheadingDef"> Zone 4 </h1>
                                                                     </v-card>
                                                                     <v-card flat color="blue">
-                                                                                <h1 class="subheadingDef white--text"> Zone 5 </h1> 
+                                                                                <h1 class="subheadingDef white--text"> Zone 5 </h1>
                                                                     </v-card>
                                                                     <v-card flat color="purple">
-                                                                                <h1 class="subheadingDef white--text"> Zone 6 </h1> 
+                                                                                <h1 class="subheadingDef white--text"> Zone 6 </h1>
                                                                     </v-card>
                                                                     <v-card flat color="pink">
-                                                                            <h1 class="subheadingDef white--text"> Zone 7 </h1> 
+                                                                            <h1 class="subheadingDef white--text"> Zone 7 </h1>
                                                                 </v-card>
-                                                                </v-flex> 
+                                                                </v-flex>
                                                             </v-layout>
                                                         </v-card>
                                                     </v-container>
                                                 </div>
                                             </v-layout>
                                         </v-card>
-                                        
+
                                     </v-flex>
                                     <v-flex xs12 md9>
                                         <v-card class="ma-3 pa-3" v-show="addError == true" class="mb-4">
@@ -864,7 +864,7 @@
                                                     <v-flex xs10>
                                                         <v-card-text class="headlineDef pa-1 ml-3">{{exp.title}}</v-card-text>
                                                         <v-card-text class="ml-4 pl-2">{{exp.description}}</v-card-text>
-                                                        
+
                                                     </v-flex>
                                                     <v-flex xs2>
                                                             <v-btn fab flat @click="addToDisplay(exp,'accomplishment')" v-if="!exp.displayShow">
@@ -1091,9 +1091,9 @@
                                         </v-list-tile>
                                     </v-list>
                                 </v-menu>
-                            </div> 
+                            </div>
                             <v-spacer></v-spacer> <!-- changed, removed button -->
-                            <!-- changed <v-menu offset-y> 
+                            <!-- changed <v-menu offset-y>
                                 <template v-slot:activator="{ on }">
                                     <v-btn v-on="on"> {{fontLabel}} </v-btn>
                                 </template>
@@ -1119,7 +1119,7 @@
                               direction="left"
                               hover
                               transition="slide-y-reverse-transition"
-                            > 
+                            >
                               <template v-slot:activator>
                                 <v-btn
                                   color="blue darken-2"
@@ -1157,7 +1157,7 @@
                                             <canvas id="color-picker-main" width="150" height="150" style="width: 150px; height: 150px;"></canvas>
                                         </v-card-text>
                                     </v-card>
-        
+
                                     <v-card id="fixedPos" v-show="pickingColor">
                                         <v-card-text>
                                             <canvas id="color-picker-accent" width="150" height="150" style="width: 150px; height: 150px;"></canvas>
@@ -1734,7 +1734,7 @@
                                                                                 </v-card>
                                                                         </div>
                                                                     </v-card-text>
-                                                            </v-flex> 
+                                                            </v-flex>
                                                         </v-layout>
                                                     </v-card>
                                                 </div>
@@ -2324,7 +2324,7 @@
                                                             <div v-for="item in zone1" class="pl-2 pr-2">
                                                                 <v-card-text class="pa-1 pl-3  font-weight-bold subheadingDef" >{{item.title}} | {{item.proficiency}}</v-card-text>
                                                             </div>
-                                                            <hr> 
+                                                            <hr>
                                                         </v-card>
                                                         <v-card v-if="zone1_type == 'skills'" flat transparent class="ml-3 mr-3 pl-4 pr-4 pb-4 text-xs-center">
                                                             <v-card-text  class="titleDef pt-0">Skills</v-card-text>
@@ -2394,7 +2394,7 @@
                                                             <div v-for="item in zone2" class="pl-2 pr-2">
                                                                 <v-card-text class="pa-1 pl-3  font-weight-bold subheadingDef" >{{item.title}} | {{item.proficiency}}</v-card-text>
                                                             </div>
-                                                            <hr> 
+                                                            <hr>
                                                         </v-card>
                                                         <v-card v-if="zone2_type == 'skills'" flat transparent class="ml-3 mr-3 pl-4 pr-4 pb-4 text-xs-center">
                                                             <v-card-text  class="titleDef pt-0">Skills</v-card-text>
@@ -2464,7 +2464,7 @@
                                                             <div v-for="item in zone3" class="pl-2 pr-2">
                                                                 <v-card-text class="pa-1 pl-3  font-weight-bold subheadingDef" >{{item.title}} | {{item.proficiency}}</v-card-text>
                                                             </div>
-                                                            <hr> 
+                                                            <hr>
                                                         </v-card>
                                                         <v-card v-if="zone3_type == 'skills'" flat transparent class="ml-3 mr-3 pl-4 pr-4 pb-4 text-xs-center">
                                                             <v-card-text  class="titleDef pt-0">Skills</v-card-text>
@@ -2534,7 +2534,7 @@
                                                             <div v-for="item in zone4" class="pl-2 pr-2">
                                                                 <v-card-text class="pa-1 pl-3  font-weight-bold subheadingDef" >{{item.title}} | {{item.proficiency}}</v-card-text>
                                                             </div>
-                                                            <hr> 
+                                                            <hr>
                                                         </v-card>
                                                         <v-card v-if="zone4_type == 'skills'" flat transparent class="ml-3 mr-3 pl-4 pr-4 pb-4 text-xs-center">
                                                             <v-card-text  class="titleDef pt-0">Skills</v-card-text>
@@ -2604,7 +2604,7 @@
                                                             <div v-for="item in zone5" class="pl-2 pr-2">
                                                                 <v-card-text class="pa-1 pl-3  font-weight-bold subheadingDef" >{{item.title}} | {{item.proficiency}}</v-card-text>
                                                             </div>
-                                                            <hr> 
+                                                            <hr>
                                                         </v-card>
                                                         <v-card v-if="zone5_type == 'skills'" flat transparent class="ml-3 mr-3 pl-4 pr-4 pb-4 text-xs-center">
                                                             <v-card-text  class="titleDef pt-0">Skills</v-card-text>
@@ -2674,7 +2674,7 @@
                                                             <div v-for="item in zone6" class="pl-2 pr-2">
                                                                 <v-card-text class="pa-1 pl-3  font-weight-bold subheadingDef" >{{item.title}} | {{item.proficiency}}</v-card-text>
                                                             </div>
-                                                            <hr> 
+                                                            <hr>
                                                         </v-card>
                                                         <v-card v-if="zone6_type == 'skills'" flat transparent class="ml-3 mr-3 pl-4 pr-4 pb-4 text-xs-center">
                                                             <v-card-text  class="titleDef pt-0">Skills</v-card-text>
@@ -2744,7 +2744,7 @@
                                                             <div v-for="item in zone7" class="pl-2 pr-2">
                                                                 <v-card-text class="pa-1 pl-3  font-weight-bold subheadingDef" >{{item.title}} | {{item.proficiency}}</v-card-text>
                                                             </div>
-                                                            <hr> 
+                                                            <hr>
                                                         </v-card>
                                                         <v-card v-if="zone7_type == 'skills'" flat transparent class="ml-3 mr-3 pl-4 pr-4 pb-4 text-xs-center">
                                                             <v-card-text  class="titleDef pt-0">Skills</v-card-text>
@@ -2814,7 +2814,7 @@
                                                             <div v-for="item in zone8" class="pl-2 pr-2">
                                                                 <v-card-text class="pa-1 pl-3  font-weight-bold subheadingDef" >{{item.title}} | {{item.proficiency}}</v-card-text>
                                                             </div>
-                                                            <hr> 
+                                                            <hr>
                                                         </v-card>
                                                         <v-card v-if="zone8_type == 'skills'" flat transparent class="ml-3 mr-3 pl-4 pr-4 pb-4 text-xs-center">
                                                             <v-card-text  class="titleDef pt-0">Skills</v-card-text>
@@ -2833,11 +2833,11 @@
                                                             <hr>
                                                         </v-card>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </v-card>
                                         </v-flex>
-                                        
+
                                     </v-layout>
                             </v-container>
                             <v-container grid-list-xs fluid v-if="template == 'template5'">
@@ -2856,7 +2856,7 @@
                                                             </v-card>
                                                         </v-flex>
                                                     </v-layout>
-                                                    
+
                                                     <div id="zone1">
                                                         <v-card v-if="zone1_type == 'statement'" flat class="ml-3 mr-3 pl-4 pr-4 pb-4">
                                                             <div v-for="item in zone1" class="pa-2">
@@ -3878,7 +3878,7 @@
                                                     </div>
                                                 </v-card>
                                         </v-flex>
-                                        
+
                                     </v-layout>
                             </v-container>
                             <v-container grid-list-xs fluid v-if="template == 'basezones'">
@@ -4396,7 +4396,7 @@
                                     <v-flex>
                                         <v-card elevation=15 id="page" color="#BDBDBD">
                                             <div id="printPDF">
-                                                
+
                                                 <v-layout id="zone0" class="pa-0">
                                                     <v-flex xs7>
                                                         <v-card class="ma-4 pa-3" flat :color="selected_color_main" >
@@ -4599,7 +4599,7 @@
                                                             </v-card>
                                                         </div>
                                                     </v-flex>
-                                                </v-layout>  
+                                                </v-layout>
                                                 <v-layout>
                                                     <v-flex xs5>
                                                         <div id="zone4" class="mb-3" height=25%>
@@ -4857,10 +4857,10 @@
                                             </div>
                                         </v-card>
                                     </v-flex>
-                                    
+
                                 </v-layout>
                             </v-container> -->
-                            
+
                         </v-container>
                     </div>
                 </div>
@@ -4876,5 +4876,5 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
     <script src="html5kellycolorpicker.js"></script>
-	<script src="hannahcode1.js"></script>
+	<script src="code.js"></script>
 </html>
