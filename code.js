@@ -314,6 +314,7 @@ var app= new Vue ({
         response.json().then( function(data){
           app.userID = data.user_id
           app.page = "form";
+          app.islogin = true;
           app.loadlists();
 
         })
@@ -327,6 +328,11 @@ var app= new Vue ({
       method: "GET",
       credentials: "include",
     }).then(function(response) {
+      app.islogin = false;
+      app.clearlists();
+      app.loadlists();
+      app.getPosition();
+      app.setZone();
     });
 
   },
@@ -339,51 +345,28 @@ var app= new Vue ({
         );
       },
 
-      includeStatement: function(exp) {
-        this.statementdisplay.push(exp);
-        this.add_remove = "remove";
-        return true;
+      clearlists: function() {
+        app.educationlist = []
+        app.workexplist=[]
+        app.accomplishmentlist= []
+        app.extracurricularlist=[]
+        app.languageslist=[]
+        app.programslist=[]
+        app.softskillslist=[]
+        app.awardslist=[]
+        app.statementlist=[]
+        app.statementdisplay= []
+        app.workexpdisplay= []
+        app.educationdisplay= []
+        app.accomplishmentdisplay= []
+        app.extracurriculardisplay= []
+        app.languagesdisplay= []
+        app.programsdisplay= []
+        app.softskillsdisplay= []
+        app.awardsdisplay= []
       },
-      includeWork: function(exp) {
-        this.workexpdisplay.push(exp);
-        this.add_remove = "remove";
-        return true;
-      },
-      includeEducation: function(exp) {
-        this.educationdisplay.push(exp);
-        this.add_remove = "remove";
-        return true;
-      },
-      includeAccomplishment: function(exp) {
-        this.accomplishmentdisplay.push(exp);
-        this.add_remove = "remove";
-        return true;
-      },
-      includeAward: function(exp) {
-        this.awardsdisplay.push(exp);
-        this.add_remove = "remove";
-        return true;
-      },
-      includeProgram: function(exp) {
-        this.programsdisplay.push(exp);
-        this.add_remove = "remove";
-        return true;
-      },
-      includeSkill: function(exp) {
-        this.softskillsdisplay.push(exp);
-        this.add_remove = "remove";
-        return true;
-      },
-      includeExtracurricular: function(exp) {
-        this.extracurriculardisplay.push(exp);
-        this.add_remove = "remove";
-        return true;
-      },
-      includeLanguage: function(exp) {
-        this.languagesdisplay.push(exp);
-        this.add_remove = "remove";
-        return true;
-      },
+
+  
 
       newKellyColorPickerMain: function () {
         addEventListener("click", function () {
