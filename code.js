@@ -5,28 +5,28 @@ var app= new Vue ({
     el: "#app1",
 
     data: {
+      islogin: false,
       loadinglists: false,
-      islogin:false,
-      username: "",
-      password: "",
+      username: "", 
+      password: "", 
       userID: "",
       menu:false,
       modal: false,
       page: "home",
       color: "",
-      panel: 0,
-      panel1: 0,
-      panel2: 0,
-      panel3: 0,
-      panel4: 0,
-      panel5: 0,
-      panel6: 0,
-      panel7: 0,
-      panel8: 0,
-      panel9: 0,
+      panel: 0, 
+      panel1: 0, 
+      panel2: 0, 
+      panel3: 0, 
+      panel4: 0, 
+      panel5: 0, 
+      panel6: 0, 
+      panel7: 0, 
+      panel8: 0, 
+      panel9: 0, 
 
         educationlist:[],
-        workexplist:[
+        workexplist:[            
         ],
         accomplishmentlist: [],
         extracurricularlist:[],
@@ -36,7 +36,7 @@ var app= new Vue ({
         awardslist:[],
         statementlist:[],
 
-
+        
         personalinfoEdit:
         {
             first_name:"",
@@ -44,7 +44,7 @@ var app= new Vue ({
             address: "",
             city:"",
             state:"",
-            zip:"",
+            zip:"", 
             country: "",
             email: "",
             phone: "",
@@ -128,7 +128,7 @@ var app= new Vue ({
         pickingColor: false,
         color_brightness: 6,
         accent: 0,
-
+        
       template: "malia",
       templateLabel: "Choose a Template",
       templates: [
@@ -161,7 +161,7 @@ var app= new Vue ({
           name: "Template 7"
         },
       ],
-
+      
       statementdisplay: [],
       workexpdisplay: [],
       educationdisplay: [],
@@ -174,7 +174,7 @@ var app= new Vue ({
 
       add_remove: "",
 
-
+      
       positionEdit: {
         statementposition: 0,
         workexpposition: 0,
@@ -188,15 +188,15 @@ var app= new Vue ({
         user_id: "",
       },
 
-      statementpositions: [1,2,3,4,5,6,7],
-      workexppositions: [1,2,3,4,5,6,7],
-      educationpositions: [1,2,3,4,5,6,7],
-      accomplishmentpositions: [1,2,3,4,5,6,7],
-      extracurricularpositions: [1,2,3,4,5,6,7],
-      languagespositions: [1,2,3,4,5,6,7],
-      programspositions: [1,2,3,4,5,6,7],
-      softskillspositions: [1,2,3,4,5,6,7],
-      awardspositions: [1,2,3,4,5,6,7],
+      statementpositions: [0,1,2,3,4,5,6,7,8],
+      workexppositions: [0,1,2,3,4,5,6,7,8],
+      educationpositions: [0,1,2,3,4,5,6,7,8],
+      accomplishmentpositions: [0,1,2,3,4,5,6,7,8],
+      extracurricularpositions: [0,1,2,3,4,5,6,7,8],
+      languagespositions: [0,1,2,3,4,5,6,7,8],
+      programspositions: [0,1,2,3,4,5,6,7,8],
+      softskillspositions: [0,1,2,3,4,5,6,7,8],
+      awardspositions: [0,1,2,3,4,5,6,7,8],
 
       zone1: [],
       zone2: [],
@@ -205,6 +205,7 @@ var app= new Vue ({
       zone5: [],
       zone6: [],
       zone7: [],
+      zone8: [],
 
       zone1_type: "",
       zone2_type: "",
@@ -213,6 +214,7 @@ var app= new Vue ({
       zone5_type: "",
       zone6_type: "",
       zone7_type: "",
+      zone8_type: "",
 
       workexpcheck: false,
       educationcheck: false,
@@ -224,15 +226,15 @@ var app= new Vue ({
       statementcheck: false,
       awardscheck: false,
 
-      loginError: false,
-      loginErrorMsg: "",
-      loginSuccess: false,
-      registerSuccess: false,
+      loginError: false, 
+      loginErrorMsg: "", 
+      loginSuccess: false, 
+      registerSuccess: false, 
 
-      addError: false,
-      addErrorMsg: "",
-      deleteError: false,
-      deleteErrorMsg: "",
+      addError: false, 
+      addErrorMsg: "", 
+      deleteError: false, 
+      deleteErrorMsg: "", 
 
 
       emailRules: [
@@ -242,26 +244,41 @@ var app= new Vue ({
       fieldRules: [
         v => !!v || 'This field is required',
       ],
+      fonts: [
+        'Merriweather', 'Montserrat', 'Libre Baskerville', 'Karla', 'Arvo', 'Source Serif Pro', 'EB Garamond', 'Cairo',
+        ],
+        fontLabel: "Choose Font...",
     },
 
     created: function () {
-
+      
     },
-
+  
 
     methods: {
-      toPrint: function(divID) {
+      toPrint: function(divID) { //changed
         var divElements = document.getElementById(divID).innerHTML;
+        var headDoc = document.head.innerHTML;
         var oldPage = document.body.innerHTML;
+        console.log(headDoc)
 
         document.body.innerHTML =
-          "<html><head><title></title></head><body>" +
+          "<html>" + headDoc + `<body>` +
           divElements + "</body>";
+
+
 
         window.print();
 
         document.location.reload(true);
-  },
+      },
+      changeFont: function (font) { //changed
+        font = String(font);
+        var pageID = document.getElementById(page);
+        console.log(pageID);
+        document.getElementById(font).style.fontFamily = font + ",sans-serif";
+        document.getElementById(page).style.fontFamily = font + ",sans-serif";
+      },
 
 
   register: function() {
@@ -1059,7 +1076,7 @@ var app= new Vue ({
 
     },
     computed: {
-
+      
       binding () {
         const binding = {}
 
@@ -1067,7 +1084,14 @@ var app= new Vue ({
 
         return binding
     },
+    lgbinding () {
+        const binding = {}
+
+        if (this.$vuetify.breakpoint.lgAndDown) binding.column = true
+
+        return binding
+    },
 },
 
-
+      
 })
