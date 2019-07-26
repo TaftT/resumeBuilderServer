@@ -20,8 +20,8 @@
                         <v-spacer></v-spacer>
                         <v-toolbar-items>
                             <v-btn flat @click="page = 'form'" class=" subheadingDef">Input Form</v-btn>
-                            <v-btn flat @click="page = 'savedinfo'; loadlists(); getPosition()" class="subheadingDef">Your Info</v-btn>
-                            <v-btn flat @click="page = 'preview'; loadlists(); getPosition()" class=" subheadingDef">Preview</v-btn>
+                            <v-btn flat @click="PersonalInfoUpdate(); page = 'savedinfo'; loadlists(); getPosition()" class="subheadingDef">Your Info</v-btn>
+                            <v-btn flat @click="PersonalInfoUpdate(); page = 'preview'; loadlists(); getPosition();" class=" subheadingDef">Preview</v-btn>
                             <v-btn v-show="islogin == false" flat @click="page = 'login'" class="subheadingDef">Login</v-btn> <!-- changed -->
                         <v-btn v-show="islogin != false" flat @click="logout()" class="subheadingDef">Log Out</v-btn> <!-- changed -->
                         </v-toolbar-items>

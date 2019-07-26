@@ -422,6 +422,7 @@ var app= new Vue ({
         app.softskillsdisplay= []
         app.awardsdisplay= []
         app.personalinfoEdit={}
+        app.positionEdit={}
       },
 
 
@@ -593,8 +594,7 @@ var app= new Vue ({
          email:app.personalinfoEdit.email,
          phone:app.personalinfoEdit.phone,
          branding_statement:app.personalinfoEdit.branding_statement,
-         professional_title:app.personalinfoEdit.title,
-         linkedin: app.personalinfoEdit.linkedin,
+
        }
 
      app.getData("personalinfo");
@@ -739,7 +739,36 @@ var app= new Vue ({
       });
       },
 
-      setPosition: function () {
+      setPosition: function (position, type) {
+
+        if(app.positionEdit.statementposition == position && type !=="statement"){
+          app.positionEdit.statementposition = 0
+        }
+        if(app.positionEdit.workexpposition == position && type !=="workexp"){
+          app.positionEdit.workexpposition = 0
+        }
+        if(app.positionEdit.educationposition == position && type !=="education"){
+          app.positionEdit.educationposition = 0
+        }
+        if(app.positionEdit.extracurricularposition == position && type !=="extracurricular"){
+          app.positionEdit.extracurricularposition = 0
+        }
+        if(app.positionEdit.languagesposition == position && type !=="languages"){
+          app.positionEdit.languagesposition = 0
+        }
+        if(app.positionEdit.programsposition == position && type !=="programs"){
+          app.positionEdit.programsposition = 0
+        }
+        if(app.positionEdit.softskillsposition == position && type !=="softskills"){
+          app.positionEdit.softskillsposition = 0
+        }
+        if(app.positionEdit.awardsposition == position && type !=="awards"){
+          app.positionEdit.awardsposition = 0
+        }
+        if(app.positionEdit.accomplishmentposition == position && type !=="accomplishment"){
+          app.positionEdit.accomplishmentposition = 0
+        }
+
 
         fetch(`${url}/position`, {
           method:"PUT",
@@ -760,6 +789,15 @@ var app= new Vue ({
       },
 
       setZone:function (){
+        app.zone1 = []
+        app.zone2 = []
+        app.zone3= []
+        app.zone4 = []
+        app.zone5 = []
+        app.zone6 = []
+        app.zone7 = []
+        app.zone8 = []
+      
         app.sortToZone(app.positionEdit.statementposition,app.statementdisplay, "statement");
         app.sortToZone(app.positionEdit.workexpposition,app.workexpdisplay, "workexp");
         app.sortToZone(app.positionEdit.educationposition,app.educationdisplay, "education");
@@ -774,10 +812,11 @@ var app= new Vue ({
 
       sortToZone: function (position,displayList,type) {
 
+
+
         if(position == 1){
           app.zone1=displayList;
           app.zone1_type=type;
-          console.log("added to zone 1");
         }
         if(position == 2){
           app.zone2=displayList;
@@ -804,6 +843,7 @@ var app= new Vue ({
           app.zone7_type=type;
         }
       },
+
 
 
       pdfSave: function () {
