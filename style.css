@@ -1,0 +1,377 @@
+#padding {
+  padding: 2% 2%;
+}
+#avatar {
+  background-image: url("https://avatars0.githubusercontent.com/u/9064066?v=4&s=460");
+  height: 150%;
+  background-position: center;
+  background-size: contain;
+}
+[v-cloak]{
+  display: none;
+}
+.template{
+  margin: 10px;
+  padding: 5px;
+  margin-top: 0px;
+  background-color: gray;
+}
+.information{
+  padding-top: 5px;
+}
+.v-progress-linear{
+  margin: 0rem 0;
+}
+
+.overflow {
+  overflow: hidden;
+}
+
+#fixedPos {
+position: absolute;
+z-index: 100;
+}
+#body {
+   background-image: url("img/lightLeft.jpg");
+   background-size: cover;
+   background-position: center ;
+   background-attachment: fixed;
+   font-family: 'Nunito Sans', 'Roboto', sans-serif;
+ }
+ #hero { 
+   height: 60%;
+   margin: 20% 0 36% 0;
+ }
+ #page {
+    height: 1414.7px;
+    width: 1093.3px;
+    margin: 0px auto;
+    overflow: hidden;
+ }
+ #smallPage {
+    height: 424.4px;
+    width: 328px;
+    overflow: hidden;
+ }
+ #smallPage .subheadingDef {
+    font-size: 16px;
+    margin: 3px;
+    padding: 10px 4px;
+   }
+ .homeMargin {
+    margin: 20% 0;
+ }
+ .load {
+  margin: 18% 0 48% 0;
+ }
+
+ .maliaTempBar {
+  height: 266.7px;
+ }
+
+ .display-4Def {
+  font-size: 112px;
+  font-weight: 100;
+ }
+ .display-3Def {
+  font-size: 56px;
+  font-weight: 400;
+ }
+ .display-2Def {
+  font-size: 45px;
+  font-weight: 400;
+ }
+ .display-1Def {
+  font-size: 34px;
+  font-weight: 400;
+ }
+ .headlineDef {
+  font-size: 24px;
+  font-weight: 400;
+ }
+  .titleDef {
+  font-size: 20px;
+  font-weight: 500;
+ }
+  .subheadingDef {
+  font-size: 16px;
+  font-weight: 400;
+ }
+  .body-2Def {
+  font-size: 14px;
+  font-weight: 500;
+ }
+  .body-1Def {
+  font-size: 14px;
+  font-weight: 400;
+ }
+  .captionDef {
+  font-size: 12px;
+  font-weight: 400;
+ }
+
+
+
+ #page .display-4Def {
+  font-size: 149.3px;
+  font-weight: 100;
+ }
+  #page .display-3Def {
+  font-size: 74.7px;
+  font-weight: 400;
+ }
+  #page .display-2Def {
+  font-size: 60px;
+  font-weight: 400;
+ }
+  #page .display-1Def {
+  font-size: 45.3px;
+  font-weight: 400;
+ }
+  #page .headlineDef {
+  font-size: 32px;
+  font-weight: 400;
+ }
+   #page .titleDef {
+  font-size: 26.7px;
+  font-weight: 500;
+ }
+   #page .subheadingDef {
+  font-size: 21.3px;
+  font-weight: 400;
+ }
+   #page .body-2Def {
+  font-size: 18.7px;
+  font-weight: 500;
+ }
+   #page .body-1Def {
+  font-size: 18.7px;
+  font-weight: 400;
+ }
+   #page .captionDef {
+  font-size: 16px;
+  font-weight: 400;
+ }
+
+ @media only screen and (max-width: 1903px) {
+  #smallPage {
+    height: 212.2px;
+    width: 164px;
+    overflow: hidden;
+   }
+   #smallPage .subheadingDef {
+    font-size: 10px;
+    margin: 3px;
+    padding: 2px;
+   }
+}
+
+ @media only screen and (max-width: 1247px) {
+  #page {
+    height: 1061px;
+    width: 820px;
+    margin: 0px auto;
+  }
+  .maliaTempBar {
+    height: 200px;
+ }
+.homeMargin {
+    margin: 15% 0;
+ }
+ .load {
+  margin: 18% 0 48% 0;
+ }
+
+ .maliaTempBar {
+  height: 266.7px;
+ }
+
+  #page .display-4Def {
+  font-size: 112px;
+  font-weight: 100;
+ }
+  #page .display-3Def {
+  font-size: 56px;
+  font-weight: 400;
+ }
+  #page .display-2Def {
+  font-size: 45px;
+  font-weight: 400;
+ }
+  #page .display-1Def {
+  font-size: 34px;
+  font-weight: 400;
+ }
+  #page .headlineDef {
+  font-size: 24px;
+  font-weight: 400;
+ }
+  #page .titleDef {
+  font-size: 20px;
+  font-weight: 500;
+ }
+  #page .subheadingDef {
+  font-size: 16px;
+  font-weight: 400;
+ }
+   #page .body-2Def {
+  font-size: 14px;
+  font-weight: 500;
+ }
+  #page .body-1Def {
+  font-size: 14px;
+  font-weight: 400;
+ }
+  #page .captionDef {
+  font-size: 12px;
+  font-weight: 400;
+ }
+
+}
+@media only screen and (max-width: 1260px) {
+  #smallPage {
+    height: 424.4px;
+    width: 328px;
+    overflow: hidden;
+   }
+   #smallPage .subheadingDef {
+    font-size: 16px;
+    margin: 3px;
+    padding: 10px 4px;
+   }
+}
+
+ @media only screen and (max-width: 850px) {
+  #page {
+    height: 530.5px;
+    width: 410px;
+    margin: 0px auto 30% auto;
+  }
+  #hero {
+    height: 100%;
+    margin: 30% 0;
+  }
+  .maliaTempBar {
+  height: 100px;
+ }
+ #page .display-4Def {
+  font-size: 56px;
+  font-weight: 100;
+ }
+  #page .display-3Def {
+  font-size: 28px;
+  font-weight: 400;
+ }
+  #page .display-2Def {
+  font-size: 22.5px;
+  font-weight: 400;
+ }
+  #page .display-1Def {
+  font-size: 17px;
+  font-weight: 400;
+ }
+  #page .headlineDef {
+  font-size: 12px;
+  font-weight: 400;
+ }
+   #page .titleDef {
+  font-size: 10px;
+  font-weight: 500;
+ }
+   #page .subheadingDef {
+  font-size: 8px;
+  font-weight: 400;
+ }
+   #page .body-2Def {
+  font-size: 7px;
+  font-weight: 500;
+ }
+   #page .body-1Def {
+  font-size: 7px;
+  font-weight: 400;
+ }
+   #page .captionDef {
+  font-size: 6px;
+  font-weight: 400;
+ }
+}
+
+@media only screen and (max-width: 600px) {
+  #page {
+    height: 318.3px;
+    width: 246px;
+    margin: 0px auto 30% auto;
+  }
+  #hero {
+    height: 100%;
+    margin: 30% 0;
+  }
+  .maliaTempBar {
+  height: 60px;
+ }
+ #page .display-4Def {
+  font-size: 33.6px;
+  font-weight: 100;
+ }
+  #page .display-3Def {
+  font-size: 16.8px;
+  font-weight: 400;
+ }
+  #page .display-2Def {
+  font-size: 13.5px;
+  font-weight: 400;
+ }
+  #page .display-1Def {
+  font-size: 10.2px;
+  font-weight: 400;
+ }
+  #page .headlineDef {
+  font-size: 7.2px;
+  font-weight: 400;
+ }
+   #page .titleDef {
+  font-size: 10px;
+  font-weight: 500;
+ }
+   #page .subheadingDef {
+  font-size: 4.8px;
+  font-weight: 400;
+ }
+   #page .body-2Def {
+  font-size: 7px;
+  font-weight: 500;
+ }
+   #page .body-1Def {
+  font-size: 7px;
+  font-weight: 400;
+ }
+   #page .captionDef {
+  font-size: 6px;
+  font-weight: 400;
+ }
+}
+
+ /*
+.dark { color: rgba(85, 82, 89, 1); }
+.white { color: rgba(234, 238, 242, 1); }
+.yellow { color: rgba(242, 214, 162, 1); }
+.tan { color: rgba(242, 225, 205, 1); }
+.pink { color: rgba(191, 156, 149, 1); }
+*/
+/* progress {
+  background-color: orangered;
+}
+progress::-webkit-progress-bar {
+  color: crimson;
+} */
+
+/*
+font-family: 'Merriweather', serif;
+font-family: 'Montserrat', sans-serif;
+font-family: 'Libre Baskerville', serif;
+font-family: 'Karla', sans-serif;
+font-family: 'Arvo', serif;
+font-family: 'Source Serif Pro', serif;
+font-family: 'EB Garamond', serif;
+font-family: 'Cairo', sans-serif;
+ */

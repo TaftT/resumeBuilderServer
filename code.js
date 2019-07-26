@@ -797,7 +797,15 @@ var app= new Vue ({
         app.zone6 = []
         app.zone7 = []
         app.zone8 = []
-      
+        app.zone1_type= ""
+        app.zone2_type= ""
+        app.zone3_type= ""
+        app.zone4_type= ""
+        app.zone5_type= ""
+        app.zone6_type= ""
+        app.zone7_type= ""
+        app.zone8_type= ""
+
         app.sortToZone(app.positionEdit.statementposition,app.statementdisplay, "statement");
         app.sortToZone(app.positionEdit.workexpposition,app.workexpdisplay, "workexp");
         app.sortToZone(app.positionEdit.educationposition,app.educationdisplay, "education");
