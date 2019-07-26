@@ -193,6 +193,8 @@ server.post("/personalinfo", ensureAuthentication,  function(req, res){
   	resumeInfo.personalinfomodel.create({
   	  	first_name: req.body.first_name,
         last_name: req.body.last_name,
+        professional_title: req.body.professional_title,
+        linkedin: req.body.linkedin,
         address: req.body.address,
         city: req.body.city,
         state: req.body.state,
@@ -235,6 +237,12 @@ server.put("/personalinfo", ensureAuthentication,  function(req, res){
     }
     if (req.body.city != undefined){
       item.city = req.body.city;
+    }
+    if (req.body.professional_title != undefined){
+      item.professional_title = req.body.professional_title;
+    }
+    if (req.body.linkedin != undefined){
+      item.linkedin = req.body.linkedin;
     }
     if (req.body.state != undefined){
       item.state = req.body.state;

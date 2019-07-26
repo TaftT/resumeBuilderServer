@@ -41,6 +41,8 @@ var app= new Vue ({
         {
             first_name:"",
             last_name:"",
+            professional_title: "",
+            linkedin: "",
             address: "",
             city:"",
             state:"",
@@ -300,11 +302,45 @@ var app= new Vue ({
           app.loginErrorMsg = "Username and Password are required";
         })
       } else if (response.status == 201) {
-        app.checklogin();
-        app.newPosition();
-        app.newPersonalInfo();
-        app.loginError = false; // changed
+        console.log("registered")
+        app.loginError = false;
         app.registerSuccess = true;
+        fetch(`${url}/users/login`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-type": "application/json"
+          },
+          body: JSON.stringify({
+            username: app.username,
+            password: app.password
+          })
+
+        }).then(function(response) {
+
+          if (response.status == 403) {
+            response.json().then(function(data) {
+              app.loginError = true;
+              app.loginErrorMsg = data.msg;
+            })
+          }else if(response.status == 200){
+              app.loginError = false; // changed
+              app.loginSuccess = true;
+            response.json().then( function(data){
+              app.userID = data.user_id
+              app.page = "form";
+              app.islogin = true;
+              app.newPosition();
+              app.newPersonalInfo();
+              app.loadlists();
+
+            })
+
+          }
+        });
+
+
+
         app.page = "form";
 
       }
@@ -506,6 +542,8 @@ var app= new Vue ({
             console.log(response.personalinfo.first_name)
             app.personalinfoEdit.first_name = response.personalinfo.first_name
             app.personalinfoEdit.last_name = response.personalinfo.last_name
+            app.personalinfoEdit.professional_title = response.personalinfo.professional_title
+            app.personalinfoEdit.linkedin = response.personalinfo.linkedin
             app.personalinfoEdit.address = response.personalinfo.address
             app.personalinfoEdit.city = response.personalinfo.city
             app.personalinfoEdit.state = response.personalinfo.state
@@ -545,6 +583,8 @@ var app= new Vue ({
        app.personalinfoEdit={
          first_name :app.personalinfoEdit.first_name,
          last_name:app.personalinfoEdit.last_name,
+         linkedin: app.personalinfoEdit.linkedin,
+         professional_title: app.personalinfoEdit.professional_title,
          address:app.personalinfoEdit.address,
          city:app.personalinfoEdit.city,
          state:app.personalinfoEdit.state,
@@ -649,23 +689,28 @@ var app= new Vue ({
       },
 
       getPosition: function () {
-        fetch(`${url}/position`,{
-          credentials: "include"
-        }).then(function (response) { //then executes when browser has received response from browser
-          response.json().then(function (data) {
-            app.positionEdit.statementposition = data.statementposition;
-            app.positionEdit.workexpposition = data.workexpposition;
-            app.positionEdit.educationposition = data.educationposition;
-            app.positionEdit.accomplishmentposition = data.accomplishmentposition;
-            app.positionEdit.extracurricularposition = data.extracurricularposition;
-            app.positionEdit.languagesposition = data.languagesposition;
-            app.positionEdit.programsposition = data.programsposition;
-            app.positionEdit.softskillsposition = data.softskillsposition;
-            app.positionEdit.awardsposition = data.awardsposition;
 
-            app.setZone();
+        if(app.islogin){
+          fetch(`${url}/position`,{
+            credentials: "include"
+          }).then(function (response) { //then executes when browser has received response from browser
+            response.json().then(function (data) {
+              app.positionEdit.statementposition = data.statementposition;
+              app.positionEdit.workexpposition = data.workexpposition;
+              app.positionEdit.educationposition = data.educationposition;
+              app.positionEdit.accomplishmentposition = data.accomplishmentposition;
+              app.positionEdit.extracurricularposition = data.extracurricularposition;
+              app.positionEdit.languagesposition = data.languagesposition;
+              app.positionEdit.programsposition = data.programsposition;
+              app.positionEdit.softskillsposition = data.softskillsposition;
+              app.positionEdit.awardsposition = data.awardsposition;
+
+              app.setZone();
+
+            });
           });
-        });
+
+        }
 
       },
 

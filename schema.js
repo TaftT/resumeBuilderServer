@@ -9,6 +9,14 @@ const personalinfoSchema = mongoose.Schema({
    			type: String,
     		required: false,
  		 },
+     professional_title: {
+       type: String,
+       required: false,
+    },
+    linkedin: {
+      type: String,
+      required: false,
+   },
  		 address: {
    			type: String,
     		required: false,
